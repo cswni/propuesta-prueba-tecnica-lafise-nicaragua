@@ -1,102 +1,100 @@
-import { IconTrendingDown, IconTrendingUp } from "@tabler/icons-react"
+import LogoLafise from '@/assets/images/logo-lafise-blanco.svg'
+import LafiseLogoShield from "@/assets/images/logo-lafise-shield.svg"
+const cards = [
+  {
+    type: "Credit",
+    bank: "Lafise Bank",
+    number: "1234 **** **** 1234",
+    holder: "John Doe",
+    expiry: "12/26",
+    brand: "Visa",
+    color: "bg-gradient-to-r from-[#00593B] to-[#096C4B]",
+  },
+  {
+    type: "Debit",
+    bank: "Lafise Bank",
+    number: "1234 **** **** 5678",
+    holder: "Jane Smith",
+    expiry: "08/25",
+    brand: "Mastercard",
+    color: "bg-gradient-to-r from-[#0B102E] to-[#121741]",
+  },
+  {
+    type: "Debit",
+    bank: "Lafise Bank",
+    number: "1234 **** **** 5678",
+    holder: "Jane Smith",
+    expiry: "08/25",
+    brand: "Mastercard",
+    color: "bg-gradient-to-r from-[#1F1F1F] to-[#272727]",
+  },
+  // ...add more cards as needed
+]
 
-import { Badge } from "@/components/ui/badge"
-import {
-  Card,
-  CardAction,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
+// Card component for credit/debit cards
+function CreditDebitCard({
+  number,
+  holder,
+  expiry,
+  color,
+}: {
+  type: string
+  number: string
+  holder: string
+  expiry: string
+  color: string
+}) {
+  return (
+    <div
+      className={`relative rounded-xl shadow-md p-6 text-white flex flex-col justify-between min-h-[208px] overflow-hidden ${color}`}
+      data-slot="card"
+    >
+      {/* Escudo de fondo*/}
+      <div
+        className="absolute inset-y-0 right-10 flex items-center pointer-events-none"
+        style={{
+          width: "80%",
+          justifyContent: "flex-end",
+          zIndex: 0,
+        }}
+      >
+        <img
+          src={LafiseLogoShield}
+          alt="Escudo de Lafise"
+          className="h-full w-auto"
+        />
+      </div>
+      {/* Card content */}
+      <div className="relative z-10 flex flex-col justify-between h-full gap-4">
+        <div className="flex justify-between items-center mb-2">
+          <span className="font-semibold">
+            <img
+              src={LogoLafise}
+              alt="Lafise Bank"
+              className="w-24 mr-2 inline-block" />
+          </span>
+        </div>
+        <div className="text-lg font-mono tracking-widest mb-2">{number}</div>
+        <div className="flex justify-start items-center gap-4">
+          <div>
+            <div className="font-medium">{holder}</div>
+          </div>
+          <div className="text-right">
+            <div className="text-xs">Expira</div>
+            <div className="font-medium">{expiry}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
 
 export function SectionCards() {
   return (
-    <div className="*:data-[slot=card]:from-primary/5 *:data-[slot=card]:to-card dark:*:data-[slot=card]:bg-card grid grid-cols-1 gap-4 px-4 *:data-[slot=card]:bg-gradient-to-t *:data-[slot=card]:shadow-xs lg:px-6 @xl/main:grid-cols-2 @5xl/main:grid-cols-4">
-      <Card className="@container/card">
-        <CardHeader>
-          <CardDescription>Total Revenue</CardDescription>
-          <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-            $1,250.00
-          </CardTitle>
-          <CardAction>
-            <Badge variant="outline">
-              <IconTrendingUp />
-              +12.5%
-            </Badge>
-          </CardAction>
-        </CardHeader>
-        <CardFooter className="flex-col items-start gap-1.5 text-sm">
-          <div className="line-clamp-1 flex gap-2 font-medium">
-            Trending up this month <IconTrendingUp className="size-4" />
-          </div>
-          <div className="text-muted-foreground">
-            Visitors for the last 6 months
-          </div>
-        </CardFooter>
-      </Card>
-      <Card className="@container/card">
-        <CardHeader>
-          <CardDescription>New Customers</CardDescription>
-          <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-            1,234
-          </CardTitle>
-          <CardAction>
-            <Badge variant="outline">
-              <IconTrendingDown />
-              -20%
-            </Badge>
-          </CardAction>
-        </CardHeader>
-        <CardFooter className="flex-col items-start gap-1.5 text-sm">
-          <div className="line-clamp-1 flex gap-2 font-medium">
-            Down 20% this period <IconTrendingDown className="size-4" />
-          </div>
-          <div className="text-muted-foreground">
-            Acquisition needs attention
-          </div>
-        </CardFooter>
-      </Card>
-      <Card className="@container/card">
-        <CardHeader>
-          <CardDescription>Active Accounts</CardDescription>
-          <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-            45,678
-          </CardTitle>
-          <CardAction>
-            <Badge variant="outline">
-              <IconTrendingUp />
-              +12.5%
-            </Badge>
-          </CardAction>
-        </CardHeader>
-        <CardFooter className="flex-col items-start gap-1.5 text-sm">
-          <div className="line-clamp-1 flex gap-2 font-medium">
-            Strong user retention <IconTrendingUp className="size-4" />
-          </div>
-          <div className="text-muted-foreground">Engagement exceed targets</div>
-        </CardFooter>
-      </Card>
-      <Card className="@container/card">
-        <CardHeader>
-          <CardDescription>Growth Rate</CardDescription>
-          <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-            4.5%
-          </CardTitle>
-          <CardAction>
-            <Badge variant="outline">
-              <IconTrendingUp />
-              +4.5%
-            </Badge>
-          </CardAction>
-        </CardHeader>
-        <CardFooter className="flex-col items-start gap-1.5 text-sm">
-          <div className="line-clamp-1 flex gap-2 font-medium">
-            Steady performance increase <IconTrendingUp className="size-4" />
-          </div>
-          <div className="text-muted-foreground">Meets growth projections</div>
-        </CardFooter>
-      </Card>
+    <div className="grid grid-cols-1 gap-4 px-4 lg:px-6 @xl/main:grid-cols-2 @5xl/main:grid-cols-3">
+      {cards.map((card, idx) => (
+        <CreditDebitCard key={idx} {...card} />
+      ))}
     </div>
   )
 }
