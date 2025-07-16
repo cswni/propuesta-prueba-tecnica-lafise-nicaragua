@@ -115,7 +115,7 @@ function Sidebar({
       <div
         data-slot="sidebar-container"
         className={cn(
-          'relative z-10 hidden h-svh w-(--sidebar-width) transition-[width,transform] duration-200 ease-linear md:flex',
+          'relative z-10 hidden h-screen w-(--sidebar-width) transition-[width,transform] duration-200 ease-linear md:flex',
           collapseClass,
           // Adjust the padding for floating and inset variants.
           variant === 'floating' || variant === 'inset'
@@ -203,7 +203,7 @@ function SidebarContent({ className, ...props }: React.ComponentProps<'div'>) {
       data-slot="sidebar-content"
       data-sidebar="content"
       className={cn(
-        'flex min-h-0 flex-1 flex-col gap-2 overflow-auto group-data-[collapsible=icon]:overflow-hidden',
+        'flex min-h-0 flex-1 flex-col gap-2 overflow-y-auto group-data-[collapsible=icon]:overflow-hidden',
         className
       )}
       {...props}

@@ -12,7 +12,7 @@ const MainLayout = ({ className, children, ...props }: React.ComponentProps<'mai
     
     return (
         <div 
-            className="transition-all duration-500 ease-in-out relative"
+            className="transition-all duration-500 ease-in-out relative h-screen overflow-hidden"
             style={{
                 width: isFullWidth ? '100vw' : '1440px',
                 margin: isFullWidth ? '0' : '0 auto',
@@ -20,14 +20,14 @@ const MainLayout = ({ className, children, ...props }: React.ComponentProps<'mai
             }}
         >
             {/* Sidebar positioned absolutely to stay in place */}
-            <div className="absolute left-0 top-0 z-10">
+            <div className="absolute left-0 top-0 z-10 h-full">
                 {sidebar}
             </div>
             
             <main
                 data-slot="sidebar-inset"
                 className={cn(
-                    'bg-background relative flex flex-1 flex-row',
+                    'bg-background relative flex flex-1 flex-row h-full',
                     'w-full',
                     className
                 )}
