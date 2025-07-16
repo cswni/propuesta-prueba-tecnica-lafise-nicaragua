@@ -16,7 +16,6 @@ import Configuracion from '@/assets/images/sidebar/configuracion.svg'
 import { type Icon,} from '@tabler/icons-react';
 
 import { NavMain } from '@/components/nav-main';
-import { NavUser } from '@/components/nav-user';
 import {
   Sidebar,
   SidebarContent,
@@ -127,20 +126,21 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarContent>
         <NavMain items={data.navMain} />
       </SidebarContent>
-      {/* Toggle for full width mode, only if not mobile */}
-      {!isMobile && (
-        <div className="flex items-center justify-center py-2 border-t">
-          <Toggle
-            pressed={isFullWidth}
-            onPressedChange={toggleFullWidth}
-            aria-label={isFullWidth ? 'Set to Squared' : 'Set to Full Width'}
-          >
-            {isFullWidth ? 'Cuadrado' : 'Ancho completo'}
-          </Toggle>
-        </div>
-      )}
+
+
       <SidebarFooter>
-        <NavUser user={data.user} />
+        {/* Toggle for full width mode, only if not mobile */}
+        {!isMobile && (
+            <div className="flex items-center justify-center py-2 border-t">
+              <Toggle
+                  pressed={isFullWidth}
+                  onPressedChange={toggleFullWidth}
+                  aria-label={isFullWidth ? 'Set to Squared' : 'Set to Full Width'}
+              >
+                {isFullWidth ? 'Cuadrado' : 'Ancho completo'}
+              </Toggle>
+            </div>
+        )}
       </SidebarFooter>
     </Sidebar>
   );

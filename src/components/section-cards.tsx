@@ -36,12 +36,12 @@ function CreditDebitCard({
 }) {
   return (
     <div
-      className={`relative rounded-xl shadow-md p-6 text-white flex flex-col justify-between min-h-[208px] overflow-hidden ${color}`}
+      className={`relative rounded-xl shadow-md p-6 text-white flex flex-col justify-between min-h-[208px] sm:max-w-[353px] overflow-hidden ${color}`}
       data-slot="card"
     >
       {/* Escudo de fondo*/}
       <div
-        className="absolute inset-y-0 right-10 flex items-center pointer-events-none"
+        className="absolute inset-y-0 right-0 flex items-center pointer-events-none"
         style={{
           width: "80%",
           justifyContent: "flex-end",

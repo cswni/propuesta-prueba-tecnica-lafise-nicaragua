@@ -14,7 +14,7 @@ const SidebarMenuItem: React.FC<SidebarMenuItemProps> = ({
   <li
     data-slot="sidebar-menu-item"
     data-sidebar="menu-item"
-    className={cn('group/menu-item py-2 px-1 relative font-semibold min-h-[48px]', className, 'border-1')}
+    className={cn('hover:bg-[var(--base-soft-green)] hover:cursor-pointer group/menu-item py-2 px-1 relative font-semibold min-h-[48px]', className)}
     {...props}
   >
       {props.children}

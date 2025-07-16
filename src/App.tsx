@@ -5,6 +5,7 @@ import MainLayout from '@/components/ui/layout/MainLayout';
 import {SiteHeader} from "@/components/site-header.tsx";
 import { SettingsProvider } from '@/providers/settings/SettingsProvider.tsx';
 import {SidebarProvider} from "@/providers/sidebar/SidebarProvider.tsx";
+import {Toaster} from "@/components/ui/sonner.tsx";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
                 <Route key={idx} path={route.path} element={route.element} />
               ))}
             </Routes>
+            <Toaster />
           </MainLayout>
         </BrowserRouter>
       </SidebarProvider>
