@@ -7,6 +7,7 @@
 @theme inline {
   --base-color: oklch(0.145 0 0);
   --base-soft-green: oklch(0.963 0.009 171.799);
+  --base-soft-green-opacity: oklch(0.963 0.009 171.799 / 0.17);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -119,6 +120,22 @@
   * {
     @apply border-border outline-ring/50;
     font-family: "Poppins", sans-serif;
+  }
+
+  /*
+  Set the scrollbar styles for the entire application and apply color base and 5px width
+  */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--base-soft-green);
+    border-radius: 4px;
+  }
+  ::-webkit-scrollbar-track {
+    /*Add a darker mode using --base-soft-green*/
+    background: var(--base-soft-green-opacity);
   }
   html, body {
     @apply bg-background text-foreground;
