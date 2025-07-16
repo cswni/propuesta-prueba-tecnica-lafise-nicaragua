@@ -1,25 +1,21 @@
 import * as React from 'react';
-import {
-  IconCamera,
-  IconChartBar,
-  IconDashboard,
-  IconDatabase,
-  IconFileAi,
-  IconFileDescription,
-  IconFileWord,
-  IconFolder,
-  IconHelp,
-  IconInnerShadowTop,
-  IconListDetails,
-  IconReport,
-  IconSearch,
-  IconSettings,
-  IconUsers,
-} from '@tabler/icons-react';
 
-import { NavDocuments } from '@/components/nav-documents';
+// Assets
+import LogoLafise from '@/assets/images/logo-lafise.svg'
+import Tablero from '@/assets/images/sidebar/tablero.svg'
+import Transferir from '@/assets/images/sidebar/transferir.svg'
+import Pagar from '@/assets/images/sidebar/pagar.svg'
+import Mistransacciones from '@/assets/images/sidebar/mistransacciones.svg'
+import Gestionar from '@/assets/images/sidebar/gestionar.svg'
+import Cheque from '@/assets/images/sidebar/cheque.svg'
+import Administrar from '@/assets/images/sidebar/administrar.svg'
+import Paganet from '@/assets/images/sidebar/paganet.svg'
+import Ahorro from '@/assets/images/sidebar/ahorro.svg'
+import Configuracion from '@/assets/images/sidebar/configuracion.svg'
+
+import { type Icon,} from '@tabler/icons-react';
+
 import { NavMain } from '@/components/nav-main';
-import { NavSecondary } from '@/components/nav-secondary';
 import { NavUser } from '@/components/nav-user';
 import {
   Sidebar,
@@ -27,11 +23,25 @@ import {
   SidebarFooter,
   SidebarHeader,
   SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-} from '@/components/ui/sidebar';
+} from '@/components/ui/sidebar/sidebar.tsx';
+import {Link} from "react-router-dom";
+import SidebarMenuItem from "@/components/ui/sidebar/SidebarMenuItem.tsx";
 
-const data = {
+type SidebarData = {
+  user: {
+    name: string;
+    email: string;
+    avatar: string;
+  };
+  navMain: {
+    title: string;
+    url: string;
+    icon?: Icon;
+    svg?: string;
+  }[]
+};
+
+const data: SidebarData = {
   user: {
     name: 'shadcn',
     email: 'm@example.com',
@@ -39,113 +49,56 @@ const data = {
   },
   navMain: [
     {
-      title: 'Dashboard',
+      title: 'Tablero',
       url: '#',
-      icon: IconDashboard,
+      svg: Tablero
     },
     {
-      title: 'Lifecycle',
+      title: 'Transferir',
       url: '#',
-      icon: IconListDetails,
+      svg: Transferir
     },
     {
-      title: 'Analytics',
+      title: 'Pagar',
       url: '#',
-      icon: IconChartBar,
+      svg: Pagar
     },
     {
-      title: 'Projects',
+      title: 'Mis transacciones',
       url: '#',
-      icon: IconFolder,
+      svg: Mistransacciones,
     },
     {
-      title: 'Team',
+      title: 'Gestionar',
       url: '#',
-      icon: IconUsers,
-    },
-  ],
-  navClouds: [
-    {
-      title: 'Capture',
-      icon: IconCamera,
-      isActive: true,
-      url: '#',
-      items: [
-        {
-          title: 'Active Proposals',
-          url: '#',
-        },
-        {
-          title: 'Archived',
-          url: '#',
-        },
-      ],
+      svg: Gestionar,
     },
     {
-      title: 'Proposal',
-      icon: IconFileDescription,
+      title: 'Cheques',
       url: '#',
-      items: [
-        {
-          title: 'Active Proposals',
-          url: '#',
-        },
-        {
-          title: 'Archived',
-          url: '#',
-        },
-      ],
+      svg: Cheque,
     },
     {
-      title: 'Prompts',
-      icon: IconFileAi,
+      title: 'Paganet',
       url: '#',
-      items: [
-        {
-          title: 'Active Proposals',
-          url: '#',
-        },
-        {
-          title: 'Archived',
-          url: '#',
-        },
-      ],
-    },
-  ],
-  navSecondary: [
-    {
-      title: 'Settings',
-      url: '#',
-      icon: IconSettings,
+      svg: Paganet,
     },
     {
-      title: 'Get Help',
+      title: 'Administrar',
       url: '#',
-      icon: IconHelp,
+      svg: Administrar,
     },
     {
-      title: 'Search',
+      title: 'Ahorro automático',
       url: '#',
-      icon: IconSearch,
-    },
-  ],
-  documents: [
-    {
-      name: 'Data Library',
-      url: '#',
-      icon: IconDatabase,
+      svg: Ahorro,
     },
     {
-      name: 'Reports',
+      title: 'Configuración',
       url: '#',
-      icon: IconReport,
+      svg: Configuracion,
     },
-    {
-      name: 'Word Assistant',
-      url: '#',
-      icon: IconFileWord,
-    },
-  ],
+  ]
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
@@ -156,24 +109,18 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton
-              asChild
-              className="data-[slot=sidebar-menu-button]:!p-1.5">
-              <a href="#">
-                <IconInnerShadowTop className="!size-5" />
-                <span className="text-base font-semibold">Acme Inc.</span>
-              </a>
-            </SidebarMenuButton>
+            <Link to="#">
+              <img
+                  className="w-auto mx-auto"
+                  src={LogoLafise}
+                  alt="Logo Lafise"
+              />
+            </Link>
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />
-        <NavDocuments items={data.documents} />
-        <NavSecondary
-          items={data.navSecondary}
-          className="mt-auto"
-        />
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={data.user} />

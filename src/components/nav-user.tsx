@@ -23,9 +23,9 @@ import {
 import {
   SidebarMenu,
   SidebarMenuButton,
-  SidebarMenuItem,
   useSidebar,
-} from "@/components/ui/sidebar"
+} from "@/components/ui/sidebar/sidebar.tsx"
+import SidebarMenuItem from "@/components/ui/sidebar/SidebarMenuItem.tsx";
 
 export function NavUser({
   user,

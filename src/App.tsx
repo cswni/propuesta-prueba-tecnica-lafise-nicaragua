@@ -1,27 +1,25 @@
-import './App.css';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import DashboardPage from './app/dashboard/index';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { SidebarProvider } from "@/components/ui/sidebar/sidebar.tsx";
+import { routes } from './routes/index';
+import { AppSidebar } from '@/components/app-sidebar';
+import MainLayout from '@/components/ui/layout/MainLayout';
+import {SiteHeader} from "@/components/site-header.tsx";
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <Navigate
-              to="/dashboard"
-              replace
-            />
-          }
-        />
-        <Route
-          path="/dashboard"
-          element={<DashboardPage />}
-        />
-    
-      </Routes>
-    </BrowserRouter>
+    <SidebarProvider>
+      <BrowserRouter>
+        <AppSidebar variant="inset" />
+        <MainLayout>
+          <SiteHeader />
+          <Routes>
+            {routes.map((route, idx) => (
+              <Route key={idx} path={route.path} element={route.element} />
+            ))}
+          </Routes>
+        </MainLayout>
+      </BrowserRouter>
+    </SidebarProvider>
   );
 }
 

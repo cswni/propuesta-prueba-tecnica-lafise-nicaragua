@@ -7,9 +7,9 @@ import {
   SidebarGroup,
   SidebarGroupContent,
   SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-} from "@/components/ui/sidebar"
+  SidebarMenuButton
+} from "@/components/ui/sidebar/sidebar.tsx"
+import SidebarMenuItem from "@/components/ui/sidebar/SidebarMenuItem.tsx";
 
 export function NavSecondary({
   items,
