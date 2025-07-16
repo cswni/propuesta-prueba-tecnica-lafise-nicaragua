@@ -26,6 +26,9 @@ import {
 } from '@/components/ui/sidebar/sidebar.tsx';
 import {Link} from "react-router-dom";
 import SidebarMenuItem from "@/components/ui/sidebar/SidebarMenuItem.tsx";
+import { Toggle } from '@/components/ui/toggle';
+import { useSettings } from '@/providers/settings/SettingsProvider.tsx';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 type SidebarData = {
   user: {
@@ -102,6 +105,8 @@ const data: SidebarData = {
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const { isFullWidth, toggleFullWidth } = useSettings();
+  const isMobile = useIsMobile();
   return (
     <Sidebar
       collapsible="offcanvas"
@@ -122,6 +127,18 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarContent>
         <NavMain items={data.navMain} />
       </SidebarContent>
+      {/* Toggle for full width mode, only if not mobile */}
+      {!isMobile && (
+        <div className="flex items-center justify-center py-2 border-t">
+          <Toggle
+            pressed={isFullWidth}
+            onPressedChange={toggleFullWidth}
+            aria-label={isFullWidth ? 'Set to Squared' : 'Set to Full Width'}
+          >
+            {isFullWidth ? 'Cuadrado' : 'Ancho completo'}
+          </Toggle>
+        </div>
+      )}
       <SidebarFooter>
         <NavUser user={data.user} />
       </SidebarFooter>

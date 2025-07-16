@@ -1,25 +1,28 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { SidebarProvider } from "@/components/ui/sidebar/sidebar.tsx";
 import { routes } from '@/routes';
 import { AppSidebar } from '@/components/app-sidebar';
 import MainLayout from '@/components/ui/layout/MainLayout';
 import {SiteHeader} from "@/components/site-header.tsx";
+import { SettingsProvider } from '@/providers/settings/SettingsProvider.tsx';
+import {SidebarProvider} from "@/providers/sidebar/SidebarProvider.tsx";
 
 function App() {
   return (
-    <SidebarProvider>
-      <BrowserRouter>
-        <AppSidebar variant="inset" />
-        <MainLayout>
-          <SiteHeader />
-          <Routes>
-            {routes.map((route, idx) => (
-              <Route key={idx} path={route.path} element={route.element} />
-            ))}
-          </Routes>
-        </MainLayout>
-      </BrowserRouter>
-    </SidebarProvider>
+    <SettingsProvider>
+      <SidebarProvider>
+        <BrowserRouter>
+          <MainLayout>
+            <AppSidebar />
+            <SiteHeader />
+            <Routes>
+              {routes.map((route, idx) => (
+                <Route key={idx} path={route.path} element={route.element} />
+              ))}
+            </Routes>
+          </MainLayout>
+        </BrowserRouter>
+      </SidebarProvider>
+    </SettingsProvider>
   );
 }
 
