@@ -1,28 +1,34 @@
 import { Button } from "@/components/ui/button"
-import { Separator } from "@/components/ui/separator"
-import { SidebarTrigger } from "@/components/ui/sidebar"
+import { SidebarTrigger } from "@/components/ui/sidebar/sidebar.tsx"
+import { Bell, Search as SearchIcon } from "lucide-react"
 
 export function SiteHeader() {
   return (
     <header className="flex h-(--header-height) shrink-0 items-center gap-2 border-b transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-(--header-height)">
       <div className="flex w-full items-center gap-1 px-4 lg:gap-2 lg:px-6">
         <SidebarTrigger className="-ml-1" />
-        <Separator
-          orientation="vertical"
-          className="mx-2 data-[orientation=vertical]:h-4"
-        />
-        <h1 className="text-base font-medium">Documents</h1>
         <div className="ml-auto flex items-center gap-2">
-          <Button variant="ghost" asChild size="sm" className="hidden sm:flex">
-            <a
-              href="https://github.com/shadcn-ui/ui/tree/main/apps/v4/app/(examples)/dashboard"
-              rel="noopener noreferrer"
-              target="_blank"
-              className="dark:text-foreground"
-            >
-              GitHub
-            </a>
+          {/* Icono de notificaciones */}
+          <Button variant="ghost" size="icon" aria-label="Notificaciones">
+            <Bell />
           </Button>
+          {/* Búsqueda */}
+          <div className="relative">
+            <span className="absolute left-2 top-1/2 -translate-y-1/2 text-muted-foreground">
+              <SearchIcon size={16} />
+            </span>
+            <input
+              type="text"
+              placeholder="Buscar"
+              className="pl-8 rounded-md border px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+            />
+          </div>
+          {/* User avatar */}
+          <img
+            src="https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png"
+            alt="User Avatar"
+            className="w-8 h-8 rounded-full object-cover"
+          />
         </div>
       </div>
     </header>
