@@ -1,6 +1,6 @@
 import {cn} from "@/lib/utils.ts";
 import * as React from "react";
-import { useSettings } from '@/providers/settings/SettingsProvider.tsx';
+import {useSettings} from "@/providers/settings/use-settings.ts";
 
 const MainLayout = ({ className, children, ...props }: React.ComponentProps<'main'>) => {
     const { isFullWidth } = useSettings();
