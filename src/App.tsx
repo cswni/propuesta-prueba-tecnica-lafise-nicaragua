@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { SidebarProvider } from "@/components/ui/sidebar/sidebar.tsx";
-import { routes } from './routes/index';
+import { routes } from '@/routes';
 import { AppSidebar } from '@/components/app-sidebar';
 import MainLayout from '@/components/ui/layout/MainLayout';
 import {SiteHeader} from "@/components/site-header.tsx";
