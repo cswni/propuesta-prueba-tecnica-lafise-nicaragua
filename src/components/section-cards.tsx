@@ -2,17 +2,12 @@ import LogoLafise from '@/assets/images/logo-lafise-blanco.svg'
 import LafiseLogoShield from "@/assets/images/logo-lafise-shield.svg"
 const cards = [
   {
-    type: "Credit",
-    bank: "Lafise Bank",
     number: "1234 **** **** 1234",
     holder: "John Doe",
     expiry: "12/26",
-    brand: "Visa",
     color: "bg-gradient-to-r from-[#00593B] to-[#096C4B]",
   },
   {
-    type: "Debit",
-    bank: "Lafise Bank",
     number: "1234 **** **** 5678",
     holder: "Jane Smith",
     expiry: "08/25",
@@ -20,25 +15,20 @@ const cards = [
     color: "bg-gradient-to-r from-[#0B102E] to-[#121741]",
   },
   {
-    type: "Debit",
-    bank: "Lafise Bank",
     number: "1234 **** **** 5678",
     holder: "Jane Smith",
     expiry: "08/25",
     brand: "Mastercard",
     color: "bg-gradient-to-r from-[#1F1F1F] to-[#272727]",
-  },
-  // ...add more cards as needed
+  }
 ]
 
-// Card component for credit/debit cards
 function CreditDebitCard({
   number,
   holder,
   expiry,
   color,
 }: {
-  type: string
   number: string
   holder: string
   expiry: string
