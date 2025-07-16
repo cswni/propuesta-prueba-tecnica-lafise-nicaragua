@@ -4,7 +4,6 @@ import {useSettings} from "@/providers/settings/use-settings.ts";
 
 const MainLayout = ({ className, children, ...props }: React.ComponentProps<'main'>) => {
     const { isFullWidth } = useSettings();
-    // Expect children: [<AppSidebar />, ...content]
     const [sidebar, ...content] = React.Children.toArray(children);
     return (
         <main

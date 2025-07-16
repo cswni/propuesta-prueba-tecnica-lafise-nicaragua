@@ -27,8 +27,8 @@ import {
 import {Link} from "react-router-dom";
 import SidebarMenuItem from "@/components/ui/sidebar/SidebarMenuItem.tsx";
 import { Toggle } from '@/components/ui/toggle';
-import { useSettings } from '@/providers/settings/SettingsProvider.tsx';
 import { useIsMobile } from '@/hooks/use-mobile';
+import {useSettings} from "@/providers/settings/use-settings.ts";
 
 type SidebarData = {
   user: {
