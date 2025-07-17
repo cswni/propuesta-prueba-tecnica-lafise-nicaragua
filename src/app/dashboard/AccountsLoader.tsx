@@ -41,7 +41,6 @@ const AccountsLoader = () => {
     });
   };
 
-  // Reset loadedAccounts if accountIds change
   useEffect(() => {
     setLoadedAccounts({});
   }, [accountIds]);
