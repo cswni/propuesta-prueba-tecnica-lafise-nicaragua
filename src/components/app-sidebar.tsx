@@ -28,6 +28,8 @@ import SidebarMenuItem from "@/components/ui/sidebar/SidebarMenuItem.tsx";
 import { Toggle } from '@/components/ui/toggle';
 import { useIsMobile } from '@/hooks/use-mobile';
 import {useSettings} from "@/providers/settings/use-settings.ts";
+import { ExchangeRate } from '@/components/exchange-rate';
+import { ServerInfo } from '@/components/server-info';
 
 type SidebarData = {
   user: {
@@ -129,7 +131,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
 
       <SidebarFooter>
-        {/* Toggle for full width mode, only if not mobile */}
+        <div className="space-y-4 p-1">
+          <ExchangeRate />
+          <ServerInfo />
+        </div>
+
+        {/* Esto es una implementacion para que la vista considere las dimensiones del archivo en Figma */}
         {!isMobile && (
             <div className="flex items-center justify-center py-2 border-t">
               <Toggle
