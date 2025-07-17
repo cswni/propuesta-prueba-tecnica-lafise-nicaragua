@@ -33,3 +33,51 @@ Desarrollar una aplicación web en React basada en un diseño predefinido y cons
 
 ## Mock API:
 * https://github.com/lafise/mobile-frontend-challenge-mock
+
+---
+
+## 🚀 Instrucciones de Instalación (Web)
+
+1. **Clona el repositorio:**
+   ```bash
+   git clone https://github.com/cswni/propuesta-prueba-tecnica-lafise-nicaragua
+   cd propuesta-prueba-tecnica-lafise-nicaragua
+   ```
+
+2. **Instala las dependencias:**
+   ```bash
+   npm install
+   # o
+   yarn install
+   ```
+
+3. **Configura las variables de entorno:**
+   - Crea un archivo `.env` en la raíz del proyecto y copia el siguiente template:
+
+   ```env
+   VITE_USER_ID_MOCK=1134948394
+   VITE_URL_API=http://localhost:5566/
+   ```
+   - Ajusta los valores según tu entorno o los datos de la API mock. En este caso levantar el servidor Mock sugerido para la prueba.
+
+4. **Inicia la aplicación:**
+   ```bash
+   npm run dev
+   # o
+   yarn dev
+   ```
+
+5. **Abre en tu navegador:**
+   - Visita [http://localhost:5173](http://localhost:5173) (o el puerto indicado en la terminal).
+
+---
+
+## 🛠️ Template de .env
+
+```env
+# ID de usuario mock para pruebas
+VITE_USER_ID_MOCK=1134948394
+
+# URL base de la API mock
+VITE_URL_API=http://localhost:5566/
+```
