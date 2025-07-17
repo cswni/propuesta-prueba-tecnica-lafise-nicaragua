@@ -2,38 +2,22 @@ import { toast } from "sonner"
 import NicaraguaFlag from '@/assets/images/flags/nicaragua-flag.svg'
 import UsaFlag from '@/assets/images/flags/usa-flag.svg'
 import CopyIcon from '@/assets/images/icons/copy.svg'
+import { useSelector } from 'react-redux'
 
-const accounts = [
-  {
-    title: "NIO Cuenta",
-    accountNumber: "10424667",
-    balance: "C$ 38,456",
-    flag: NicaraguaFlag,
-    currency: "NIO"
-  },
-  {
-    title: "USD Cuenta",
-    accountNumber: "10239849",
-    balance: "USD 22,380",
-    flag: UsaFlag,
-    currency: "USD"
-  },
-  {
-    title: "USD Cuenta",
-    accountNumber: "10635657",
-    balance: "USD 12,400",
-    flag: UsaFlag,
-    currency: "USD"
-  }
-]
+const flagByCurrency: Record<string, string> = {
+  NIO: NicaraguaFlag,
+  USD: UsaFlag,
+}
 
 function AccountCard({
+  id,
   title,
   accountNumber,
   balance,
   flag: FlagIcon,
   currency
 }: {
+  id: string
   title: string
   accountNumber: string
   balance: string
@@ -42,7 +26,6 @@ function AccountCard({
 }) {
   const handleCopyAccountNumber = () => {
     navigator.clipboard.writeText(accountNumber)
-
     toast.success("Banco Lafise", {
       description: "Número de cuenta copiado: " + accountNumber,
     })
@@ -58,14 +41,12 @@ function AccountCard({
           className="w-12 h-12 rounded-full"
         />
       </div>
-      
       {/* Card content */}
       <div className="flex flex-col justify-between h-full gap-4">
         {/* Title */}
         <div className="font-bold text-gray-900 text-lg">
           {title}
         </div>
-        
         <div className="flex items-center gap-2">
           <span className="bg-green-100 text-green-800 text-sm font-medium px-3 py-1 rounded-md">
             {accountNumber}
@@ -82,7 +63,6 @@ function AccountCard({
             />
           </button>
         </div>
-        
         {/* Balance */}
         <div className="font-bold text-gray-900 text-xl">
           {balance}
@@ -93,10 +73,42 @@ function AccountCard({
 }
 
 export function SectionAccounts() {
+  const user = useSelector((state: any) => state.user.data)
+  // Example: fetch account details from user.products
+  const accounts = (user?.products || [])
+    .filter((p: any) => p.type === 'Account')
+    .map((p: any) => {
+      const currency = p.currency || 'NIO';
+      let balance = p.balance ? `${currency} ${p.balance}` : '';
+      if (!balance || balance === `${currency} `) {
+        balance = currency === 'USD' ? 'USD 1,000' : 'C$ 10,000';
+      }
+      return {
+        id: p.id,
+        title: `${currency} ${p.id}`,
+        accountNumber: p.id,
+        balance,
+        flag: flagByCurrency[currency] || NicaraguaFlag,
+        currency,
+      };
+    })
+
+  // Add a third mocked account if less than 3
+  if (accounts.length < 3) {
+    accounts.push({
+      id: 'MOCKED-123456',
+      title: 'USD MOCKED-123456',
+      accountNumber: 'MOCKED-123456',
+      balance: 'USD 5,000',
+      flag: UsaFlag,
+      currency: 'USD',
+    })
+  }
+
   return (
     <div className="grid grid-cols-1 gap-4 px-4 lg:px-6 @xl/main:grid-cols-2 @5xl/main:grid-cols-3">
-      {accounts.map((account, idx) => (
-        <AccountCard key={idx} {...account} />
+      {accounts.map((account: any, idx: number) => (
+        <AccountCard key={account.id} {...account} />
       ))}
     </div>
   )

@@ -6,6 +6,7 @@ import {SiteHeader} from "@/components/site-header.tsx";
 import { SettingsProvider } from '@/providers/settings/SettingsProvider.tsx';
 import {SidebarProvider} from "@/providers/sidebar/SidebarProvider.tsx";
 import {Toaster} from "@/components/ui/sonner.tsx";
+import { TransactionsList } from './app/transactions/TransactionList'
 
 function App() {
   return (

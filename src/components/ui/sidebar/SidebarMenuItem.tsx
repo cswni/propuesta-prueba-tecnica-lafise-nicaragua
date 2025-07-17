@@ -9,7 +9,7 @@ export type SidebarMenuItemProps = React.ComponentProps<'li'> & {
 };
 
 const SidebarMenuItem = (props: SidebarMenuItemProps) => {
-  const {className, showRightArrow = false, avoidActive = false, children  } = props;
+  const {className, showRightArrow = false, avoidActive = false, children, ...rest  } = props;
   const location = useLocation();
   
   // Verificar la ruta activa
@@ -29,7 +29,7 @@ const SidebarMenuItem = (props: SidebarMenuItemProps) => {
         isActive && !avoidActive && 'bg-[var(--base-soft-green)]',
         className
       )}
-      {...props}
+      {...rest}
     >
       {children}
       {showRightArrow && (
