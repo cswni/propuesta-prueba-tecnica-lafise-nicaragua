@@ -288,7 +288,7 @@ export function TransactionsList() {
                             key={row.id}
                             row={row}
                             // Add onClick to the row
-                            // @ts-ignore
+                            // @ts-expect-error No error in this case
                             onClick={() => handleRowClick(row)}
                           />
                         ))}

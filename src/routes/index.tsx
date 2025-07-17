@@ -2,6 +2,7 @@ import { Navigate } from 'react-router-dom';
 import DashboardPage from '../app/dashboard/index';
 import TransactionsPage from "@/app/transactions";
 import WorkingProgress from '@/components/WorkingProgress';
+import TransferWizardPage from '@/app/transfer/TransferWizardPage';
 
 export const routes = [
   {
@@ -14,10 +15,7 @@ export const routes = [
   },
   {
     path: '/transferir',
-    element: <WorkingProgress 
-      title="Transferir" 
-      description="Próximamente podrás realizar transferencias de forma rápida y segura." 
-    />
+    element: <TransferWizardPage/>
   },
   {
     path: '/pagar',
