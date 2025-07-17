@@ -1,6 +1,4 @@
-import React from 'react';
-
-export function StepCuentaDestino({ formData, onChange }: any) {
+export function StepCuentaDestino() {
   return (
     <div>
       <h2 className="text-xl font-bold mb-4">Cuenta destino</h2>

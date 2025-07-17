@@ -1,6 +1,4 @@
-import React from 'react';
-
-export function StepMontoTransferir({ formData, onChange }: any) {
+export function StepMontoTransferir() {
   return (
     <div>
       <h2 className="text-xl font-bold mb-4">Monto a transferir</h2>

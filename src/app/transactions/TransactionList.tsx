@@ -99,7 +99,7 @@ const columns: ColumnDef<z.infer<typeof TransactionsSchema>>[] = [
   },
 ]
 
-function DraggableRow({ row }: { row: Row<z.infer<typeof schema>> }) {
+function DraggableRow({ row }: { row: Row<z.infer<typeof TransactionsSchema>> }) {
   const { transform, transition, setNodeRef, isDragging } = useSortable({
     id: row.original.id,
   })
@@ -406,7 +406,7 @@ export function TransactionsList() {
   )
 }
 
-function TableCellViewer({ item, onOpen }: { item: z.infer<typeof schema>, onOpen: () => void }) {
+function TableCellViewer({ item, onOpen }: { item: z.infer<typeof TransactionsSchema>, onOpen: () => void }) {
   const isMobile = useIsMobile()
   const [open, setOpen] = React.useState(false)
 
