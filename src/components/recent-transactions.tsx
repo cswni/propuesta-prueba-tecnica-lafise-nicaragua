@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 
@@ -18,7 +17,7 @@ export function RecentTransactions({ transactions }: RecentTransactionsProps) {
   const recentTransactions = transactions.slice(0, 3);
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 p-4 md:p-6 rounded-sm">
       <div className="flex items-center justify-between">
         <h3 className="text-lg font-semibold">Transacciones recientes</h3>
         <Link
@@ -28,7 +27,7 @@ export function RecentTransactions({ transactions }: RecentTransactionsProps) {
           Ver todas
         </Link>
       </div>
-      <div className="rounded-lg border bg-white">
+      <div className="rounded-sm border bg-white">
         <Table>
           <TableHeader>
             <TableRow>

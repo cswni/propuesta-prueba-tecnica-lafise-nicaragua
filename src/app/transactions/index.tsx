@@ -1,6 +1,6 @@
-import { DataTable } from '@/components/data-table';
 import transactions from '@/app/dashboard/data.json';
 import HeadingLine from '@/components/ui/heading-line';
+import {TransactionsList} from "@/app/transactions/TransactionList.tsx";
 const TransactionsPage = () => {
     return (
 
@@ -8,7 +8,7 @@ const TransactionsPage = () => {
                 <div className="@container/main flex flex-1 flex-col gap-2">
                     <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
             <HeadingLine text={'Mis transacciones'} />
-            <DataTable data={transactions} />
+            <TransactionsList data={transactions} />
                     </div>
                 </div>
             </div>

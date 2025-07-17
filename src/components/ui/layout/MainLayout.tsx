@@ -27,7 +27,7 @@ const MainLayout = ({ className, children, ...props }: React.ComponentProps<'mai
             <main
                 data-slot="sidebar-inset"
                 className={cn(
-                    'bg-background relative flex flex-1 flex-row h-full',
+                    'bg-background relative flex flex-1 flex-row h-full pb-10',
                     'w-full',
                     className
                 )}
