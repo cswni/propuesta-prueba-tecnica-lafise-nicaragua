@@ -1,5 +1,6 @@
 import { Navigate } from 'react-router-dom';
 import DashboardPage from '../app/dashboard/index';
+import TransactionsPage from "@/app/transactions";
 
 export const routes = [
   {
@@ -9,6 +10,10 @@ export const routes = [
   {
     path: '/dashboard',
     element: <DashboardPage />
+  },
+  {
+    path: '/transacciones',
+    element: <TransactionsPage />
   }
 ];
 

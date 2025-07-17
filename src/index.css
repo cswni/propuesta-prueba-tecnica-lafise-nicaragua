@@ -6,6 +6,7 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
+  --green: oklch(0.564 0.089 164.585);
   --base-color: oklch(0.145 0 0);
   --base-soft-green: oklch(0.963 0.009 171.799);
   --base-soft-green-opacity: oklch(0.963 0.009 171.799 / 0.17);
