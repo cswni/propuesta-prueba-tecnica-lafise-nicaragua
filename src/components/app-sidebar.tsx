@@ -54,52 +54,52 @@ const data: SidebarData = {
   navMain: [
     {
       title: 'Tablero',
-      url: '#',
+      url: '/dashboard',
       svg: Tablero
     },
     {
       title: 'Transferir',
-      url: '#',
+      url: '/transferir',
       svg: Transferir
     },
     {
       title: 'Pagar',
-      url: '#',
+      url: '/pagar',
       svg: Pagar
     },
     {
       title: 'Mis transacciones',
-      url: '#',
+      url: '/transacciones',
       svg: Mistransacciones,
     },
     {
       title: 'Gestionar',
-      url: '#',
+      url: '/gestionar',
       svg: Gestionar,
     },
     {
       title: 'Cheques',
-      url: '#',
+      url: '/cheques',
       svg: Cheque,
     },
     {
       title: 'Paganet',
-      url: '#',
+      url: '/paganet',
       svg: Paganet,
     },
     {
       title: 'Administrar',
-      url: '#',
+      url: '/administrar',
       svg: Administrar,
     },
     {
       title: 'Ahorro automático',
-      url: '#',
+      url: '/ahorro',
       svg: Ahorro,
     },
     {
       title: 'Configuración',
-      url: '#',
+      url: '/configuracion',
       svg: Configuracion,
     },
   ]
@@ -115,7 +115,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
-            <Link to="#">
+            <Link to="/dashboard">
               <img
                   className="w-auto mx-auto"
                   src={LogoLafise}
