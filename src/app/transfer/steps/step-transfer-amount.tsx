@@ -7,12 +7,10 @@ import { useGetAccountQuery } from '@/store/services/api';
 import { useSelector } from 'react-redux';
 
 export function StepTransferAmount({ getError }: { getError?: (field: string) => string | undefined }) {
-  const { control, watch, setError, clearErrors, setValue } = useFormContext();
+  const { control, watch, setError, clearErrors } = useFormContext();
   const monto = watch('monto') || '';
   const cuentaOrigenId = watch('cuentaOrigenId') || '';
   const cuentaDestinoId = watch('cuentaDestinoId') || '';
-  const cuentaOrigenLabel = watch('cuentaOrigenLabel') || '-';
-  const cuentaDestinoLabel = watch('cuentaDestinoLabel') || '-';
   const error = getError ? getError('monto') : undefined;
 
   // Redux fallback
