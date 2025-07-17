@@ -2,7 +2,6 @@ import { SectionCards } from '@/components/section-cards';
 import { SectionAccounts } from '@/components/section-accounts';
 import HeadingLine from "@/components/ui/heading-line.tsx";
 import { RecentTransactions } from '@/components/recent-transactions';
-import transactions from './transactions.json';
 
 const DashboardPage = () => {
   return (
@@ -13,7 +12,7 @@ const DashboardPage = () => {
                 <SectionCards />
               <HeadingLine text={'Cuentas'}  />
                 <SectionAccounts />
-              <RecentTransactions transactions={transactions} />
+              <RecentTransactions accountId={import.meta.env.VITE_USER_ID_MOCK} />
           </div>
         </div>
       </div>
