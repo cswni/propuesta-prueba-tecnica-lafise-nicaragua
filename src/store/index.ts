@@ -9,11 +9,9 @@ const userSlice = createSlice({
   reducers: {
     setUser: (state, action) => {
       state.data = action.payload;
-      console.log('[userSlice/setUser] data:', state.data, 'accounts:', state.accounts);
     },
     setUserAccounts: (state, action) => {
       state.accounts = action.payload;
-      console.log('[userSlice/setUserAccounts] accounts:', state.accounts);
     },
   },
 })
