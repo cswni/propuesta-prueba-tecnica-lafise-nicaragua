@@ -15,11 +15,10 @@ const SidebarMenuItem: React.FC<SidebarMenuItemProps> = ({
 }) => {
   const location = useLocation();
   
-  // Check if any child Link is active
+  // Verificar la ruta activa
   const isActive = React.Children.toArray(children).some(child => {
-    if (React.isValidElement(child) && child.type === 'a') {
-      // Check for React Router Link component
-      return (child.props as { to?: string }).to === location.pathname;
+    if (React.isValidElement(child) && 'to' in (child.props as any)) {
+      return (child.props as any).to === location.pathname;
     }
     return false;
   });
@@ -30,7 +29,7 @@ const SidebarMenuItem: React.FC<SidebarMenuItemProps> = ({
       data-sidebar="menu-item"
       className={cn(
         'hover:bg-[var(--base-soft-green)] hover:cursor-pointer group/menu-item py-2 px-1 relative font-semibold min-h-[48px]',
-        isActive && 'bg-[var(--base-soft-green)] cursor-pointer',
+        isActive && 'bg-[var(--base-soft-green)]',
         className
       )}
       {...props}
