@@ -33,6 +33,7 @@ const axiosBaseQuery =
 export const api = createApi({
   reducerPath: 'api',
   baseQuery: axiosBaseQuery({ baseUrl: 'http://localhost:5566/' }),
+  tagTypes: ['Transactions'],
   endpoints: (builder) => ({
     getUser: builder.query<any, string>({
       query: (userId) => ({ url: `users/${userId}` }),
@@ -42,6 +43,9 @@ export const api = createApi({
     }),
     getAccountTransactions: builder.query<any, string>({
       query: (accountId) => ({ url: `accounts/${accountId}/transactions` }),
+      providesTags: (result, error, accountId) => [
+        { type: 'Transactions', id: accountId },
+      ],
     }),
     createTransaction: builder.mutation<any, any>({
       query: (transaction) => ({
@@ -49,6 +53,9 @@ export const api = createApi({
         method: 'post',
         data: transaction,
       }),
+      invalidatesTags: (result, error, arg) => [
+        { type: 'Transactions', id: arg.origin },
+      ],
     }),
   }),
 })

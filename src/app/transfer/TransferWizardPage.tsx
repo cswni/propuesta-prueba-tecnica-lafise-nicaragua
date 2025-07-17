@@ -10,9 +10,9 @@ import { useForm, FormProvider } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useCreateTransactionMutation } from '@/store/services/api';
-import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import { toast } from 'sonner';
 
 // Zod schema for POST /transactions
 const transferSchema = z.object({
@@ -26,6 +26,8 @@ const transferSchema = z.object({
   confirmation: z.string().optional(),
   cuentaOrigenLabel: z.string().optional(),
   cuentaDestinoLabel: z.string().optional(),
+  cuentaOrigenBalance: z.string().optional(), 
+  cuentaOrigenCurrency: z.string().optional(),
 });
 
 type TransferFormType = z.infer<typeof transferSchema>;
@@ -38,7 +40,7 @@ const stepDefs: StepDef[] = [
 ];
 
 const stepFieldMap = [
-  ['cuentaOrigenId'],
+  ['cuentaOrigenId', 'cuentaOrigenBalance', 'cuentaOrigenCurrency'],
   ['cuentaDestinoId'],
   ['monto'],
   ['transactionType', 'debitConcept', 'creditConcept', 'reference', 'confirmation'],
@@ -62,11 +64,18 @@ export default function TransferWizardPage() {
     steps,
   } = useStepper(stepDefs);
   const StepComponent = step.component;
-  const [createTransaction, { isLoading, isSuccess, error }] = useCreateTransactionMutation();
+  const [createTransaction, { isLoading }] = useCreateTransactionMutation();
   const { formState } = methods;
 
-  console.log('Rendering step', currentStep, step);
-  console.log('Registered fields:', Object.keys(methods.getValues()));
+  const monto = methods.watch('monto');
+  const cuentaOrigenBalance = Number(methods.watch('cuentaOrigenBalance') || 0);
+  let disableContinue = false;
+  if (currentStep === 2) { // StepMontoTransferir es el paso 2
+    const value = Number(monto);
+    if (value > cuentaOrigenBalance) {
+      disableContinue = true;
+    }
+  }
 
   async function onStepSubmit(data: TransferFormType) {
     const fields = stepFieldMap[currentStep];
@@ -91,9 +100,13 @@ export default function TransferWizardPage() {
       reference: data.reference,
       confirmation: data.confirmation,
     };
-    await createTransaction(payload);
-    methods.reset();
-    setShowModal(true);
+    try {
+      await createTransaction(payload).unwrap();
+      methods.reset();
+      setShowModal(true);
+    } catch (err: any) {
+      toast.error('Ocurrió un error al realizar la transferencia.');
+    }
   }
 
   const getError = (field: keyof TransferFormType) => {
@@ -111,7 +124,7 @@ export default function TransferWizardPage() {
         <FormProvider {...methods}>
           <form onSubmit={methods.handleSubmit(onStepSubmit)}>
             <div className="p-6">
-              <StepComponent key={currentStep} getError={getError} />
+              <StepComponent key={currentStep} getError={getError} disableContinue={disableContinue} />
             </div>
             <div className="flex justify-center gap-4 my-8">
               <Button
@@ -127,14 +140,14 @@ export default function TransferWizardPage() {
                 type="submit"
                 onClick={() => console.log('Submit button clicked')}
                 className="h-10 px-6 bg-[var(--green)] text-white font-medium text-base hover:bg-[var(--green)]/90"
-                disabled={isLoading}
+                disabled={isLoading || disableContinue}
               >
                 {isLastStep ? 'Enviar' : 'Continuar'}
               </Button>
             </div>
           </form>
         </FormProvider>
-        {/* Fancy Modal for Success */}
+        {/* Modal de confirmación */}
         {showModal && (
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-[var(--green)]/50">
             <div className="bg-white rounded-xl shadow-2xl p-8 max-w-md w-full text-center animate-fade-in">

@@ -1,13 +1,33 @@
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { useFormContext, Controller } from 'react-hook-form';
+import { toast } from 'sonner';
+import { useEffect } from 'react';
 
 export function StepMontoTransferir({ getError }: { getError?: (field: string) => string | undefined }) {
-  const { control, watch } = useFormContext();
+  const { control, watch, setError, clearErrors } = useFormContext();
   const monto = watch('monto') || '';
+  const cuentaOrigenBalance = Number(watch('cuentaOrigenBalance') || 0);
+  const cuentaOrigenCurrency = watch('cuentaOrigenCurrency') || 'NIO';
   const cuentaOrigenLabel = watch('cuentaOrigenLabel') || '-';
   const cuentaDestinoLabel = watch('cuentaDestinoLabel') || '-';
   const error = getError ? getError('monto') : undefined;
+
+  const placeholder = `Ingrese el monto (Max: ${cuentaOrigenCurrency} ${cuentaOrigenBalance})`;
+
+  useEffect(() => {
+    if (!monto) {
+      clearErrors('monto');
+      return;
+    }
+    const value = Number(monto);
+    if (value > cuentaOrigenBalance) {
+      setError('monto', { type: 'manual', message: `El monto excede el saldo disponible (${cuentaOrigenCurrency} ${cuentaOrigenBalance})` });
+      toast.error('El monto excede el saldo disponible de la cuenta de origen.');
+    } else {
+      clearErrors('monto');
+    }
+  }, [monto, cuentaOrigenBalance, cuentaOrigenCurrency, setError, clearErrors]);
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start mt-2 bg-gray-50 p-6 border-y-2">
@@ -23,7 +43,7 @@ export function StepMontoTransferir({ getError }: { getError?: (field: string) =
               step="0.01"
               value={field.value || ''}
               onChange={field.onChange}
-              placeholder="Ingrese el monto"
+              placeholder={placeholder}
               className="border rounded-sm px-3 py-6 h-10 text-sm bg-white w-full"
             />
           )}

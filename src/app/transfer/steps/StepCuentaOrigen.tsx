@@ -2,6 +2,8 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useSelector } from 'react-redux';
 import { useFormContext, Controller } from 'react-hook-form';
+import {useGetAccountQuery} from "@/store/services/api.ts";
+import {useEffect} from "react";
 
 export function StepCuentaOrigen({ getError }: { getError?: (field: string) => string | undefined }) {
   const user = useSelector((state: any) => state.user.data);
@@ -18,9 +20,18 @@ export function StepCuentaOrigen({ getError }: { getError?: (field: string) => s
   const cuentaOrigenId = watch('cuentaOrigenId') || '';
   const cuentaOrigenLabel = watch('cuentaOrigenLabel') || '';
   const cuentaOrigenBalance = watch('cuentaOrigenBalance') || 'C$ 10,000';
+  const cuentaOrigenCurrency = watch('cuentaOrigenCurrency') || 'NIO';
   const error = getError ? getError('cuentaOrigenId') : undefined;
 
-  console.log('Watch', getValues() );
+  // Fetch account details when cuentaOrigenId changes
+  const { data: accountData } = useGetAccountQuery(cuentaOrigenId, { skip: !cuentaOrigenId });
+
+  useEffect(() => {
+    if (accountData) {
+      setValue('cuentaOrigenBalance', accountData.balance?.toString() || '0');
+      setValue('cuentaOrigenCurrency', accountData.currency || 'NIO');
+    }
+  }, [accountData, setValue]);
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start mt-2 bg-gray-50 p-6 border-y-2">
@@ -36,8 +47,7 @@ export function StepCuentaOrigen({ getError }: { getError?: (field: string) => s
                 field.onChange(v);
                 const acc = accounts.find((a: any) => a.id === v);
                 setValue('cuentaOrigenLabel', acc?.label || '');
-                setValue('cuentaOrigenBalance', acc?.balance || 'C$ 10,000');
-                field.onBlur(); // <-- This is the key!
+                field.onBlur();
               }}
             >
               <SelectTrigger className="border rounded-sm px-3 py-6 h-10 text-sm bg-white w-full">
