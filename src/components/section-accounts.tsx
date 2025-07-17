@@ -10,17 +10,19 @@ const flagByCurrency: Record<string, string> = {
 }
 
 function AccountCard({
-  title,
+  alias,
   accountNumber,
   balance,
   flag: FlagIcon,
-  currency
+  currency,
+  id
 }: {
-  title: string
+  alias?: string
   accountNumber: string
-  balance: string
+  balance: string | number
   flag: string
   currency: string
+  id: string | number
 }) {
   const handleCopyAccountNumber = () => {
     navigator.clipboard.writeText(accountNumber)
@@ -41,10 +43,11 @@ function AccountCard({
       </div>
       {/* Card content */}
       <div className="flex flex-col justify-between h-full gap-4">
-        {/* Title */}
+        {/* Alias or fallback title */}
         <div className="font-bold text-gray-900 text-lg">
-          {title}
+          {alias || `${currency} ${id}`}
         </div>
+        {/* Account number */}
         <div className="flex items-center gap-2">
           <span className="bg-green-100 text-green-800 text-sm font-medium px-3 py-1 rounded-md">
             {accountNumber}
@@ -63,7 +66,7 @@ function AccountCard({
         </div>
         {/* Balance */}
         <div className="font-bold text-gray-900 text-xl">
-          {balance}
+          {currency} {balance}
         </div>
       </div>
     </div>
@@ -71,43 +74,42 @@ function AccountCard({
 }
 
 export function SectionAccounts() {
-  const user = useSelector((state: any) => state.user.data)
-  // Example: fetch account details from user.products
-  const accounts = (user?.products || [])
-    .filter((p: any) => p.type === 'Account')
-    .map((p: any) => {
-      const currency = p.currency || 'NIO';
-      let balance = p.balance ? `${currency} ${p.balance}` : '';
-      if (!balance || balance === `${currency} `) {
-        balance = currency === 'USD' ? 'USD 1,000' : 'C$ 10,000';
-      }
-      return {
-        id: p.id,
-        title: `${currency} ${p.id}`,
-        accountNumber: p.id,
-        balance,
-        flag: flagByCurrency[currency] || NicaraguaFlag,
-        currency,
-      };
-    })
+  const userSlice = useSelector((state: any) => state.user);
+  const accounts = userSlice.accounts || [];
 
-  // Add a third mocked account if less than 3
+  console.log('SectionAccounts Redux:', userSlice);
+
+  console.log(accounts)
+
+  // Add a third mocked account if less than 3 (optional, for demo)
+  let displayAccounts = accounts;
   if (accounts.length < 3) {
-    accounts.push({
-      id: 'MOCKED-123456',
-      title: 'USD MOCKED-123456',
-      accountNumber: 'MOCKED-123456',
-      balance: 'USD 5,000',
-      flag: UsaFlag,
-      currency: 'USD',
-    })
+    displayAccounts = [
+      ...accounts,
+      {
+        id: 'MOCKED-123456',
+        alias: 'Cuenta Mock',
+        accountNumber: 'MOCKED-123456',
+        balance: '5,000',
+        flag: UsaFlag,
+        currency: 'USD',
+      },
+    ];
   }
 
   return (
     <div className="grid grid-cols-1 gap-4 px-4 lg:px-6 @xl/main:grid-cols-2 @5xl/main:grid-cols-3">
-      {accounts.map((account: any) => (
-        <AccountCard key={account.id} {...account} />
+      {displayAccounts.map((account: any) => (
+        <AccountCard
+          key={account.id}
+          alias={account.alias}
+          accountNumber={account.id?.toString()}
+          balance={account.balance}
+          flag={flagByCurrency[account.currency] || NicaraguaFlag}
+          currency={account.currency}
+          id={account.id}
+        />
       ))}
     </div>
-  )
+  );
 } 

@@ -5,21 +5,27 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const userSlice = createSlice({
   name: 'user',
-  initialState: { data: null },
+  initialState: { data: null, accounts: [] },
   reducers: {
     setUser: (state, action) => {
-      state.data = action.payload
+      state.data = action.payload;
+      console.log('[userSlice/setUser] data:', state.data, 'accounts:', state.accounts);
+    },
+    setUserAccounts: (state, action) => {
+      state.accounts = action.payload;
+      console.log('[userSlice/setUserAccounts] accounts:', state.accounts);
     },
   },
 })
 
-export const { setUser } = userSlice.actions
+export const { setUser, setUserAccounts } = userSlice.actions
 
 export const store = configureStore({
   reducer: {
     [api.reducerPath]: api.reducer,
     user: userSlice.reducer,
   },
+  devTools: true,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(api.middleware),
 })
