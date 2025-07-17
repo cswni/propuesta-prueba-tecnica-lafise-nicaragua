@@ -125,9 +125,6 @@
     font-family: "Poppins", sans-serif;
   }
 
-  /*
-  Set the scrollbar styles for the entire application and apply color base and 5px width
-  */
   ::-webkit-scrollbar {
     width: 8px;
     height: 8px;
@@ -137,7 +134,6 @@
     border-radius: 4px;
   }
   ::-webkit-scrollbar-track {
-    /*Add a darker mode using --base-soft-green*/
     background: var(--base-soft-green-opacity);
   }
   html, body {
