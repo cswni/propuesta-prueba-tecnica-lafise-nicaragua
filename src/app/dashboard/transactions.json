@@ -1,0 +1,44 @@
+[
+  {
+    "id": 1,
+    "fecha": "14/11/2021",
+    "descripcion": "Walmart",
+    "debitoUSD": 320.00,
+    "balanceUSD": 2100
+  },
+  {
+    "id": 2,
+    "fecha": "12/11/2021",
+    "descripcion": "Hugo Delivery",
+    "debitoUSD": 12.45,
+    "balanceUSD": 2100
+  },
+  {
+    "id": 3,
+    "fecha": "14/Nov/2021",
+    "descripcion": "Walmart Carretera Masaya",
+    "debitoUSD": 320.00,
+    "balanceUSD": 2100
+  },
+  {
+    "id": 4,
+    "fecha": "10/11/2021",
+    "descripcion": "Gasolina Shell",
+    "debitoUSD": 45.80,
+    "balanceUSD": 2100
+  },
+  {
+    "id": 5,
+    "fecha": "08/11/2021",
+    "descripcion": "Restaurante La Terraza",
+    "debitoUSD": 78.50,
+    "balanceUSD": 2100
+  },
+  {
+    "id": 6,
+    "fecha": "05/11/2021",
+    "descripcion": "Farmacia San José",
+    "debitoUSD": 23.75,
+    "balanceUSD": 2100
+  }
+] 
