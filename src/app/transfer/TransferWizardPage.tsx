@@ -45,13 +45,6 @@ const stepFieldMap = [
 ];
 
 export default function TransferWizardPage() {
-  useEffect(() => {
-    const handler = (e: Event) => {
-      console.log('Global submit event', e);
-    };
-    window.addEventListener('submit', handler, true);
-    return () => window.removeEventListener('submit', handler, true);
-  }, []);
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
   const methods = useForm<TransferFormType>({
@@ -76,11 +69,9 @@ export default function TransferWizardPage() {
   console.log('Registered fields:', Object.keys(methods.getValues()));
 
   async function onStepSubmit(data: TransferFormType) {
-    console.log('Submitting step:', currentStep, data);
     const fields = stepFieldMap[currentStep];
     // Restore per-step validation
     const valid = await methods.trigger(fields as any);
-    console.log('Trigger fields:', fields, 'Valid:', valid, 'Errors:', methods.formState.errors, 'Values:', methods.getValues());
     if (!valid) return;
     if (!isLastStep) {
       nextStep();
@@ -123,11 +114,6 @@ export default function TransferWizardPage() {
               <StepComponent key={currentStep} getError={getError} />
             </div>
             <div className="flex justify-center gap-4 my-8">
-              {Object.keys(formState.errors).length > 0 && (
-                <pre style={{ color: 'red' }}>
-                  {JSON.stringify(formState.errors, null, 2)}
-                </pre>
-              )}
               <Button
                 type="button"
                 variant="outline"
@@ -137,25 +123,15 @@ export default function TransferWizardPage() {
               >
                 Atrás
               </Button>
-              {/* <Button
+              <Button
                 type="submit"
                 onClick={() => console.log('Submit button clicked')}
                 className="h-10 px-6 bg-[var(--green)] text-white font-medium text-base hover:bg-[var(--green)]/90"
                 disabled={isLoading}
               >
                 {isLastStep ? 'Enviar' : 'Continuar'}
-              </Button> */}
-              <button
-                type="submit"
-                onClick={() => console.log('Submit button clicked')}
-                className="h-10 px-6 bg-[var(--green)] text-white font-medium text-base hover:bg-[var(--green)]/90"
-                disabled={isLoading}
-              >
-                {isLastStep ? 'Enviar' : 'Continuar'}
-              </button>
+              </Button>
             </div>
-            {isSuccess && <div className="text-green-600 text-center">¡Transferencia realizada con éxito!</div>}
-            {/*{error && <div className="text-red-600 text-center">Ocurrió un error al realizar la transferencia.</div>}*/}
           </form>
         </FormProvider>
         {/* Fancy Modal for Success */}
