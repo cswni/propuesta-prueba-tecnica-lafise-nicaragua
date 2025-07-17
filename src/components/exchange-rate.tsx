@@ -47,7 +47,7 @@ export function ExchangeRate() {
         </div>
 
         {/* Exchange Rate Display */}
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between border-b">
           <div className="text-sm font-medium">
             NIO: 35.1
           </div>

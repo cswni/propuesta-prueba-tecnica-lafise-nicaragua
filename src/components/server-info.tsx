@@ -1,7 +1,7 @@
 export function ServerInfo() {
   return (
       <>
-          <div className={'mx-auto w-full text-center flex flex-col items-center'}>
+          <div className={'mx-auto w-full text-center flex flex-col items-center mt-10'}>
         <div className="flex items-center gap-2 text-sm">
           <span>IP del Servidor:</span>
           <span className="font-medium">190.432.574.23</span>
