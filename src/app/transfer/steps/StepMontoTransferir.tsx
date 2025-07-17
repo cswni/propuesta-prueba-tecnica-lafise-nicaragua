@@ -3,15 +3,31 @@ import { Input } from '@/components/ui/input';
 import { useFormContext, Controller } from 'react-hook-form';
 import { toast } from 'sonner';
 import { useEffect } from 'react';
+import { useGetAccountQuery } from '@/store/services/api';
+import { useSelector } from 'react-redux';
 
 export function StepMontoTransferir({ getError }: { getError?: (field: string) => string | undefined }) {
-  const { control, watch, setError, clearErrors } = useFormContext();
+  const { control, watch, setError, clearErrors, setValue } = useFormContext();
   const monto = watch('monto') || '';
-  const cuentaOrigenBalance = Number(watch('cuentaOrigenBalance') || 0);
-  const cuentaOrigenCurrency = watch('cuentaOrigenCurrency') || 'NIO';
+  const cuentaOrigenId = watch('cuentaOrigenId') || '';
+  const cuentaDestinoId = watch('cuentaDestinoId') || '';
   const cuentaOrigenLabel = watch('cuentaOrigenLabel') || '-';
   const cuentaDestinoLabel = watch('cuentaDestinoLabel') || '-';
   const error = getError ? getError('monto') : undefined;
+
+  // Redux fallback
+  const user = useSelector((state: any) => state.user.data);
+  const accounts = (user?.products || []).filter((p: any) => p.type === 'Account');
+
+  // API queries
+  const { data: origenData } = useGetAccountQuery(cuentaOrigenId, { skip: !cuentaOrigenId });
+  const { data: destinoData } = useGetAccountQuery(cuentaDestinoId, { skip: !cuentaDestinoId });
+
+  // Use API or fallback to redux for balance/currency
+  const cuentaOrigenCurrency = origenData?.currency || accounts.find((a: any) => a.id === cuentaOrigenId)?.currency || 'NIO';
+  const cuentaOrigenBalance = origenData?.balance ?? accounts.find((a: any) => a.id === cuentaOrigenId)?.balance ?? 0;
+  const cuentaDestinoCurrency = destinoData?.currency || accounts.find((a: any) => a.id === cuentaDestinoId)?.currency || 'NIO';
+  const cuentaDestinoBalance = destinoData?.balance ?? accounts.find((a: any) => a.id === cuentaDestinoId)?.balance ?? '';
 
   const placeholder = `Ingrese el monto (Max: ${cuentaOrigenCurrency} ${cuentaOrigenBalance})`;
 
@@ -31,7 +47,6 @@ export function StepMontoTransferir({ getError }: { getError?: (field: string) =
       clearErrors('monto');
     }
   }, [monto, cuentaOrigenBalance, cuentaOrigenCurrency, setError, clearErrors]);
-
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start mt-2 bg-gray-50 p-6 border-y-2">
@@ -58,9 +73,17 @@ export function StepMontoTransferir({ getError }: { getError?: (field: string) =
         <Label className="font-normal text-sm">Resumen</Label>
         <div className="p-4 bg-white border rounded-md">
           <div className="text-black font-normal text-sm mb-1">Cuenta origen:</div>
-          <div className="font-bold text-base text-[var(--green)]">{cuentaOrigenLabel}</div>
+          <div className="font-bold text-base text-[var(--green)]">
+            {cuentaOrigenId
+              ? `${cuentaOrigenCurrency} ${cuentaOrigenId} (Saldo: ${cuentaOrigenCurrency} ${cuentaOrigenBalance})`
+              : '-'}
+          </div>
           <div className="text-black font-normal text-sm mt-2 mb-1">Cuenta destino:</div>
-          <div className="font-bold text-base text-[var(--green)]">{cuentaDestinoLabel}</div>
+          <div className="font-bold text-base text-[var(--green)]">
+            {cuentaDestinoId
+              ? `${cuentaDestinoCurrency} ${cuentaDestinoId} (Saldo: ${cuentaDestinoCurrency} ${cuentaDestinoBalance || 0})`
+              : '-'}
+          </div>
         </div>
       </div>
     </div>

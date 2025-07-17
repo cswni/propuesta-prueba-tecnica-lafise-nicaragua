@@ -2,6 +2,8 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useSelector } from 'react-redux';
 import { useFormContext, Controller } from 'react-hook-form';
+import { useGetAccountQuery } from '@/store/services/api';
+import { useEffect } from 'react';
 
 export function StepCuentaDestino({ getError }: { getError?: (field: string) => string | undefined }) {
   const user = useSelector((state: any) => state.user.data);
@@ -18,7 +20,24 @@ export function StepCuentaDestino({ getError }: { getError?: (field: string) => 
   const cuentaDestinoId = watch('cuentaDestinoId') || '';
   const cuentaDestinoLabel = watch('cuentaDestinoLabel') || '';
   const cuentaDestinoBalance = watch('cuentaDestinoBalance') || '';
+  const cuentaOrigenId = watch('cuentaOrigenId') || '';
   const error = getError ? getError('cuentaDestinoId') : undefined;
+
+  // Fetch account details from API when cuentaDestinoId changes
+  const { data: accountData } = useGetAccountQuery(cuentaDestinoId, { skip: !cuentaDestinoId });
+
+  useEffect(() => {
+    if (accountData) {
+      setValue('cuentaDestinoBalance', accountData.balance?.toString() || '');
+      setValue('cuentaDestinoLabel', `${accountData.currency || 'NIO'} ${accountData.id}`);
+    } else if (cuentaDestinoId) {
+      // fallback to redux data if API not available
+      const acc = accounts.find((a: any) => a.id === cuentaDestinoId);
+      setValue('cuentaDestinoLabel', acc?.label || '');
+      setValue('cuentaDestinoBalance', acc?.balance || '');
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [accountData, cuentaDestinoId]);
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start mt-2 bg-gray-50 p-6 border-y-2">
@@ -32,10 +51,7 @@ export function StepCuentaDestino({ getError }: { getError?: (field: string) => 
               value={field.value || ''}
               onValueChange={v => {
                 field.onChange(v);
-                const acc = accounts.find((a: any) => a.id === v);
-                setValue('cuentaDestinoLabel', acc?.label || '');
-                setValue('cuentaDestinoBalance', acc?.balance || '');
-                field.onBlur(); // <-- This is the key!
+                field.onBlur();
               }}
             >
               <SelectTrigger className="border rounded-sm px-3 py-6 h-10 text-sm bg-white w-full">
@@ -43,10 +59,13 @@ export function StepCuentaDestino({ getError }: { getError?: (field: string) => 
               </SelectTrigger>
               <SelectContent>
                 {accounts.map((acc: any) => (
-                  <SelectItem key={acc.id} value={acc.id}>
+                  <SelectItem key={acc.id} value={acc.id} disabled={acc.id === cuentaOrigenId}>
                     <div className="flex flex-col">
                       <span className="text-base font-bold text-[var(--green)]">{acc.label}</span>
                       <span className="text-black font-normal text-xs">{acc.balance}</span>
+                      {acc.id === cuentaOrigenId && (
+                        <span className="text-xs text-red-500">No puedes seleccionar la misma cuenta de origen</span>
+                      )}
                     </div>
                   </SelectItem>
                 ))}
@@ -56,12 +75,12 @@ export function StepCuentaDestino({ getError }: { getError?: (field: string) => 
         />
         {error && <span className="text-red-600 text-xs mt-1">{error}</span>}
       </div>
-      {cuentaDestinoId && (
+      {cuentaDestinoId && (accountData || cuentaDestinoLabel) && (
         <div className="flex flex-col gap-3">
           <Label className="font-normal text-sm">Detalle de la cuenta</Label>
           <div className="p-4 bg-white border rounded-md">
             <div className="font-bold text-base text-[var(--green)]">{cuentaDestinoLabel}</div>
-            <div className="text-black font-normal">Saldo: {cuentaDestinoBalance}</div>
+            <div className="text-black font-normal">Saldo: {accountData ? `${accountData.currency || 'NIO'} ${accountData.balance}` : cuentaDestinoBalance}</div>
           </div>
         </div>
       )}

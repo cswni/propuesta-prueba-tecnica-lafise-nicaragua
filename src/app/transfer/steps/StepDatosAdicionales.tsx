@@ -2,10 +2,39 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Input } from '@/components/ui/input';
 import { useFormContext, Controller } from 'react-hook-form';
+import { useGetAccountQuery } from '@/store/services/api';
+import { useSelector } from 'react-redux';
+import React from 'react';
 
 export function StepDatosAdicionales({ getError }: { getError?: (field: string) => string | undefined }) {
   const { register, watch, setValue, control } = useFormContext();
   const formData = watch();
+
+  // Redux fallback
+  const user = useSelector((state: any) => state.user.data);
+  const accounts = (user?.products || []).filter((p: any) => p.type === 'Account');
+
+  // API queries
+  const { data: origenData } = useGetAccountQuery(formData.cuentaOrigenId, { skip: !formData.cuentaOrigenId });
+  const { data: destinoData } = useGetAccountQuery(formData.cuentaDestinoId, { skip: !formData.cuentaDestinoId });
+
+  // Use API or fallback to redux for balance/currency
+  const cuentaOrigenCurrency = origenData?.currency || accounts.find((a: any) => a.id === formData.cuentaOrigenId)?.currency || 'NIO';
+  const cuentaDestinoCurrency = destinoData?.currency || accounts.find((a: any) => a.id === formData.cuentaDestinoId)?.currency || 'NIO';
+  
+  // Get alias/label for the origin account
+  const cuentaOrigen = origenData || accounts.find((a: any) => a.id === formData.cuentaOrigenId);
+  const cuentaOrigenAlias = cuentaOrigen?.alias || cuentaOrigen?.label || 'Cuenta';
+  const cuentaOrigenNumber = cuentaOrigen?.id || '';
+  const cuentaOrigenBalance = cuentaOrigen?.balance ?? '';
+
+  // Set default transactionType to 'Propias' if not set
+  React.useEffect(() => {
+    if (!formData.transactionType) {
+      setValue('transactionType', 'Propias');
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [formData.transactionType]);
 
   return (
     <>
@@ -13,11 +42,19 @@ export function StepDatosAdicionales({ getError }: { getError?: (field: string) 
       <div className="mb-6 p-4 m-6 bg-white border rounded-md grid grid-cols-1 md:grid-cols-3 gap-4">
         <div>
           <Label className="font-normal text-xs text-gray-500">Cuenta origen</Label>
-          <div className="font-bold text-base text-[var(--green)]">{formData.cuentaOrigenLabel || '-'}</div>
+          <div className="font-bold text-base text-[var(--green)]">
+            {formData.cuentaOrigenId
+              ? `${cuentaOrigenCurrency} ${formData.cuentaOrigenId}`
+              : '-'}
+          </div>
         </div>
         <div>
           <Label className="font-normal text-xs text-gray-500">Cuenta destino</Label>
-          <div className="font-bold text-base text-[var(--green)]">{formData.cuentaDestinoLabel || '-'}</div>
+          <div className="font-bold text-base text-[var(--green)]">
+            {formData.cuentaDestinoId
+              ? `${cuentaDestinoCurrency} ${formData.cuentaDestinoId}`
+              : '-'}
+          </div>
         </div>
         <div>
           <Label className="font-normal text-xs text-gray-500">Monto</Label>
@@ -32,7 +69,7 @@ export function StepDatosAdicionales({ getError }: { getError?: (field: string) 
             control={control}
             render={({ field }) => (
               <Select
-                value={field.value || ''}
+                value={field.value || 'Propias'}
                 onValueChange={v => {
                   field.onChange(v);
                   field.onBlur();
@@ -52,11 +89,11 @@ export function StepDatosAdicionales({ getError }: { getError?: (field: string) 
         </div>
         <div className="flex flex-col gap-3">
           <Label className="font-normal text-sm">Cuenta</Label>
-          <Input
-            value={formData.cuentaOrigenLabel || ''}
-            disabled
-            className="border rounded-sm px-3 py-6 h-10 text-sm bg-white w-full"
-          />
+          <div className="border rounded-sm px-3 py-6 h-10 text-sm bg-gray-50 w-full flex items-center gap-2">
+            <span className="text-[var(--green)] font-bold">{cuentaOrigenCurrency} {cuentaOrigenAlias}</span>
+            <span className="text-gray-500 font-normal">{cuentaOrigenNumber}</span>
+            <span className="ml-auto font-normal">{cuentaOrigenCurrency} {cuentaOrigenBalance}</span>
+          </div>
         </div>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6 p-8">
