@@ -8,7 +8,7 @@ export function ExchangeRate() {
 
   return (
       <>
-      <h1>Tasa de cambio</h1>
+      <h3 className={'font-semibold'}>Tasa de cambio</h3>
         {/* Currency Selection */}
         <div className="grid grid-cols-2 gap-2 w-full mb-4">
           <Select value={fromCurrency} onValueChange={setFromCurrency}>

@@ -130,12 +130,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarContent>
 
 
+
       <SidebarFooter>
-        <div className="space-y-4 p-1">
+        <div className="space-y-4 p-1 border-t">
           <ExchangeRate />
           <ServerInfo />
         </div>
-
         {/* Esto es una implementacion para que la vista considere las dimensiones del archivo en Figma */}
         {!isMobile && (
             <div className="flex items-center justify-center py-2 border-t">
