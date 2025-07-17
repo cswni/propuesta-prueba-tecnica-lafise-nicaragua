@@ -6,7 +6,7 @@ import { useGetAccountQuery } from '@/store/services/api';
 import { useSelector } from 'react-redux';
 import React from 'react';
 
-export function StepDatosAdicionales({ getError }: { getError?: (field: string) => string | undefined }) {
+export function StepInfoSummary({ getError }: { getError?: (field: string) => string | undefined }) {
   const { register, watch, setValue, control } = useFormContext();
   const formData = watch();
 

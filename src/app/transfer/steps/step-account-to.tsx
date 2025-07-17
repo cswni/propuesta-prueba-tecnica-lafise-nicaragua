@@ -5,7 +5,7 @@ import { useFormContext, Controller } from 'react-hook-form';
 import { useGetAccountQuery } from '@/store/services/api';
 import { useEffect } from 'react';
 
-export function StepCuentaDestino({ getError }: { getError?: (field: string) => string | undefined }) {
+export function StepAccountTo({ getError }: { getError?: (field: string) => string | undefined }) {
   const user = useSelector((state: any) => state.user.data);
   const accounts = (user?.products || [])
     .filter((p: any) => p.type === 'Account')

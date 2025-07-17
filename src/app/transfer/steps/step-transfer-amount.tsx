@@ -6,7 +6,7 @@ import { useEffect } from 'react';
 import { useGetAccountQuery } from '@/store/services/api';
 import { useSelector } from 'react-redux';
 
-export function StepMontoTransferir({ getError }: { getError?: (field: string) => string | undefined }) {
+export function StepTransferAmount({ getError }: { getError?: (field: string) => string | undefined }) {
   const { control, watch, setError, clearErrors, setValue } = useFormContext();
   const monto = watch('monto') || '';
   const cuentaOrigenId = watch('cuentaOrigenId') || '';

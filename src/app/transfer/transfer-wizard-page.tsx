@@ -2,10 +2,10 @@ import { Button } from '@/components/ui/button';
 import { Stepper } from './stepper.tsx';
 import { useStepper } from './use-stepper.ts';
 import type { StepDef } from './use-stepper.ts';
-import { StepCuentaOrigen } from './steps/step-cuenta-origen.tsx';
-import { StepCuentaDestino } from './steps/step-cuenta-destino.tsx';
-import { StepMontoTransferir } from './steps/step-monto-transferir.tsx';
-import { StepDatosAdicionales } from './steps/step-datos-adicionales.tsx';
+import { StepAccountFrom } from './steps/step-account-from.tsx';
+import { StepAccountTo } from './steps/step-account-to.tsx';
+import { StepTransferAmount } from './steps/step-transfer-amount.tsx';
+import { StepInfoSummary } from './steps/step-info-summary.tsx';
 import { useForm, FormProvider } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -33,10 +33,10 @@ const transferSchema = z.object({
 type TransferFormType = z.infer<typeof transferSchema>;
 
 const stepDefs: StepDef[] = [
-  { label: 'Cuenta origen', component: StepCuentaOrigen },
-  { label: 'Cuenta destino', component: StepCuentaDestino },
-  { label: 'Monto a transferir', component: StepMontoTransferir },
-  { label: 'Datos adicionales', component: StepDatosAdicionales },
+  { label: 'Cuenta origen', component: StepAccountFrom },
+  { label: 'Cuenta destino', component: StepAccountTo },
+  { label: 'Monto a transferir', component: StepTransferAmount },
+  { label: 'Datos adicionales', component: StepInfoSummary },
 ];
 
 // stepFieldMap: For each step, list only the required fields. All other fields are optional.
