@@ -64,14 +64,14 @@ function CreditDebitCard({
               className="w-24 mr-2 inline-block" />
           </span>
         </div>
-        <div className="text-lg font-mono tracking-widest mb-2">{number}</div>
-        <div className="flex justify-start items-center gap-4">
+        <div className="cardNumber">{number}</div>
+        <div className="flex justify-start items-end gap-4">
           <div>
-            <div className="font-medium">{holder}</div>
+            <div className="font-light">{holder}</div>
           </div>
           <div className="text-right">
             <div className="text-xs">Expira</div>
-            <div className="font-medium">{expiry}</div>
+            <div className="font-light">{expiry}</div>
           </div>
         </div>
       </div>
