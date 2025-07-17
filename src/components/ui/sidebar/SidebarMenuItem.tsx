@@ -5,14 +5,11 @@ import { cn } from '@/lib/utils.ts';
 
 export type SidebarMenuItemProps = React.ComponentProps<'li'> & {
   showRightArrow?: boolean;
+  avoidActive?: boolean;
 };
 
-const SidebarMenuItem: React.FC<SidebarMenuItemProps> = ({
-  className,
-  showRightArrow = false,
-  children,
-  ...props
-}) => {
+const SidebarMenuItem = (props: SidebarMenuItemProps) => {
+  const {className, showRightArrow = false, avoidActive = false, children  } = props;
   const location = useLocation();
   
   // Verificar la ruta activa
@@ -29,7 +26,7 @@ const SidebarMenuItem: React.FC<SidebarMenuItemProps> = ({
       data-sidebar="menu-item"
       className={cn(
         'hover:bg-[var(--base-soft-green)] hover:cursor-pointer group/menu-item py-2 px-1 relative font-semibold min-h-[48px]',
-        isActive && 'bg-[var(--base-soft-green)]',
+        isActive && !avoidActive && 'bg-[var(--base-soft-green)]',
         className
       )}
       {...props}
