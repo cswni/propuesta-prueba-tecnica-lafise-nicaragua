@@ -10,7 +10,7 @@ export function StepDatosAdicionales({ getError }: { getError?: (field: string) 
   return (
     <>
       {/* Summary of previous selections */}
-      <div className="mb-6 p-4 bg-white border rounded-md grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="mb-6 p-4 m-6 bg-white border rounded-md grid grid-cols-1 md:grid-cols-3 gap-4">
         <div>
           <Label className="font-normal text-xs text-gray-500">Cuenta origen</Label>
           <div className="font-bold text-base text-[var(--green)]">{formData.cuentaOrigenLabel || '-'}</div>

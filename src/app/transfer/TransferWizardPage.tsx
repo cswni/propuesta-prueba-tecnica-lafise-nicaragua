@@ -39,11 +39,16 @@ const stepDefs: StepDef[] = [
   { label: 'Datos adicionales', component: StepDatosAdicionales },
 ];
 
+// stepFieldMap: For each step, list only the required fields. All other fields are optional.
+// Step 1: cuentaOrigenId (required)
+// Step 2: cuentaDestinoId (required)
+// Step 3: monto (required)
+// Step 4: all fields optional
 const stepFieldMap = [
-  ['cuentaOrigenId', 'cuentaOrigenBalance', 'cuentaOrigenCurrency'],
+  ['cuentaOrigenId'],
   ['cuentaDestinoId'],
   ['monto'],
-  ['transactionType', 'debitConcept', 'creditConcept', 'reference', 'confirmation'],
+  [],
 ];
 
 export default function TransferWizardPage() {
@@ -67,13 +72,15 @@ export default function TransferWizardPage() {
   const [createTransaction, { isLoading }] = useCreateTransactionMutation();
   const { formState } = methods;
 
-  const monto = methods.watch('monto');
-  const cuentaOrigenBalance = Number(methods.watch('cuentaOrigenBalance') || 0);
+  // Disable continue if any required field for the current step is empty or invalid
+  const requiredFields = stepFieldMap[currentStep];
   let disableContinue = false;
-  if (currentStep === 2) { // StepMontoTransferir es el paso 2
-    const value = Number(monto);
-    if (value > cuentaOrigenBalance) {
+  const allValues = methods.getValues();
+  for (const field of requiredFields as string[]) {
+    const value = allValues[field as keyof TransferFormType];
+    if (!value || (typeof value === 'string' && value.trim() === '')) {
       disableContinue = true;
+      break;
     }
   }
 
@@ -123,7 +130,7 @@ export default function TransferWizardPage() {
         <Stepper steps={steps} currentStep={currentStep} />
         <FormProvider {...methods}>
           <form onSubmit={methods.handleSubmit(onStepSubmit)}>
-            <div className="p-6">
+            <div className="">
               <StepComponent key={currentStep} getError={getError} disableContinue={disableContinue} />
             </div>
             <div className="flex justify-center gap-4 my-8">

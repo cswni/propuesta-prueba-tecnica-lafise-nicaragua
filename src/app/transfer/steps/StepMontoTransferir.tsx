@@ -21,13 +21,17 @@ export function StepMontoTransferir({ getError }: { getError?: (field: string) =
       return;
     }
     const value = Number(monto);
-    if (value > cuentaOrigenBalance) {
+    if (value < 0) {
+      setError('monto', { type: 'manual', message: `El monto no puede ser negativo.` });
+      toast.error('Por favor, ingrese un monto válido. No se permiten valores negativos.');
+    } else if (value > cuentaOrigenBalance) {
       setError('monto', { type: 'manual', message: `El monto excede el saldo disponible (${cuentaOrigenCurrency} ${cuentaOrigenBalance})` });
       toast.error('El monto excede el saldo disponible de la cuenta de origen.');
     } else {
       clearErrors('monto');
     }
   }, [monto, cuentaOrigenBalance, cuentaOrigenCurrency, setError, clearErrors]);
+
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start mt-2 bg-gray-50 p-6 border-y-2">

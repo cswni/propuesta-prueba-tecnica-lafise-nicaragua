@@ -58,7 +58,6 @@ export function StepCuentaOrigen({ getError }: { getError?: (field: string) => s
                   <SelectItem key={acc.id} value={acc.id}>
                     <div className="flex flex-col">
                       <span className="text-base font-bold text-[var(--green)]">{acc.label}</span>
-                      <span className="text-black font-normal text-xs">{acc.balance}</span>
                     </div>
                   </SelectItem>
                 ))}
