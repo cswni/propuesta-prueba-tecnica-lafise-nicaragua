@@ -8,6 +8,7 @@ import {
   SidebarMenuButton,
 } from "@/components/ui/sidebar/sidebar.tsx"
 import SidebarMenuItem from "@/components/ui/sidebar/SidebarMenuItem.tsx";
+import { useSidebar } from '@/providers/sidebar/use-sidebar';
 
 export function NavMain({
   items,
@@ -19,13 +20,19 @@ export function NavMain({
     svg?: string
   }[]
 }) {
+  const { isMobile, setOpenMobile } = useSidebar();
+
+  const handleMenuClick = () => {
+    if (isMobile) setOpenMobile(false);
+  };
+
   return (
     <SidebarGroup>
       <SidebarGroupContent className="flex flex-col gap-2">
         <SidebarMenu>
           {items.map((item) => (
             <SidebarMenuItem showRightArrow key={item.title}>
-              <Link to={item.url} className="w-full block">
+              <Link to={item.url} className="w-full block" onClick={handleMenuClick}>
                 <SidebarMenuButton tooltip={item.title} className="w-full">
                   {item.icon && <item.icon className={'text-[#3B8668]'} />}
                   {item.svg && <img src={item.svg} alt={item.title} />}
