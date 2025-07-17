@@ -32,7 +32,7 @@ const axiosBaseQuery =
 
 export const api = createApi({
   reducerPath: 'api',
-  baseQuery: axiosBaseQuery({ baseUrl: 'http://localhost:5566/' }),
+  baseQuery: axiosBaseQuery({ baseUrl: import.meta.env.VITE_URL_API }),
   tagTypes: ['Transactions'],
   endpoints: (builder) => ({
     getUser: builder.query<any, string>({
