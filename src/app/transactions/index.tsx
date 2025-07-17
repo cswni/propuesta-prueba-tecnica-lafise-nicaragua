@@ -1,5 +1,5 @@
 import HeadingLine from '@/components/ui/heading-line';
-import {TransactionsList} from "@/app/transactions/TransactionList.tsx";
+import {TransactionsList} from "@/app/transactions/transaction-list.tsx";
 const TransactionsPage = () => {
     return (
 

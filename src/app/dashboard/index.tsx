@@ -1,7 +1,7 @@
-import { SectionCards } from '@/components/section-cards';
-import { SectionAccounts } from '@/components/section-accounts';
+import { SectionCards } from '@/app/dashboard/components/section-cards.tsx';
+import { SectionAccounts } from '@/app/dashboard/components/section-accounts.tsx';
 import HeadingLine from "@/components/ui/heading-line.tsx";
-import { RecentTransactions } from '@/components/recent-transactions';
+import { RecentTransactions } from '@/app/dashboard/components/recent-transactions.tsx';
 
 const DashboardPage = () => {
   return (

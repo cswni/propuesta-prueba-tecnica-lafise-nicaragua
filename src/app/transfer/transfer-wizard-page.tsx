@@ -1,11 +1,11 @@
 import { Button } from '@/components/ui/button';
-import { Stepper } from './Stepper';
-import { useStepper } from './useStepper';
-import type { StepDef } from './useStepper';
-import { StepCuentaOrigen } from './steps/StepCuentaOrigen';
-import { StepCuentaDestino } from './steps/StepCuentaDestino';
-import { StepMontoTransferir } from './steps/StepMontoTransferir';
-import { StepDatosAdicionales } from './steps/StepDatosAdicionales';
+import { Stepper } from './stepper.tsx';
+import { useStepper } from './use-stepper.ts';
+import type { StepDef } from './use-stepper.ts';
+import { StepCuentaOrigen } from './steps/step-cuenta-origen.tsx';
+import { StepCuentaDestino } from './steps/step-cuenta-destino.tsx';
+import { StepMontoTransferir } from './steps/step-monto-transferir.tsx';
+import { StepDatosAdicionales } from './steps/step-datos-adicionales.tsx';
 import { useForm, FormProvider } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select.tsx';
 import Interchange from '@/assets/images/icons/interchange.svg';
 
 export function ExchangeRate() {

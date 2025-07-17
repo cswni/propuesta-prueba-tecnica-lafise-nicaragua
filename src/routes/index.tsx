@@ -2,7 +2,7 @@ import { Navigate } from 'react-router-dom';
 import DashboardPage from '../app/dashboard/index';
 import TransactionsPage from "@/app/transactions";
 import WorkingProgress from '@/components/WorkingProgress';
-import TransferWizardPage from '@/app/transfer/TransferWizardPage';
+import TransferWizardPage from '@/app/transfer/transfer-wizard-page.tsx';
 
 export const routes = [
   {

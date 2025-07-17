@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { useGetAccountTransactionsQuery } from '@/store/services/api';
-import type {RecentTransactionsProps, TransactionsApiResponse} from '@/types/transactions'
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table.tsx';
+import { useGetAccountTransactionsQuery } from '@/store/services/api.ts';
+import type {RecentTransactionsProps, TransactionsApiResponse} from '@/types/transactions.ts'
 
 
 export function RecentTransactions({ accountId }: RecentTransactionsProps) {

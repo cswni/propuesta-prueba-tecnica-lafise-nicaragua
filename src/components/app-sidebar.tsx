@@ -24,12 +24,12 @@ import {
   SidebarMenu,
 } from '@/components/ui/sidebar/sidebar.tsx';
 import {Link} from "react-router-dom";
-import SidebarMenuItem from "@/components/ui/sidebar/SidebarMenuItem.tsx";
+import SidebarMenuItem from "@/components/ui/sidebar/sidebar-menu-item.tsx";
 import { Toggle } from '@/components/ui/toggle';
 import { useIsMobile } from '@/hooks/use-mobile';
 import {useSettings} from "@/providers/settings/use-settings.ts";
-import { ExchangeRate } from '@/components/exchange-rate';
-import { ServerInfo } from '@/components/server-info';
+import { ExchangeRate } from '@/components/ui/sidebar/exchange-rate.tsx';
+import { ServerInfo } from '@/components/ui/sidebar/server-info.tsx';
 
 type SidebarData = {
   user: {

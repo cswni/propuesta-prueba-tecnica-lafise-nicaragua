@@ -1,4 +1,4 @@
-import {SidebarContext, type SidebarContextProps} from "./SidebarContext";
+import {SidebarContext, type SidebarContextProps} from "./sidebar-context.tsx";
 import {TooltipProvider} from "@radix-ui/react-tooltip";
 import * as React from "react";
 import {cn} from "@/lib/utils.ts";
