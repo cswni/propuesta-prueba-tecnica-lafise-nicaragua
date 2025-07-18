@@ -27,7 +27,7 @@ export function StepAccountFrom({ getError }: { getError?: (field: string) => st
   }, [accountData, setValue]);
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start mt-2 bg-gray-50 p-6 border-y-2">
+    <div className="grid  -m-6 grid-cols-1 md:grid-cols-2 gap-6 items-start mt-2 bg-gray-50 p-6 border-y-2">
       <div className="flex flex-col gap-3">
         <Label className="font-normal text-sm">Selecciona la cuenta de origen</Label>
         <Controller
@@ -50,7 +50,7 @@ export function StepAccountFrom({ getError }: { getError?: (field: string) => st
                 {accounts.map((acc: AccountUI) => (
                   <SelectItem key={acc.id} value={String(acc.id)}>
                     <div className="flex flex-col">
-                      <span className="text-base font-bold text-[var(--green)]">{acc.alias}</span>
+                      <span className="text-base font-bold text-[var(--green)]">{`${acc.alias} - ${acc.id}`}</span>
                     </div>
                   </SelectItem>
                 ))}

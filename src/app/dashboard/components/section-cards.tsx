@@ -3,17 +3,10 @@ import LafiseLogoShield from "@/assets/images/logo-lafise-shield.svg"
 import { useSelector } from 'react-redux'
 import type { RootState } from '@/store'
 
-function CreditDebitCard({
-  number,
-  holder,
-  expiry,
-  color,
-}: {
-  number: string
-  holder: string
-  expiry: string
-  color: string
-}) {
+import type { CardProps } from "@/types/cards";
+
+function CreditDebitCard(props: CardProps) {
+    const { number, holder, expiry, color } = props;
   return (
     <div
       className={`relative rounded-xl shadow-md p-6 text-white flex flex-col justify-between min-h-[208px] sm:max-w-[353px] overflow-hidden ${color}`}
@@ -61,7 +54,13 @@ function CreditDebitCard({
 
 export function SectionCards() {
   const user = useSelector((state: RootState) => state.user.data);
-  const userName = user?.full_name || 'Usuario';
+  let userName = 'Usuario';
+  const userNameParts = user?.full_name.split(' ') || [];
+
+  if (userNameParts.length > 1) {
+        userNameParts.pop();
+        userName = userNameParts.join(' ');
+  }
 
   const cards = [
     {
@@ -87,7 +86,7 @@ export function SectionCards() {
   ]
 
   return (
-    <div className="grid grid-cols-1 gap-4 px-4 lg:px-6 @xl/main:grid-cols-2 @5xl/main:grid-cols-3">
+    <div className="grid select-none grid-cols-1 gap-4 px-4 lg:px-6 @xl/main:grid-cols-2 @5xl/main:grid-cols-3">
       {cards.map((card, idx) => (
         <CreditDebitCard key={idx} {...card} />
       ))}

@@ -124,13 +124,13 @@ export default function TransferWizardPage() {
   };
 
   return (
-    <div className="p-6">
+    <div className="p-6 overflow-y-auto max-h-screen">
       <h1 className="text-2xl font-bold mb-6">Transferir</h1>
       <div className="bg-white rounded-sm mb-8 border-2 border-gray-100">
         <Stepper steps={steps} currentStep={currentStep} />
         <FormProvider {...methods}>
           <form onSubmit={methods.handleSubmit(onStepSubmit)}>
-            <div className="">
+            <div className="min-h-[400px] p-6">
               <StepComponent key={currentStep} getError={getError} disableContinue={disableContinue} />
             </div>
             <div className="flex justify-center gap-4 my-8">
@@ -156,7 +156,7 @@ export default function TransferWizardPage() {
         </FormProvider>
         {/* Modal de confirmación */}
         {showModal && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-[var(--green)]/50">
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/20">
             <div className="bg-white rounded-xl shadow-2xl p-8 max-w-md w-full text-center animate-fade-in">
               <div className="flex flex-col items-center gap-4">
                 <svg width="64" height="64" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#3B8668"/><path d="M7 13l3 3 7-7" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>

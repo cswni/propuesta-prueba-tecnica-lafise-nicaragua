@@ -26,14 +26,14 @@ export function StepAccountTo({ getError }: { getError?: (field: string) => stri
     } else if (cuentaDestinoId) {
       // fallback to redux data if API not available
       const acc = accounts.find((a: AccountUI) => a.id === cuentaDestinoId);
-      setValue('cuentaDestinoLabel', acc?.label || '');
+      setValue('cuentaDestinoLabel', acc?.alias || '');
       setValue('cuentaDestinoBalance', acc?.balance || '');
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [accountData, cuentaDestinoId]);
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start mt-2 bg-gray-50 p-6 border-y-2">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start -m-6 mt-2 bg-gray-50 p-6 border-y-2">
       <div className="flex flex-col gap-3">
         <Label className="font-normal text-sm">Selecciona la cuenta destino</Label>
         <Controller
@@ -52,12 +52,12 @@ export function StepAccountTo({ getError }: { getError?: (field: string) => stri
               </SelectTrigger>
               <SelectContent>
                 {accounts.map((acc: AccountUI) => (
-                  <SelectItem key={acc.id} value={acc.id} disabled={acc.id === cuentaOrigenId}>
-                    <div className="flex flex-col">
-                      <span className="text-base font-bold text-[var(--green)]">{acc.label}</span>
-                      <span className="text-black font-normal text-xs">{acc.balance}</span>
+                  <SelectItem key={acc.id} value={String(acc.id)} disabled={acc.id === cuentaOrigenId}>
+                    <div className="flex flex-col justify-start items-start gap-1">
+                      <span className="text-base font-bold text-[var(--green)]">{acc.alias}</span>
+                      <span className="text-black font-normal text-xs">{`${acc.id} - ${acc.balance}`}</span>
                       {acc.id === cuentaOrigenId && (
-                        <span className="text-xs text-red-500">No puedes seleccionar la misma cuenta de origen</span>
+                        <span className="text-xs text-red-400">No puedes seleccionar la misma cuenta de origen</span>
                       )}
                     </div>
                   </SelectItem>

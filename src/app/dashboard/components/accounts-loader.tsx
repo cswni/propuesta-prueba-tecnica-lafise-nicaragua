@@ -3,6 +3,7 @@ import { useEffect, useState, useMemo } from "react";
 import { setUserAccounts } from "@/store";
 import { useGetAccountQuery } from "@/store/services/api.ts";
 import type { AccountUI } from "@/types/accounts";
+import type { User } from "@/types/user";
 import NicaraguaFlag from '@/assets/images/flags/nicaragua-flag.svg';
 import UsaFlag from '@/assets/images/flags/usa-flag.svg';
 
@@ -31,10 +32,10 @@ const AccountFetcher = ({ id, onData }: { id: string, onData: (data: AccountUI) 
 
 const AccountsLoader = () => {
   const dispatch = useDispatch();
-  const user = useSelector((state: any) => state.user.data);
+  const user: User | null = useSelector((state: { user: { data: User | null } }) => state.user.data);
 
-  const accountIds = useMemo(
-    () => (user?.products || []).filter((p: any) => p.type === 'Account').map((p: any): string => p.id as string),
+  const accountIds: string[] = useMemo(
+    () => (user?.products || []).filter((p) => p.type === 'Account').map((p) => p.id as string),
     [user]
   );
 
@@ -51,6 +52,8 @@ const AccountsLoader = () => {
       return updated;
     });
   };
+
+  console.log("Loaded accounts:", loadedAccounts);
 
   useEffect(() => {
     setLoadedAccounts({});

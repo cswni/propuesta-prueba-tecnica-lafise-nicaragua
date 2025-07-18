@@ -13,7 +13,6 @@ export function StepInfoSummary({ getError }: { getError?: (field: string) => st
   const formData = watch();
 
   // Redux fallback
-  const user = useSelector((state: RootState) => state.user.data);
   const accounts: AccountUI[] = useSelector((state: RootState) => state.user.accounts);
 
   // API queries
@@ -41,29 +40,7 @@ export function StepInfoSummary({ getError }: { getError?: (field: string) => st
   return (
     <>
       {/* Summary of previous selections */}
-      <div className="mb-6 p-4 m-6 bg-white border rounded-md grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div>
-          <Label className="font-normal text-xs text-gray-500">Cuenta origen</Label>
-          <div className="font-bold text-base text-[var(--green)]">
-            {formData.cuentaOrigenId
-              ? `${cuentaOrigenCurrency} ${formData.cuentaOrigenId}`
-              : '-'}
-          </div>
-        </div>
-        <div>
-          <Label className="font-normal text-xs text-gray-500">Cuenta destino</Label>
-          <div className="font-bold text-base text-[var(--green)]">
-            {formData.cuentaDestinoId
-              ? `${cuentaDestinoCurrency} ${formData.cuentaDestinoId}`
-              : '-'}
-          </div>
-        </div>
-        <div>
-          <Label className="font-normal text-xs text-gray-500">Monto</Label>
-          <div className="font-bold text-base text-[var(--green)]">{formData.monto || '-'}</div>
-        </div>
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start mt-2 bg-gray-50 p-6 border-y-2">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start mt-2 bg-gray-50 p-6 border-y-2 -m-6">
         <div className="flex flex-col gap-3">
           <Label className="font-normal text-sm">Tipo de transacción</Label>
           <Controller
@@ -96,6 +73,28 @@ export function StepInfoSummary({ getError }: { getError?: (field: string) => st
             <span className="text-gray-500 font-normal">{cuentaOrigenNumber}</span>
             <span className="ml-auto font-normal">{cuentaOrigenCurrency} {cuentaOrigenBalance}</span>
           </div>
+        </div>
+      </div>
+      <div className="mb-6 p-4 m-6 mt-12 bg-white border rounded-md grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div>
+          <Label className="font-normal text-xs text-gray-500">Cuenta origen</Label>
+          <div className="font-bold text-base text-[var(--green)]">
+            {formData.cuentaOrigenId
+                ? `${cuentaOrigenCurrency} ${formData.cuentaOrigenId}`
+                : '-'}
+          </div>
+        </div>
+        <div>
+          <Label className="font-normal text-xs text-gray-500">Cuenta destino</Label>
+          <div className="font-bold text-base text-[var(--green)]">
+            {formData.cuentaDestinoId
+                ? `${cuentaDestinoCurrency} ${formData.cuentaDestinoId}`
+                : '-'}
+          </div>
+        </div>
+        <div>
+          <Label className="font-normal text-xs text-gray-500">Monto</Label>
+          <div className="font-bold text-base text-[var(--green)]">{formData.monto || '-'}</div>
         </div>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6 p-8">

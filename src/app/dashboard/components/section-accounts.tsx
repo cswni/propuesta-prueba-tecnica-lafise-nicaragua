@@ -1,15 +1,9 @@
 import type { AccountUI } from "@/types/accounts";
 import { toast } from "sonner"
-import NicaraguaFlag from '@/assets/images/flags/nicaragua-flag.svg'
 import UsaFlag from '@/assets/images/flags/usa-flag.svg'
 import CopyIcon from '@/assets/images/icons/copy.svg'
 import { useSelector } from 'react-redux'
 import type { RootState } from "@/store";
-
-const flagByCurrency: Record<string, string> = {
-  NIO: NicaraguaFlag,
-  USD: UsaFlag,
-};
 
 function AccountCard({
   alias,

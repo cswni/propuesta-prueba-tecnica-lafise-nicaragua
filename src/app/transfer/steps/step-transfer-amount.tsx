@@ -16,7 +16,6 @@ export function StepTransferAmount({ getError }: { getError?: (field: string) =>
   const error = getError ? getError('monto') : undefined;
 
   // Redux fallback
-  const user = useSelector((state: RootState) => state.user.data);
   const accounts: AccountUI[] = useSelector((state: RootState) => state.user.accounts);
 
   // API queries
@@ -49,7 +48,7 @@ export function StepTransferAmount({ getError }: { getError?: (field: string) =>
   }, [monto, cuentaOrigenBalance, cuentaOrigenCurrency, setError, clearErrors]);
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start mt-2 bg-gray-50 p-6 border-y-2">
+    <div className="grid  -m-6 grid-cols-1 md:grid-cols-2 gap-6 items-start mt-2 bg-gray-50 p-6 border-y-2">
       <div className="flex flex-col gap-3">
         <Label className="font-normal text-sm">Monto a transferir</Label>
         <Controller
