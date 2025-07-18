@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 import {
   SidebarGroup,
@@ -21,6 +21,7 @@ export function NavMain({
   }[];
 }) {
   const { isMobile, setOpenMobile } = useSidebar();
+  const location = useLocation();
 
   const handleMenuClick = () => {
     if (isMobile) setOpenMobile(false);
@@ -30,17 +31,32 @@ export function NavMain({
     <SidebarGroup>
       <SidebarGroupContent className="flex flex-col gap-2">
         <SidebarMenu>
-          {items.map((item) => (
-            <SidebarMenuItem showRightArrow key={item.title}>
-              <Link to={item.url} className="w-full block" onClick={handleMenuClick}>
-                <SidebarMenuButton tooltip={item.title} className="w-full">
-                  {item.icon && <item.icon className={'text-[#3B8668]'} />}
-                  {item.svg && <img src={item.svg} alt={item.title} />}
-                  <span>{item.title}</span>
-                </SidebarMenuButton>
-              </Link>
-            </SidebarMenuItem>
-          ))}
+          {items.map((item) => {
+            const isActive = item.url === location.pathname;
+            return (
+              <SidebarMenuItem showRightArrow key={item.title}>
+                <Link to={item.url} className="w-full block" onClick={handleMenuClick}>
+                  <SidebarMenuButton tooltip={item.title} className="w-full" isActive={isActive}>
+                    {item.icon && (
+                      <item.icon className={isActive ? 'text-[#3B8668]' : 'text-black'} />
+                    )}
+                    {item.svg && (
+                      <img
+                        src={item.svg}
+                        alt={item.title}
+                        style={{
+                          filter: isActive
+                            ? 'invert(38%) sepia(77%) saturate(363%) hue-rotate(110deg) brightness(92%) contrast(92%)'
+                            : 'none',
+                        }}
+                      />
+                    )}
+                    <span>{item.title}</span>
+                  </SidebarMenuButton>
+                </Link>
+              </SidebarMenuItem>
+            );
+          })}
         </SidebarMenu>
       </SidebarGroupContent>
     </SidebarGroup>
