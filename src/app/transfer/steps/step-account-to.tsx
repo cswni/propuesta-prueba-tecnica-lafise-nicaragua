@@ -22,7 +22,7 @@ export function StepAccountTo({ getError }: { getError?: (field: string) => stri
   useEffect(() => {
     if (accountData) {
       setValue('cuentaDestinoBalance', accountData.balance?.toString() || '');
-      setValue('cuentaDestinoLabel', `${accountData.currency || 'NIO'} ${accountData.id}`);
+      setValue('cuentaDestinoLabel', `${accountData.currency || 'NIO'} ${accountData.account_number}`);
     } else if (cuentaDestinoId) {
       // fallback to redux data if API not available
       const acc = accounts.find((a: AccountUI) => a.id === cuentaDestinoId);

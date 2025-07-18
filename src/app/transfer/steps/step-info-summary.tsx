@@ -25,8 +25,8 @@ export function StepInfoSummary({ getError }: { getError?: (field: string) => st
   
   // Get alias/label for the origin account
   const cuentaOrigen = origenData || accounts.find((a: AccountUI) => a.id === formData.cuentaOrigenId);
-  const cuentaOrigenAlias = cuentaOrigen?.alias || cuentaOrigen?.label || 'Cuenta';
-  const cuentaOrigenNumber = cuentaOrigen?.id || '';
+  const cuentaOrigenAlias = cuentaOrigen?.alias || cuentaOrigen?.alias || 'Cuenta';
+  const cuentaOrigenNumber = cuentaOrigen?.account_number || '';
   const cuentaOrigenBalance = cuentaOrigen?.balance ?? '';
 
   // Set default transactionType to 'Propias' if not set
