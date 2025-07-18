@@ -24,15 +24,21 @@ export const Stepper: React.FC<StepperProps> = ({ steps, currentStep }) => {
             <div
               className={
                 idx < currentStep
-                  ? "bg-[var(--green)] text-white rounded-full flex items-center justify-center"
+                  ? 'bg-[var(--green)] text-white rounded-full flex items-center justify-center'
                   : idx === currentStep
-                  ? "border-2 border-transparent bg-white rounded-full flex items-center justify-center shadow-lg"
-                  : "border-2 border-gray-300 bg-white rounded-full flex items-center justify-center"
+                    ? 'border-2 border-transparent bg-white rounded-full flex items-center justify-center shadow-lg'
+                    : 'border-2 border-gray-300 bg-white rounded-full flex items-center justify-center'
               }
               style={{ width: circleSize, height: circleSize }}
             >
               {idx < currentStep ? (
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                <svg
+                  className="w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                  viewBox="0 0 24 24"
+                >
                   <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                 </svg>
               ) : idx === currentStep ? (
@@ -40,10 +46,14 @@ export const Stepper: React.FC<StepperProps> = ({ steps, currentStep }) => {
               ) : null}
             </div>
             <span className={`mt-2 text-sm font-medium text-[var(--gray)]`}>Paso {idx + 1}</span>
-            <span className={`text-lg font-medium ${idx <= currentStep ? "text-black" : "text-gray-400"}`}>{step.label}</span>
+            <span
+              className={`text-lg font-medium ${idx <= currentStep ? 'text-black' : 'text-gray-400'}`}
+            >
+              {step.label}
+            </span>
           </div>
         ))}
       </div>
     </div>
   );
-}; 
+};

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import ChevronRight  from 'lucide-react/icons/chevron-right';
+import ChevronRight from 'lucide-react/icons/chevron-right';
 import { useLocation } from 'react-router-dom';
 import { cn } from '@/lib/utils.ts';
 
@@ -9,11 +9,11 @@ export type SidebarMenuItemProps = React.ComponentProps<'li'> & {
 };
 
 const SidebarMenuItem = (props: SidebarMenuItemProps) => {
-  const {className, showRightArrow = false, avoidActive = false, children, ...rest  } = props;
+  const { className, showRightArrow = false, avoidActive = false, children, ...rest } = props;
   const location = useLocation();
-  
+
   // Verificar la ruta activa
-  const isActive = React.Children.toArray(children).some(child => {
+  const isActive = React.Children.toArray(children).some((child) => {
     if (React.isValidElement(child) && 'to' in (child.props as any)) {
       return (child.props as any).to === location.pathname;
     }

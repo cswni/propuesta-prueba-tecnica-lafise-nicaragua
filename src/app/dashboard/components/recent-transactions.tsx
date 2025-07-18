@@ -1,11 +1,21 @@
 import { Link } from 'react-router-dom';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table.tsx';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table.tsx';
 import { useGetAccountTransactionsQuery } from '@/store/services/api.ts';
-import type {RecentTransactionsProps, TransactionsApiResponse} from '@/types/transactions.ts'
-
+import type { RecentTransactionsProps, TransactionsApiResponse } from '@/types/transactions.ts';
 
 export function RecentTransactions({ accountId }: RecentTransactionsProps) {
-  const { data, isLoading, isError } = useGetAccountTransactionsQuery(accountId) as { data?: TransactionsApiResponse, isLoading: boolean, isError: boolean };
+  const { data, isLoading, isError } = useGetAccountTransactionsQuery(accountId) as {
+    data?: TransactionsApiResponse;
+    isLoading: boolean;
+    isError: boolean;
+  };
   const recentTransactions = data?.items?.slice(0, 3) || [];
 
   function formatDate(dateStr: string) {
@@ -23,10 +33,7 @@ export function RecentTransactions({ accountId }: RecentTransactionsProps) {
     <div className="space-y-4 p-4 md:p-6 rounded-sm">
       <div className="flex items-center justify-between">
         <h3 className="text-lg font-semibold">Transacciones recientes</h3>
-        <Link
-          to="/transacciones"
-          className="text-sm text-muted-foreground hover:underline"
-        >
+        <Link to="/transacciones" className="text-sm text-muted-foreground hover:underline">
           Ver todas
         </Link>
       </div>
@@ -42,17 +49,31 @@ export function RecentTransactions({ accountId }: RecentTransactionsProps) {
           </TableHeader>
           <TableBody>
             {isLoading && (
-              <TableRow><TableCell colSpan={4} className="text-center">Cargando...</TableCell></TableRow>
+              <TableRow>
+                <TableCell colSpan={4} className="text-center">
+                  Cargando...
+                </TableCell>
+              </TableRow>
             )}
             {isError && (
-              <TableRow><TableCell colSpan={4} className="text-center text-red-500">Error al cargar transacciones</TableCell></TableRow>
+              <TableRow>
+                <TableCell colSpan={4} className="text-center text-red-500">
+                  Error al cargar transacciones
+                </TableCell>
+              </TableRow>
             )}
             {!isLoading && !isError && recentTransactions.length === 0 && (
-              <TableRow><TableCell colSpan={4} className="text-center">No hay transacciones recientes</TableCell></TableRow>
+              <TableRow>
+                <TableCell colSpan={4} className="text-center">
+                  No hay transacciones recientes
+                </TableCell>
+              </TableRow>
             )}
             {recentTransactions.map((transaction) => (
               <TableRow key={transaction.transaction_number}>
-                <TableCell className="text-sm">{formatDate(transaction.transaction_date)}</TableCell>
+                <TableCell className="text-sm">
+                  {formatDate(transaction.transaction_date)}
+                </TableCell>
                 <TableCell className="text-sm">{transaction.description}</TableCell>
                 <TableCell className="text-sm">{formatAmount(transaction.amount)}</TableCell>
                 <TableCell className="text-sm">{transaction.transaction_number}</TableCell>
@@ -63,4 +84,4 @@ export function RecentTransactions({ accountId }: RecentTransactionsProps) {
       </div>
     </div>
   );
-} 
+}

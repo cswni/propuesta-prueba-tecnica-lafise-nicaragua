@@ -64,7 +64,6 @@ export default defineConfig({
             'next-themes',
           ],
           'radix-ui': [
-            '@radix-ui/react-avatar',
             '@radix-ui/react-checkbox',
             '@radix-ui/react-dialog',
             '@radix-ui/react-dropdown-menu',

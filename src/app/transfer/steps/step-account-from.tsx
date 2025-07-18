@@ -1,13 +1,23 @@
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { useSelector } from 'react-redux';
 import type { RootState } from '@/store';
 import type { AccountUI } from '@/types/accounts';
 import { useFormContext, Controller } from 'react-hook-form';
-import {useGetAccountQuery} from "@/store/services/api.ts";
-import {useEffect} from "react";
+import { useGetAccountQuery } from '@/store/services/api.ts';
+import { useEffect } from 'react';
 
-export function StepAccountFrom({ getError }: { getError?: (field: string) => string | undefined }) {
+export function StepAccountFrom({
+  getError,
+}: {
+  getError?: (field: string) => string | undefined;
+}) {
   const accounts: AccountUI[] = useSelector((state: RootState) => state.user.accounts);
 
   const { control, watch, setValue } = useFormContext();
@@ -36,7 +46,7 @@ export function StepAccountFrom({ getError }: { getError?: (field: string) => st
           render={({ field }) => (
             <Select
               value={field.value || ''}
-              onValueChange={v => {
+              onValueChange={(v) => {
                 field.onChange(v);
                 const acc = accounts.find((a: AccountUI) => a.id === v);
                 setValue('cuentaOrigenLabel', acc?.alias || '');
@@ -71,4 +81,4 @@ export function StepAccountFrom({ getError }: { getError?: (field: string) => st
       )}
     </div>
   );
-} 
+}

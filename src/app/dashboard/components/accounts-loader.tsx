@@ -1,9 +1,9 @@
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState, useMemo } from "react";
-import { setUserAccounts } from "@/store";
-import { useGetAccountQuery } from "@/store/services/api.ts";
-import type { AccountUI } from "@/types/accounts";
-import type { User } from "@/types/user";
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect, useState, useMemo } from 'react';
+import { setUserAccounts } from '@/store';
+import { useGetAccountQuery } from '@/store/services/api.ts';
+import type { AccountUI } from '@/types/accounts';
+import type { User } from '@/types/user';
 import NicaraguaFlag from '@/assets/images/flags/nicaragua-flag.svg';
 import UsaFlag from '@/assets/images/flags/usa-flag.svg';
 
@@ -12,7 +12,7 @@ const flagByCurrency: Record<string, string> = {
   USD: UsaFlag,
 };
 
-const AccountFetcher = ({ id, onData }: { id: string, onData: (data: AccountUI) => void }) => {
+const AccountFetcher = ({ id, onData }: { id: string; onData: (data: AccountUI) => void }) => {
   const { data } = useGetAccountQuery(id);
   useEffect(() => {
     if (data) {
@@ -32,7 +32,9 @@ const AccountFetcher = ({ id, onData }: { id: string, onData: (data: AccountUI) 
 
 const AccountsLoader = () => {
   const dispatch = useDispatch();
-  const user: User | null = useSelector((state: { user: { data: User | null } }) => state.user.data);
+  const user: User | null = useSelector(
+    (state: { user: { data: User | null } }) => state.user.data
+  );
 
   const accountIds: string[] = useMemo(
     () => (user?.products || []).filter((p) => p.type === 'Account').map((p) => p.id as string),
@@ -42,7 +44,7 @@ const AccountsLoader = () => {
   const [loadedAccounts, setLoadedAccounts] = useState<{ [id: string]: AccountUI }>({});
 
   const onData = (account: AccountUI) => {
-    setLoadedAccounts(prev => {
+    setLoadedAccounts((prev) => {
       if (prev[account.id]) return prev;
       const updated = { ...prev, [account.id]: account };
       if (Object.keys(updated).length === accountIds.length) {
@@ -52,8 +54,6 @@ const AccountsLoader = () => {
       return updated;
     });
   };
-
-  console.log("Loaded accounts:", loadedAccounts);
 
   useEffect(() => {
     setLoadedAccounts({});

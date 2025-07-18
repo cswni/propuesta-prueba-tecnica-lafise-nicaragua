@@ -8,7 +8,11 @@ import { useSelector } from 'react-redux';
 import type { RootState } from '@/store';
 import type { AccountUI } from '@/types/accounts';
 
-export function StepTransferAmount({ getError }: { getError?: (field: string) => string | undefined }) {
+export function StepTransferAmount({
+  getError,
+}: {
+  getError?: (field: string) => string | undefined;
+}) {
   const { control, watch, setError, clearErrors } = useFormContext();
   const monto = watch('monto') || '';
   const cuentaOrigenId = watch('cuentaOrigenId') || '';
@@ -23,10 +27,20 @@ export function StepTransferAmount({ getError }: { getError?: (field: string) =>
   const { data: destinoData } = useGetAccountQuery(cuentaDestinoId, { skip: !cuentaDestinoId });
 
   // Use API or fallback to redux for balance/currency
-  const cuentaOrigenCurrency = origenData?.currency || accounts.find((a: AccountUI) => a.id === cuentaOrigenId)?.currency || 'NIO';
-  const cuentaOrigenBalance = origenData?.balance ?? accounts.find((a: AccountUI) => a.id === cuentaOrigenId)?.balance ?? 0;
-  const cuentaDestinoCurrency = destinoData?.currency || accounts.find((a: AccountUI) => a.id === cuentaDestinoId)?.currency || 'NIO';
-  const cuentaDestinoBalance = destinoData?.balance ?? accounts.find((a: AccountUI) => a.id === cuentaDestinoId)?.balance ?? '';
+  const cuentaOrigenCurrency =
+    origenData?.currency ||
+    accounts.find((a: AccountUI) => a.id === cuentaOrigenId)?.currency ||
+    'NIO';
+  const cuentaOrigenBalance =
+    origenData?.balance ?? accounts.find((a: AccountUI) => a.id === cuentaOrigenId)?.balance ?? 0;
+  const cuentaDestinoCurrency =
+    destinoData?.currency ||
+    accounts.find((a: AccountUI) => a.id === cuentaDestinoId)?.currency ||
+    'NIO';
+  const cuentaDestinoBalance =
+    destinoData?.balance ??
+    accounts.find((a: AccountUI) => a.id === cuentaDestinoId)?.balance ??
+    '';
 
   const placeholder = `Ingrese el monto (Max: ${cuentaOrigenCurrency} ${cuentaOrigenBalance})`;
 
@@ -40,7 +54,10 @@ export function StepTransferAmount({ getError }: { getError?: (field: string) =>
       setError('monto', { type: 'manual', message: `El monto no puede ser negativo.` });
       toast.error('Por favor, ingrese un monto válido. No se permiten valores negativos.');
     } else if (value > cuentaOrigenBalance) {
-      setError('monto', { type: 'manual', message: `El monto excede el saldo disponible (${cuentaOrigenCurrency} ${cuentaOrigenBalance})` });
+      setError('monto', {
+        type: 'manual',
+        message: `El monto excede el saldo disponible (${cuentaOrigenCurrency} ${cuentaOrigenBalance})`,
+      });
       toast.error('El monto excede el saldo disponible de la cuenta de origen.');
     } else {
       clearErrors('monto');
@@ -87,4 +104,4 @@ export function StepTransferAmount({ getError }: { getError?: (field: string) =>
       </div>
     </div>
   );
-} 
+}

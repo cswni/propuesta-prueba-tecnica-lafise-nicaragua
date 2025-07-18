@@ -1,24 +1,24 @@
-import { Link } from "react-router-dom"
+import { Link } from 'react-router-dom';
 
 import {
   SidebarGroup,
   SidebarGroupContent,
   SidebarMenu,
   SidebarMenuButton,
-} from "@/components/ui/sidebar/sidebar.tsx"
-import SidebarMenuItem from "@/components/ui/sidebar/sidebar-menu-item.tsx";
+} from '@/components/ui/sidebar/sidebar.tsx';
+import SidebarMenuItem from '@/components/ui/sidebar/sidebar-menu-item.tsx';
 import { useSidebar } from '@/providers/sidebar/use-sidebar';
-import type {LucideIcon} from "lucide-react";
+import type { LucideIcon } from 'lucide-react';
 
 export function NavMain({
   items,
 }: {
   items: {
-    title: string
-    url: string
-    icon?: LucideIcon
-    svg?: string
-  }[]
+    title: string;
+    url: string;
+    icon?: LucideIcon;
+    svg?: string;
+  }[];
 }) {
   const { isMobile, setOpenMobile } = useSidebar();
 
@@ -44,5 +44,5 @@ export function NavMain({
         </SidebarMenu>
       </SidebarGroupContent>
     </SidebarGroup>
-  )
+  );
 }

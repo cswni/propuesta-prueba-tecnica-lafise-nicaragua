@@ -1,18 +1,24 @@
-import { createApi } from '@reduxjs/toolkit/query/react'
-import axios, { AxiosError } from 'axios'
-import type { BaseQueryFn } from '@reduxjs/toolkit/query/react'
-import type { AxiosRequestConfig } from 'axios'
-import type { User } from '@/types/user'
-import type { AccountApi } from '@/types/accounts'
-import type { Transaction, TransactionsApiResponse } from '@/types/transactions'
+import { createApi } from '@reduxjs/toolkit/query/react';
+import axios, { AxiosError } from 'axios';
+import type { BaseQueryFn } from '@reduxjs/toolkit/query/react';
+import type { AxiosRequestConfig } from 'axios';
+import type { User } from '@/types/user';
+import type { AccountApi } from '@/types/accounts';
+import type { Transaction, TransactionsApiResponse } from '@/types/transactions';
 
 const axiosBaseQuery =
-  ({ baseUrl }: { baseUrl: string } = { baseUrl: '' }): BaseQueryFn<{
-    url: string
-    method?: AxiosRequestConfig['method']
-    data?: AxiosRequestConfig['data']
-    params?: AxiosRequestConfig['params']
-  }, unknown, unknown> =>
+  (
+    { baseUrl }: { baseUrl: string } = { baseUrl: '' }
+  ): BaseQueryFn<
+    {
+      url: string;
+      method?: AxiosRequestConfig['method'];
+      data?: AxiosRequestConfig['data'];
+      params?: AxiosRequestConfig['params'];
+    },
+    unknown,
+    unknown
+  > =>
   async ({ url, method = 'get', data, params }) => {
     try {
       const result = await axios({
@@ -20,18 +26,18 @@ const axiosBaseQuery =
         method,
         data,
         params,
-      })
-      return { data: result.data }
+      });
+      return { data: result.data };
     } catch (axiosError) {
-      let err = axiosError as AxiosError
+      let err = axiosError as AxiosError;
       return {
         error: {
           status: err.response?.status,
           data: err.response?.data || err.message,
         },
-      }
+      };
     }
-  }
+  };
 
 export const api = createApi({
   reducerPath: 'api',
@@ -46,9 +52,7 @@ export const api = createApi({
     }),
     getAccountTransactions: builder.query<TransactionsApiResponse, string>({
       query: (accountId) => ({ url: `accounts/${accountId}/transactions` }),
-      providesTags: (_result, _error, accountId) => [
-        { type: 'Transactions', id: accountId },
-      ],
+      providesTags: (_result, _error, accountId) => [{ type: 'Transactions', id: accountId }],
     }),
     createTransaction: builder.mutation<Transaction, Partial<Transaction>>({
       query: (transaction) => ({
@@ -56,16 +60,14 @@ export const api = createApi({
         method: 'post',
         data: transaction,
       }),
-      invalidatesTags: (_result, _error, arg) => [
-        { type: 'Transactions', id: arg.origin },
-      ],
+      invalidatesTags: (_result, _error, arg) => [{ type: 'Transactions', id: arg.origin }],
     }),
   }),
-})
+});
 
 export const {
   useGetUserQuery,
   useGetAccountQuery,
   useGetAccountTransactionsQuery,
   useCreateTransactionMutation,
-} = api 
+} = api;

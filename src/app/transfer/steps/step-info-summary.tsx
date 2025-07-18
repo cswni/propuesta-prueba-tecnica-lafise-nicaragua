@@ -1,5 +1,11 @@
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { Input } from '@/components/ui/input';
 import { useFormContext, Controller } from 'react-hook-form';
 import { useGetAccountQuery } from '@/store/services/api';
@@ -8,7 +14,11 @@ import type { RootState } from '@/store';
 import type { AccountUI } from '@/types/accounts';
 import React from 'react';
 
-export function StepInfoSummary({ getError }: { getError?: (field: string) => string | undefined }) {
+export function StepInfoSummary({
+  getError,
+}: {
+  getError?: (field: string) => string | undefined;
+}) {
   const { register, watch, setValue, control } = useFormContext();
   const formData = watch();
 
@@ -16,15 +26,26 @@ export function StepInfoSummary({ getError }: { getError?: (field: string) => st
   const accounts: AccountUI[] = useSelector((state: RootState) => state.user.accounts);
 
   // API queries
-  const { data: origenData } = useGetAccountQuery(formData.cuentaOrigenId, { skip: !formData.cuentaOrigenId });
-  const { data: destinoData } = useGetAccountQuery(formData.cuentaDestinoId, { skip: !formData.cuentaDestinoId });
+  const { data: origenData } = useGetAccountQuery(formData.cuentaOrigenId, {
+    skip: !formData.cuentaOrigenId,
+  });
+  const { data: destinoData } = useGetAccountQuery(formData.cuentaDestinoId, {
+    skip: !formData.cuentaDestinoId,
+  });
 
   // Use API or fallback to redux for balance/currency
-  const cuentaOrigenCurrency = origenData?.currency || accounts.find((a: AccountUI) => a.id === formData.cuentaOrigenId)?.currency || 'NIO';
-  const cuentaDestinoCurrency = destinoData?.currency || accounts.find((a: AccountUI) => a.id === formData.cuentaDestinoId)?.currency || 'NIO';
-  
+  const cuentaOrigenCurrency =
+    origenData?.currency ||
+    accounts.find((a: AccountUI) => a.id === formData.cuentaOrigenId)?.currency ||
+    'NIO';
+  const cuentaDestinoCurrency =
+    destinoData?.currency ||
+    accounts.find((a: AccountUI) => a.id === formData.cuentaDestinoId)?.currency ||
+    'NIO';
+
   // Get alias/label for the origin account
-  const cuentaOrigen = origenData || accounts.find((a: AccountUI) => a.id === formData.cuentaOrigenId);
+  const cuentaOrigen =
+    origenData || accounts.find((a: AccountUI) => a.id === formData.cuentaOrigenId);
   const cuentaOrigenAlias = cuentaOrigen?.alias || cuentaOrigen?.alias || 'Cuenta';
   const cuentaOrigenNumber = cuentaOrigen?.account_number || '';
   const cuentaOrigenBalance = cuentaOrigen?.balance ?? '';
@@ -49,7 +70,7 @@ export function StepInfoSummary({ getError }: { getError?: (field: string) => st
             render={({ field }) => (
               <Select
                 value={field.value || 'Propias'}
-                onValueChange={v => {
+                onValueChange={(v) => {
                   field.onChange(v);
                   field.onBlur();
                 }}
@@ -64,14 +85,20 @@ export function StepInfoSummary({ getError }: { getError?: (field: string) => st
               </Select>
             )}
           />
-          {getError && getError('transactionType') && <span className="text-red-600 text-xs mt-1">{getError('transactionType')}</span>}
+          {getError && getError('transactionType') && (
+            <span className="text-red-600 text-xs mt-1">{getError('transactionType')}</span>
+          )}
         </div>
         <div className="flex flex-col gap-3">
           <Label className="font-normal text-sm">Cuenta</Label>
           <div className="border rounded-sm px-3 py-6 h-10 text-sm bg-gray-50 w-full flex items-center gap-2">
-            <span className="text-[var(--green)] font-bold">{cuentaOrigenCurrency} {cuentaOrigenAlias}</span>
+            <span className="text-[var(--green)] font-bold">
+              {cuentaOrigenCurrency} {cuentaOrigenAlias}
+            </span>
             <span className="text-gray-500 font-normal">{cuentaOrigenNumber}</span>
-            <span className="ml-auto font-normal">{cuentaOrigenCurrency} {cuentaOrigenBalance}</span>
+            <span className="ml-auto font-normal">
+              {cuentaOrigenCurrency} {cuentaOrigenBalance}
+            </span>
           </div>
         </div>
       </div>
@@ -79,17 +106,15 @@ export function StepInfoSummary({ getError }: { getError?: (field: string) => st
         <div>
           <Label className="font-normal text-xs text-gray-500">Cuenta origen</Label>
           <div className="font-bold text-base text-[var(--green)]">
-            {formData.cuentaOrigenId
-                ? `${cuentaOrigenCurrency} ${formData.cuentaOrigenId}`
-                : '-'}
+            {formData.cuentaOrigenId ? `${cuentaOrigenCurrency} ${formData.cuentaOrigenId}` : '-'}
           </div>
         </div>
         <div>
           <Label className="font-normal text-xs text-gray-500">Cuenta destino</Label>
           <div className="font-bold text-base text-[var(--green)]">
             {formData.cuentaDestinoId
-                ? `${cuentaDestinoCurrency} ${formData.cuentaDestinoId}`
-                : '-'}
+              ? `${cuentaDestinoCurrency} ${formData.cuentaDestinoId}`
+              : '-'}
           </div>
         </div>
         <div>
@@ -105,7 +130,9 @@ export function StepInfoSummary({ getError }: { getError?: (field: string) => st
             placeholder="Concepto de débito"
             className="border border-gray-300 rounded-lg px-3 py-2 text-sm placeholder-gray-400"
           />
-          {getError && getError('debitConcept') && <span className="text-red-600 text-xs mt-1">{getError('debitConcept')}</span>}
+          {getError && getError('debitConcept') && (
+            <span className="text-red-600 text-xs mt-1">{getError('debitConcept')}</span>
+          )}
         </div>
         <div className="flex flex-col gap-2">
           <Label className="font-normal text-sm">Concepto de crédito</Label>
@@ -114,7 +141,9 @@ export function StepInfoSummary({ getError }: { getError?: (field: string) => st
             placeholder="Concepto de crédito"
             className="border border-gray-300 rounded-lg px-3 py-2 text-sm placeholder-gray-400"
           />
-          {getError && getError('creditConcept') && <span className="text-red-600 text-xs mt-1">{getError('creditConcept')}</span>}
+          {getError && getError('creditConcept') && (
+            <span className="text-red-600 text-xs mt-1">{getError('creditConcept')}</span>
+          )}
         </div>
         <div className="flex flex-col gap-2">
           <Label className="font-normal text-sm">Referencia</Label>
@@ -123,7 +152,9 @@ export function StepInfoSummary({ getError }: { getError?: (field: string) => st
             placeholder="Referencia"
             className="border border-gray-300 rounded-lg px-3 py-2 text-sm placeholder-gray-400"
           />
-          {getError && getError('reference') && <span className="text-red-600 text-xs mt-1">{getError('reference')}</span>}
+          {getError && getError('reference') && (
+            <span className="text-red-600 text-xs mt-1">{getError('reference')}</span>
+          )}
         </div>
         <div className="flex flex-col gap-2">
           <Label className="font-normal text-sm">Enviar confirmación a:</Label>
@@ -132,7 +163,9 @@ export function StepInfoSummary({ getError }: { getError?: (field: string) => st
             placeholder="maria@gmail.com"
             className="border border-gray-300 rounded-lg px-3 py-2 text-sm placeholder-gray-400"
           />
-          {getError && getError('confirmation') && <span className="text-red-600 text-xs mt-1">{getError('confirmation')}</span>}
+          {getError && getError('confirmation') && (
+            <span className="text-red-600 text-xs mt-1">{getError('confirmation')}</span>
+          )}
         </div>
       </div>
     </>

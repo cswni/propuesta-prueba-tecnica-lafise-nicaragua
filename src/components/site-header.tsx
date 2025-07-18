@@ -1,7 +1,7 @@
-import { Button } from "@/components/ui/button"
-import { SidebarTrigger } from "@/components/ui/sidebar/sidebar.tsx"
-import Bell from "lucide-react/icons/bell"
-import Search from "lucide-react/icons/search"
+import { Button } from '@/components/ui/button';
+import { SidebarTrigger } from '@/components/ui/sidebar/sidebar.tsx';
+import Bell from 'lucide-react/icons/bell';
+import Search from 'lucide-react/icons/search';
 
 export function SiteHeader() {
   return (
@@ -33,5 +33,5 @@ export function SiteHeader() {
         </div>
       </div>
     </header>
-  )
+  );
 }

@@ -26,7 +26,7 @@ const transferSchema = z.object({
   confirmation: z.string().optional(),
   cuentaOrigenLabel: z.string().optional(),
   cuentaDestinoLabel: z.string().optional(),
-  cuentaOrigenBalance: z.string().optional(), 
+  cuentaOrigenBalance: z.string().optional(),
   cuentaOrigenCurrency: z.string().optional(),
 });
 
@@ -44,12 +44,7 @@ const stepDefs: StepDef[] = [
 // Step 2: cuentaDestinoId (required)
 // Step 3: monto (required)
 // Step 4: all fields optional
-const stepFieldMap = [
-  ['cuentaOrigenId'],
-  ['cuentaDestinoId'],
-  ['monto'],
-  [],
-];
+const stepFieldMap = [['cuentaOrigenId'], ['cuentaDestinoId'], ['monto'], []];
 
 export default function TransferWizardPage() {
   const navigate = useNavigate();
@@ -59,15 +54,8 @@ export default function TransferWizardPage() {
     mode: 'onChange',
     defaultValues: {},
   });
-  const {
-    currentStep,
-    isFirstStep,
-    isLastStep,
-    nextStep,
-    prevStep,
-    step,
-    steps,
-  } = useStepper(stepDefs);
+  const { currentStep, isFirstStep, isLastStep, nextStep, prevStep, step, steps } =
+    useStepper(stepDefs);
   const StepComponent = step.component;
   const [createTransaction, { isLoading }] = useCreateTransactionMutation();
   const { formState } = methods;
@@ -131,7 +119,11 @@ export default function TransferWizardPage() {
         <FormProvider {...methods}>
           <form onSubmit={methods.handleSubmit(onStepSubmit)}>
             <div className="min-h-[400px] p-6">
-              <StepComponent key={currentStep} getError={getError} disableContinue={disableContinue} />
+              <StepComponent
+                key={currentStep}
+                getError={getError}
+                disableContinue={disableContinue}
+              />
             </div>
             <div className="flex justify-center gap-4 my-8">
               <Button
@@ -159,12 +151,24 @@ export default function TransferWizardPage() {
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/20">
             <div className="bg-white rounded-xl shadow-2xl p-8 max-w-md w-full text-center animate-fade-in">
               <div className="flex flex-col items-center gap-4">
-                <svg width="64" height="64" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#3B8668"/><path d="M7 13l3 3 7-7" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                <svg width="64" height="64" fill="none" viewBox="0 0 24 24">
+                  <circle cx="12" cy="12" r="12" fill="#3B8668" />
+                  <path
+                    d="M7 13l3 3 7-7"
+                    stroke="#fff"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
                 <h2 className="text-2xl font-bold text-[var(--green)]">¡Transferencia exitosa!</h2>
                 <p className="text-gray-700">Tu transferencia ha sido realizada correctamente.</p>
                 <button
                   className="mt-4 px-6 py-2 bg-[var(--green)] text-white rounded-lg font-semibold hover:bg-green-700 transition"
-                  onClick={() => { setShowModal(false); navigate('/transacciones'); }}
+                  onClick={() => {
+                    setShowModal(false);
+                    navigate('/transacciones');
+                  }}
                 >
                   Ver transacciones
                 </button>
@@ -175,4 +179,4 @@ export default function TransferWizardPage() {
       </div>
     </div>
   );
-} 
+}

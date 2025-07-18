@@ -1,5 +1,11 @@
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { useSelector } from 'react-redux';
 import type { RootState } from '@/store';
 import type { AccountUI } from '@/types/accounts';
@@ -22,7 +28,10 @@ export function StepAccountTo({ getError }: { getError?: (field: string) => stri
   useEffect(() => {
     if (accountData) {
       setValue('cuentaDestinoBalance', accountData.balance?.toString() || '');
-      setValue('cuentaDestinoLabel', `${accountData.currency || 'NIO'} ${accountData.account_number}`);
+      setValue(
+        'cuentaDestinoLabel',
+        `${accountData.currency || 'NIO'} ${accountData.account_number}`
+      );
     } else if (cuentaDestinoId) {
       // fallback to redux data if API not available
       const acc = accounts.find((a: AccountUI) => a.id === cuentaDestinoId);
@@ -42,7 +51,7 @@ export function StepAccountTo({ getError }: { getError?: (field: string) => stri
           render={({ field }) => (
             <Select
               value={field.value || ''}
-              onValueChange={v => {
+              onValueChange={(v) => {
                 field.onChange(v);
                 field.onBlur();
               }}
@@ -52,12 +61,18 @@ export function StepAccountTo({ getError }: { getError?: (field: string) => stri
               </SelectTrigger>
               <SelectContent>
                 {accounts.map((acc: AccountUI) => (
-                  <SelectItem key={acc.id} value={String(acc.id)} disabled={acc.id === cuentaOrigenId}>
+                  <SelectItem
+                    key={acc.id}
+                    value={String(acc.id)}
+                    disabled={acc.id === cuentaOrigenId}
+                  >
                     <div className="flex flex-col justify-start items-start gap-1">
                       <span className="text-base font-bold text-[var(--green)]">{acc.alias}</span>
                       <span className="text-black font-normal text-xs">{`${acc.id} - ${acc.balance}`}</span>
                       {acc.id === cuentaOrigenId && (
-                        <span className="text-xs text-red-400">No puedes seleccionar la misma cuenta de origen</span>
+                        <span className="text-xs text-red-400">
+                          No puedes seleccionar la misma cuenta de origen
+                        </span>
                       )}
                     </div>
                   </SelectItem>
@@ -73,10 +88,15 @@ export function StepAccountTo({ getError }: { getError?: (field: string) => stri
           <Label className="font-normal text-sm">Detalle de la cuenta</Label>
           <div className="p-4 bg-white border rounded-md">
             <div className="font-bold text-base text-[var(--green)]">{cuentaDestinoLabel}</div>
-            <div className="text-black font-normal">Saldo: {accountData ? `${accountData.currency || 'NIO'} ${accountData.balance}` : cuentaDestinoBalance}</div>
+            <div className="text-black font-normal">
+              Saldo:{' '}
+              {accountData
+                ? `${accountData.currency || 'NIO'} ${accountData.balance}`
+                : cuentaDestinoBalance}
+            </div>
           </div>
         </div>
       )}
     </div>
   );
-} 
+}

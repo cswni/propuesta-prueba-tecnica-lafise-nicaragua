@@ -23,5 +23,5 @@ export interface TransactionsApiResponse {
 }
 
 export interface RecentTransactionsProps {
-    accountId: string;
-  }
+  accountId: string;
+}

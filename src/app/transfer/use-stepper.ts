@@ -31,4 +31,4 @@ export function useStepper(steps: StepDef[]) {
     step: steps[currentStep],
     steps,
   };
-} 
+}

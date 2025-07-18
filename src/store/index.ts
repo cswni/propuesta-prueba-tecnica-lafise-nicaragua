@@ -1,9 +1,9 @@
-import { configureStore } from '@reduxjs/toolkit'
-import { setupListeners } from '@reduxjs/toolkit/query'
-import { api } from '@/store/services/api'
-import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
-import type { User } from '@/types/user'
-import type { AccountUI } from '@/types/accounts'
+import { configureStore } from '@reduxjs/toolkit';
+import { setupListeners } from '@reduxjs/toolkit/query';
+import { api } from '@/store/services/api';
+import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
+import type { User } from '@/types/user';
+import type { AccountUI } from '@/types/accounts';
 
 interface UserState {
   data: User | null;
@@ -26,9 +26,9 @@ const userSlice = createSlice({
       state.accounts = action.payload;
     },
   },
-})
+});
 
-export const { setUser, setUserAccounts } = userSlice.actions
+export const { setUser, setUserAccounts } = userSlice.actions;
 
 export const store = configureStore({
   reducer: {
@@ -36,11 +36,10 @@ export const store = configureStore({
     user: userSlice.reducer,
   },
   devTools: true,
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(api.middleware),
-})
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(api.middleware),
+});
 
-setupListeners(store.dispatch)
+setupListeners(store.dispatch);
 
-export type RootState = ReturnType<typeof store.getState>
-export type AppDispatch = typeof store.dispatch 
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
