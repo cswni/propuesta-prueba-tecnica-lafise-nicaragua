@@ -1,4 +1,4 @@
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/ui/button.tsx';
 import { SidebarTrigger } from '@/components/ui/sidebar/sidebar.tsx';
 import Bell from 'lucide-react/icons/bell';
 import Search from 'lucide-react/icons/search';

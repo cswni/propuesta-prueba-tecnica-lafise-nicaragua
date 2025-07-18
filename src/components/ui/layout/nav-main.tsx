@@ -7,7 +7,7 @@ import {
   SidebarMenuButton,
 } from '@/components/ui/sidebar/sidebar.tsx';
 import { SidebarMenuItem } from '@/components/ui/sidebar/sidebar-menu-item.tsx';
-import { useSidebar } from '@/providers/sidebar/use-sidebar';
+import { useSidebar } from '@/providers/sidebar/use-sidebar.ts';
 import type { LucideIcon } from 'lucide-react';
 
 export function NavMain({

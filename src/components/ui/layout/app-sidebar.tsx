@@ -13,7 +13,7 @@ import Paganet from '@/assets/images/sidebar/paganet.svg';
 import Ahorro from '@/assets/images/sidebar/ahorro.svg';
 import Configuracion from '@/assets/images/sidebar/configuracion.svg';
 
-import { NavMain } from '@/components/nav-main';
+import { NavMain } from '@/components/ui/layout/nav-main.tsx';
 import {
   Sidebar,
   SidebarContent,
@@ -23,8 +23,8 @@ import {
 } from '@/components/ui/sidebar/sidebar.tsx';
 import { Link } from 'react-router-dom';
 import { SidebarMenuItem } from '@/components/ui/sidebar/sidebar-menu-item.tsx';
-import { Toggle } from '@/components/ui/toggle';
-import { useIsMobile } from '@/hooks/use-mobile';
+import { Toggle } from '@/components/ui/toggle.tsx';
+import { useIsMobile } from '@/hooks/use-mobile.ts';
 import { useSettings } from '@/providers/settings/use-settings.ts';
 import { ExchangeRate } from '@/components/ui/sidebar/exchange-rate.tsx';
 import { ServerInfo } from '@/components/ui/sidebar/server-info.tsx';
