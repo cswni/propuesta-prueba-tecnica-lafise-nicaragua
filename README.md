@@ -1,5 +1,8 @@
 # Prueba Técnica - Desarrollador Frontend (Web)
 
+# Producto finalizado  
+![Preview](./public/preview-app.png)
+
 ## Objetivo:
 Desarrollar una aplicación web en React basada en un diseño predefinido y consumiendo datos de un API.
 
