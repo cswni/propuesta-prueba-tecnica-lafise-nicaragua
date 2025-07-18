@@ -2,16 +2,27 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState, useMemo } from "react";
 import { setUserAccounts } from "@/store";
 import { useGetAccountQuery } from "@/store/services/api.ts";
+import type { AccountUI } from "@/types/accounts";
+import NicaraguaFlag from '@/assets/images/flags/nicaragua-flag.svg';
+import UsaFlag from '@/assets/images/flags/usa-flag.svg';
 
-const AccountFetcher = ({ id, onData }: { id: string, onData: (data: any) => void }) => {
+const flagByCurrency: Record<string, string> = {
+  NIO: NicaraguaFlag,
+  USD: UsaFlag,
+};
+
+const AccountFetcher = ({ id, onData }: { id: string, onData: (data: AccountUI) => void }) => {
   const { data } = useGetAccountQuery(id);
   useEffect(() => {
     if (data) {
       onData({
         id,
-        currency: data.currency,
-        balance: data.balance,
         alias: data.alias,
+        account_number: data.account_number,
+        balance: data.balance,
+        currency: data.currency,
+        flag: flagByCurrency[data.currency] || NicaraguaFlag,
+        accountNumber: String(data.account_number),
       });
     }
   }, [data, id, onData]);
@@ -27,14 +38,14 @@ const AccountsLoader = () => {
     [user]
   );
 
-  const [loadedAccounts, setLoadedAccounts] = useState<{ [id: string]: any }>({});
+  const [loadedAccounts, setLoadedAccounts] = useState<{ [id: string]: AccountUI }>({});
 
-  const onData = (account: any) => {
+  const onData = (account: AccountUI) => {
     setLoadedAccounts(prev => {
       if (prev[account.id]) return prev;
       const updated = { ...prev, [account.id]: account };
       if (Object.keys(updated).length === accountIds.length) {
-        const accountsArray = Object.values(updated).map(acc => JSON.parse(JSON.stringify(acc)));
+        const accountsArray = Object.values(updated);
         dispatch(setUserAccounts(accountsArray));
       }
       return updated;

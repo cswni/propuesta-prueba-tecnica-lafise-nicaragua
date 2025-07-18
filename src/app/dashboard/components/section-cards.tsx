@@ -1,27 +1,7 @@
 import LogoLafise from '@/assets/images/logo-lafise-blanco.svg'
 import LafiseLogoShield from "@/assets/images/logo-lafise-shield.svg"
-const cards = [
-  {
-    number: "1234 **** **** 1234",
-    holder: "John Doe",
-    expiry: "12/26",
-    color: "bg-gradient-to-r from-[#00593B] to-[#096C4B]",
-  },
-  {
-    number: "1234 **** **** 5678",
-    holder: "Jane Smith",
-    expiry: "08/25",
-    brand: "Mastercard",
-    color: "bg-gradient-to-r from-[#0B102E] to-[#121741]",
-  },
-  {
-    number: "1234 **** **** 5678",
-    holder: "Jane Smith",
-    expiry: "08/25",
-    brand: "Mastercard",
-    color: "bg-gradient-to-r from-[#1F1F1F] to-[#272727]",
-  }
-]
+import { useSelector } from 'react-redux'
+import type { RootState } from '@/store'
 
 function CreditDebitCard({
   number,
@@ -80,6 +60,32 @@ function CreditDebitCard({
 }
 
 export function SectionCards() {
+  const user = useSelector((state: RootState) => state.user.data);
+  const userName = user?.full_name || 'Usuario';
+
+  const cards = [
+    {
+      number: "1234 **** **** 1234",
+      holder: userName,
+      expiry: "12/26",
+      color: "bg-gradient-to-r from-[#00593B] to-[#096C4B]",
+    },
+    {
+      number: "1234 **** **** 5678",
+      holder: userName,
+      expiry: "08/25",
+      brand: "Mastercard",
+      color: "bg-gradient-to-r from-[#0B102E] to-[#121741]",
+    },
+    {
+      number: "1234 **** **** 5678",
+      holder: userName,
+      expiry: "08/25",
+      brand: "Mastercard",
+      color: "bg-gradient-to-r from-[#1F1F1F] to-[#272727]",
+    }
+  ]
+
   return (
     <div className="grid grid-cols-1 gap-4 px-4 lg:px-6 @xl/main:grid-cols-2 @5xl/main:grid-cols-3">
       {cards.map((card, idx) => (

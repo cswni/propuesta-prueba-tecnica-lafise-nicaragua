@@ -5,6 +5,8 @@ import { toast } from 'sonner';
 import { useEffect } from 'react';
 import { useGetAccountQuery } from '@/store/services/api';
 import { useSelector } from 'react-redux';
+import type { RootState } from '@/store';
+import type { AccountUI } from '@/types/accounts';
 
 export function StepTransferAmount({ getError }: { getError?: (field: string) => string | undefined }) {
   const { control, watch, setError, clearErrors } = useFormContext();
@@ -14,18 +16,18 @@ export function StepTransferAmount({ getError }: { getError?: (field: string) =>
   const error = getError ? getError('monto') : undefined;
 
   // Redux fallback
-  const user = useSelector((state: any) => state.user.data);
-  const accounts = (user?.products || []).filter((p: any) => p.type === 'Account');
+  const user = useSelector((state: RootState) => state.user.data);
+  const accounts: AccountUI[] = useSelector((state: RootState) => state.user.accounts);
 
   // API queries
   const { data: origenData } = useGetAccountQuery(cuentaOrigenId, { skip: !cuentaOrigenId });
   const { data: destinoData } = useGetAccountQuery(cuentaDestinoId, { skip: !cuentaDestinoId });
 
   // Use API or fallback to redux for balance/currency
-  const cuentaOrigenCurrency = origenData?.currency || accounts.find((a: any) => a.id === cuentaOrigenId)?.currency || 'NIO';
-  const cuentaOrigenBalance = origenData?.balance ?? accounts.find((a: any) => a.id === cuentaOrigenId)?.balance ?? 0;
-  const cuentaDestinoCurrency = destinoData?.currency || accounts.find((a: any) => a.id === cuentaDestinoId)?.currency || 'NIO';
-  const cuentaDestinoBalance = destinoData?.balance ?? accounts.find((a: any) => a.id === cuentaDestinoId)?.balance ?? '';
+  const cuentaOrigenCurrency = origenData?.currency || accounts.find((a: AccountUI) => a.id === cuentaOrigenId)?.currency || 'NIO';
+  const cuentaOrigenBalance = origenData?.balance ?? accounts.find((a: AccountUI) => a.id === cuentaOrigenId)?.balance ?? 0;
+  const cuentaDestinoCurrency = destinoData?.currency || accounts.find((a: AccountUI) => a.id === cuentaDestinoId)?.currency || 'NIO';
+  const cuentaDestinoBalance = destinoData?.balance ?? accounts.find((a: AccountUI) => a.id === cuentaDestinoId)?.balance ?? '';
 
   const placeholder = `Ingrese el monto (Max: ${cuentaOrigenCurrency} ${cuentaOrigenBalance})`;
 

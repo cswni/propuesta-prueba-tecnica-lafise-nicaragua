@@ -1,26 +1,19 @@
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useSelector } from 'react-redux';
+import type { RootState } from '@/store';
+import type { AccountUI } from '@/types/accounts';
 import { useFormContext, Controller } from 'react-hook-form';
 import {useGetAccountQuery} from "@/store/services/api.ts";
 import {useEffect} from "react";
 
 export function StepAccountFrom({ getError }: { getError?: (field: string) => string | undefined }) {
-  const user = useSelector((state: any) => state.user.data);
-  const accounts = (user?.products || [])
-    .filter((p: any) => p.type === 'Account')
-    .map((p: any) => ({
-      id: p.id,
-      label: `${p.currency || 'NIO'} ${p.id}`,
-      number: p.id,
-      balance: p.balance ? `${p.currency || 'NIO'} ${p.balance}` : 'C$ 10,000', // fallback for mock
-    }));
+  const accounts: AccountUI[] = useSelector((state: RootState) => state.user.accounts);
 
-  const { control, watch, setValue, getValues } = useFormContext();
+  const { control, watch, setValue } = useFormContext();
   const cuentaOrigenId = watch('cuentaOrigenId') || '';
   const cuentaOrigenLabel = watch('cuentaOrigenLabel') || '';
   const cuentaOrigenBalance = watch('cuentaOrigenBalance') || 'C$ 10,000';
-  const cuentaOrigenCurrency = watch('cuentaOrigenCurrency') || 'NIO';
   const error = getError ? getError('cuentaOrigenId') : undefined;
 
   // Fetch account details when cuentaOrigenId changes
@@ -45,8 +38,8 @@ export function StepAccountFrom({ getError }: { getError?: (field: string) => st
               value={field.value || ''}
               onValueChange={v => {
                 field.onChange(v);
-                const acc = accounts.find((a: any) => a.id === v);
-                setValue('cuentaOrigenLabel', acc?.label || '');
+                const acc = accounts.find((a: AccountUI) => a.id === v);
+                setValue('cuentaOrigenLabel', acc?.alias || '');
                 field.onBlur();
               }}
             >
@@ -54,10 +47,10 @@ export function StepAccountFrom({ getError }: { getError?: (field: string) => st
                 <SelectValue placeholder="Cuenta de origen" />
               </SelectTrigger>
               <SelectContent>
-                {accounts.map((acc: any) => (
-                  <SelectItem key={acc.id} value={acc.id}>
+                {accounts.map((acc: AccountUI) => (
+                  <SelectItem key={acc.id} value={String(acc.id)}>
                     <div className="flex flex-col">
-                      <span className="text-base font-bold text-[var(--green)]">{acc.label}</span>
+                      <span className="text-base font-bold text-[var(--green)]">{acc.alias}</span>
                     </div>
                   </SelectItem>
                 ))}

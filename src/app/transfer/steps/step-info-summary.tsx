@@ -4,6 +4,8 @@ import { Input } from '@/components/ui/input';
 import { useFormContext, Controller } from 'react-hook-form';
 import { useGetAccountQuery } from '@/store/services/api';
 import { useSelector } from 'react-redux';
+import type { RootState } from '@/store';
+import type { AccountUI } from '@/types/accounts';
 import React from 'react';
 
 export function StepInfoSummary({ getError }: { getError?: (field: string) => string | undefined }) {
@@ -11,19 +13,19 @@ export function StepInfoSummary({ getError }: { getError?: (field: string) => st
   const formData = watch();
 
   // Redux fallback
-  const user = useSelector((state: any) => state.user.data);
-  const accounts = (user?.products || []).filter((p: any) => p.type === 'Account');
+  const user = useSelector((state: RootState) => state.user.data);
+  const accounts: AccountUI[] = useSelector((state: RootState) => state.user.accounts);
 
   // API queries
   const { data: origenData } = useGetAccountQuery(formData.cuentaOrigenId, { skip: !formData.cuentaOrigenId });
   const { data: destinoData } = useGetAccountQuery(formData.cuentaDestinoId, { skip: !formData.cuentaDestinoId });
 
   // Use API or fallback to redux for balance/currency
-  const cuentaOrigenCurrency = origenData?.currency || accounts.find((a: any) => a.id === formData.cuentaOrigenId)?.currency || 'NIO';
-  const cuentaDestinoCurrency = destinoData?.currency || accounts.find((a: any) => a.id === formData.cuentaDestinoId)?.currency || 'NIO';
+  const cuentaOrigenCurrency = origenData?.currency || accounts.find((a: AccountUI) => a.id === formData.cuentaOrigenId)?.currency || 'NIO';
+  const cuentaDestinoCurrency = destinoData?.currency || accounts.find((a: AccountUI) => a.id === formData.cuentaDestinoId)?.currency || 'NIO';
   
   // Get alias/label for the origin account
-  const cuentaOrigen = origenData || accounts.find((a: any) => a.id === formData.cuentaOrigenId);
+  const cuentaOrigen = origenData || accounts.find((a: AccountUI) => a.id === formData.cuentaOrigenId);
   const cuentaOrigenAlias = cuentaOrigen?.alias || cuentaOrigen?.label || 'Cuenta';
   const cuentaOrigenNumber = cuentaOrigen?.id || '';
   const cuentaOrigenBalance = cuentaOrigen?.balance ?? '';

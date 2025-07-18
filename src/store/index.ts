@@ -1,16 +1,28 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { setupListeners } from '@reduxjs/toolkit/query'
 import { api } from '@/store/services/api'
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
+import type { User } from '@/types/user'
+import type { AccountUI } from '@/types/accounts'
+
+interface UserState {
+  data: User | null;
+  accounts: AccountUI[];
+}
+
+const initialState: UserState = {
+  data: null,
+  accounts: [],
+};
 
 const userSlice = createSlice({
   name: 'user',
-  initialState: { data: null, accounts: [] },
+  initialState,
   reducers: {
-    setUser: (state, action) => {
+    setUser: (state, action: PayloadAction<User>) => {
       state.data = action.payload;
     },
-    setUserAccounts: (state, action) => {
+    setUserAccounts: (state, action: PayloadAction<AccountUI[]>) => {
       state.accounts = action.payload;
     },
   },

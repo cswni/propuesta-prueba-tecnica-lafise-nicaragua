@@ -1,23 +1,24 @@
-import type {Account} from "@/types/accounts.ts";
+import type { AccountUI } from "@/types/accounts";
 import { toast } from "sonner"
 import NicaraguaFlag from '@/assets/images/flags/nicaragua-flag.svg'
 import UsaFlag from '@/assets/images/flags/usa-flag.svg'
 import CopyIcon from '@/assets/images/icons/copy.svg'
 import { useSelector } from 'react-redux'
+import type { RootState } from "@/store";
 
 const flagByCurrency: Record<string, string> = {
   NIO: NicaraguaFlag,
   USD: UsaFlag,
-}
+};
 
 function AccountCard({
   alias,
   accountNumber,
   balance,
-  flag: FlagIcon,
+  flag,
   currency,
   id
-}: Account) {
+}: AccountUI) {
   const handleCopyAccountNumber = () => {
     navigator.clipboard.writeText(accountNumber)
     toast.success("Banco Lafise", {
@@ -29,7 +30,7 @@ function AccountCard({
     <div className="relative rounded-xl shadow-md p-6 bg-white border border-gray-200 flex flex-col justify-between min-h-[160px] sm:max-w-[353px]">
       <div className="absolute top-4 right-4">
         <img
-          src={FlagIcon}
+          src={flag}
           alt={`${currency} flag`}
           className="w-12 h-12 rounded-full"
         />
@@ -63,36 +64,45 @@ function AccountCard({
 }
 
 export function SectionAccounts() {
-  const userSlice = useSelector((state: any) => state.user);
-  const accounts = userSlice.accounts || [];
+  const accounts: AccountUI[] = useSelector((state: RootState) => state.user.accounts);
 
-  // Opcional: Completar con una cuenta mock si hay menos de 3 cuentas (esto es solo para propósitos de demostración)
+  // If accounts are lower than 3, mock one in USD currency and add to existing accounts array
   let displayAccounts = accounts;
   if (accounts.length < 3) {
     displayAccounts = [
       ...accounts,
       {
-        id: 'MOCKED-123456',
-        alias: 'Cuenta Mock',
-        accountNumber: 'MOCKED-123456',
-        balance: '5,000',
-        flag: UsaFlag,
+        id: 'MOCK-USD-1',
+        alias: 'Cuenta Mock USD',
+        account_number: 99999999,
+        balance: 10000,
         currency: 'USD',
+        flag: UsaFlag,
+        accountNumber: '99999999',
       },
     ];
   }
 
+  // If no accounts are loaded, show a loading state or empty state
+  if (!accounts || accounts.length === 0) {
+    return (
+      <div className="grid grid-cols-1 gap-4 px-4 lg:px-6 @xl/main:grid-cols-2 @5xl/main:grid-cols-3">
+        <div className="rounded-xl shadow-md p-6 bg-white border border-gray-200 flex flex-col justify-center items-center min-h-[160px]">
+          <div className="text-gray-500 text-center">
+            <div className="text-lg font-semibold mb-2">Cargando cuentas...</div>
+            <div className="text-sm">Espera mientras cargamos tu información</div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="grid grid-cols-1 gap-4 px-4 lg:px-6 @xl/main:grid-cols-2 @5xl/main:grid-cols-3">
-      {displayAccounts.map((account: Account) => (
+      {displayAccounts.map((account: AccountUI) => (
         <AccountCard
           key={account.id}
-          alias={account.alias}
-          accountNumber={account.id?.toString()}
-          balance={account.balance}
-          flag={flagByCurrency[account.currency] || NicaraguaFlag}
-          currency={account.currency}
-          id={account.id}
+          {...account}
         />
       ))}
     </div>

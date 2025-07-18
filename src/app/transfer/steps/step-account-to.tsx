@@ -1,21 +1,14 @@
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useSelector } from 'react-redux';
+import type { RootState } from '@/store';
+import type { AccountUI } from '@/types/accounts';
 import { useFormContext, Controller } from 'react-hook-form';
 import { useGetAccountQuery } from '@/store/services/api';
 import { useEffect } from 'react';
 
 export function StepAccountTo({ getError }: { getError?: (field: string) => string | undefined }) {
-  const user = useSelector((state: any) => state.user.data);
-  const accounts = (user?.products || [])
-    .filter((p: any) => p.type === 'Account')
-    .map((p: any) => ({
-      id: p.id,
-      label: `${p.currency || 'NIO'} ${p.id}`,
-      number: p.id,
-      balance: p.balance ? `${p.currency || 'NIO'} ${p.balance}` : '',
-    }));
-
+  const accounts: AccountUI[] = useSelector((state: RootState) => state.user.accounts);
   const { control, watch, setValue } = useFormContext();
   const cuentaDestinoId = watch('cuentaDestinoId') || '';
   const cuentaDestinoLabel = watch('cuentaDestinoLabel') || '';
@@ -32,7 +25,7 @@ export function StepAccountTo({ getError }: { getError?: (field: string) => stri
       setValue('cuentaDestinoLabel', `${accountData.currency || 'NIO'} ${accountData.id}`);
     } else if (cuentaDestinoId) {
       // fallback to redux data if API not available
-      const acc = accounts.find((a: any) => a.id === cuentaDestinoId);
+      const acc = accounts.find((a: AccountUI) => a.id === cuentaDestinoId);
       setValue('cuentaDestinoLabel', acc?.label || '');
       setValue('cuentaDestinoBalance', acc?.balance || '');
     }
@@ -58,7 +51,7 @@ export function StepAccountTo({ getError }: { getError?: (field: string) => stri
                 <SelectValue placeholder="Cuenta destino" />
               </SelectTrigger>
               <SelectContent>
-                {accounts.map((acc: any) => (
+                {accounts.map((acc: AccountUI) => (
                   <SelectItem key={acc.id} value={acc.id} disabled={acc.id === cuentaOrigenId}>
                     <div className="flex flex-col">
                       <span className="text-base font-bold text-[var(--green)]">{acc.label}</span>
