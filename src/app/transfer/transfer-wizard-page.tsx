@@ -16,8 +16,6 @@ import { StepTransferAmount } from './steps/step-transfer-amount';
 import { useStepper } from './use-stepper';
 import type { StepDef } from './use-stepper';
 
-
-
 // Zod schema for POST /transactions
 const transferSchema = z.object({
   cuentaOrigenId: z.string().optional(),

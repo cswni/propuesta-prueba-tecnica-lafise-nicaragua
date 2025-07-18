@@ -15,7 +15,6 @@ import type { RootState } from '@/store';
 import { useGetAccountQuery } from '@/store/services/api';
 import type { AccountUI } from '@/types/accounts';
 
-
 export function StepInfoSummary({
   getError,
 }: {

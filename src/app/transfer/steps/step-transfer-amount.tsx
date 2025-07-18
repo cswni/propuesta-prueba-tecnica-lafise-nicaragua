@@ -87,15 +87,11 @@ export function StepTransferAmount({
         <div className="p-4 bg-white border rounded-md">
           <div className="text-black font-normal text-sm mb-1">Cuenta origen:</div>
           <div className="font-bold text-base text-[var(--green)]">
-            {cuentaOrigenId
-              ? `${cuentaOrigenCurrency} ${cuentaOrigenId}`
-              : '-'}
+            {cuentaOrigenId ? `${cuentaOrigenCurrency} ${cuentaOrigenId}` : '-'}
           </div>
           <div className="text-black font-normal text-sm mt-2 mb-1">Cuenta destino:</div>
           <div className="font-bold text-base text-[var(--green)]">
-            {cuentaDestinoId
-              ? `${cuentaDestinoCurrency} ${cuentaDestinoId}`
-              : '-'}
+            {cuentaDestinoId ? `${cuentaDestinoCurrency} ${cuentaDestinoId}` : '-'}
           </div>
         </div>
       </div>

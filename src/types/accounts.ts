@@ -1,4 +1,3 @@
-// Backend response type
 export interface AccountApi {
   alias: string;
   account_number: number;

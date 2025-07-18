@@ -28,7 +28,6 @@ import { Toggle } from '@/components/ui/toggle';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useSettings } from '@/providers/settings/use-settings';
 
-
 type SidebarData = {
   user: {
     name: string;

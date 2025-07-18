@@ -9,8 +9,6 @@ import UserLoader from '@/app/dashboard/components/user-loader';
 import App from './App';
 import { store } from './store';
 
-
-
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <Provider store={store}>
