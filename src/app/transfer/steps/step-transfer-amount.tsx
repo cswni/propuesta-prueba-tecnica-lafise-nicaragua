@@ -37,10 +37,6 @@ export function StepTransferAmount({
     destinoData?.currency ||
     accounts.find((a: AccountUI) => a.id === cuentaDestinoId)?.currency ||
     'NIO';
-  const cuentaDestinoBalance =
-    destinoData?.balance ??
-    accounts.find((a: AccountUI) => a.id === cuentaDestinoId)?.balance ??
-    '';
 
   const placeholder = `Ingrese el monto (Max: ${cuentaOrigenCurrency} ${cuentaOrigenBalance})`;
 
@@ -91,13 +87,13 @@ export function StepTransferAmount({
           <div className="text-black font-normal text-sm mb-1">Cuenta origen:</div>
           <div className="font-bold text-base text-[var(--green)]">
             {cuentaOrigenId
-              ? `${cuentaOrigenCurrency} ${cuentaOrigenId} (Saldo: ${cuentaOrigenCurrency} ${cuentaOrigenBalance})`
+              ? `${cuentaOrigenCurrency} ${cuentaOrigenId}`
               : '-'}
           </div>
           <div className="text-black font-normal text-sm mt-2 mb-1">Cuenta destino:</div>
           <div className="font-bold text-base text-[var(--green)]">
             {cuentaDestinoId
-              ? `${cuentaDestinoCurrency} ${cuentaDestinoId} (Saldo: ${cuentaDestinoCurrency} ${cuentaDestinoBalance || 0})`
+              ? `${cuentaDestinoCurrency} ${cuentaDestinoId}`
               : '-'}
           </div>
         </div>
