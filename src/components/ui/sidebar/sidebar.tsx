@@ -4,7 +4,7 @@ import * as React from 'react';
 import { Slot } from '@radix-ui/react-slot';
 import { cva } from 'class-variance-authority';
 import type { VariantProps } from 'class-variance-authority';
-import {MenuIcon} from 'lucide-react';
+import MenuIcon from 'lucide-react/icons/menu';
 
 import { cn } from '@/lib/utils.ts';
 import { Button } from '@/components/ui/button.tsx';

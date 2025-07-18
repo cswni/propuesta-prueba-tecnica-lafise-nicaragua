@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button"
 import { SidebarTrigger } from "@/components/ui/sidebar/sidebar.tsx"
-import { Bell, Search as SearchIcon } from "lucide-react"
+import Bell from "lucide-react/icons/bell"
+import Search from "lucide-react/icons/search"
 
 export function SiteHeader() {
   return (
@@ -15,7 +16,7 @@ export function SiteHeader() {
           {/* Búsqueda */}
           <div className="relative">
             <span className="absolute left-2 top-1/2 -translate-y-1/2 text-muted-foreground">
-              <SearchIcon size={16} />
+              <Search size={16} />
             </span>
             <input
               type="text"

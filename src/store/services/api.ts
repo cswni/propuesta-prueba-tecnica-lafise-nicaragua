@@ -2,6 +2,9 @@ import { createApi } from '@reduxjs/toolkit/query/react'
 import axios, { AxiosError } from 'axios'
 import type { BaseQueryFn } from '@reduxjs/toolkit/query/react'
 import type { AxiosRequestConfig } from 'axios'
+import type { User } from '@/types/user'
+import type { AccountApi } from '@/types/accounts'
+import type { Transaction, TransactionsApiResponse } from '@/types/transactions'
 
 const axiosBaseQuery =
   ({ baseUrl }: { baseUrl: string } = { baseUrl: '' }): BaseQueryFn<{
@@ -35,25 +38,25 @@ export const api = createApi({
   baseQuery: axiosBaseQuery({ baseUrl: import.meta.env.VITE_URL_API }),
   tagTypes: ['Transactions'],
   endpoints: (builder) => ({
-    getUser: builder.query<any, string>({
+    getUser: builder.query<User, string>({
       query: (userId) => ({ url: `users/${userId}` }),
     }),
-    getAccount: builder.query<any, string>({
+    getAccount: builder.query<AccountApi, string>({
       query: (accountId) => ({ url: `accounts/${accountId}` }),
     }),
-    getAccountTransactions: builder.query<any, string>({
+    getAccountTransactions: builder.query<TransactionsApiResponse, string>({
       query: (accountId) => ({ url: `accounts/${accountId}/transactions` }),
-      providesTags: (result, error, accountId) => [
+      providesTags: (_result, _error, accountId) => [
         { type: 'Transactions', id: accountId },
       ],
     }),
-    createTransaction: builder.mutation<any, any>({
+    createTransaction: builder.mutation<Transaction, Partial<Transaction>>({
       query: (transaction) => ({
         url: 'transactions',
         method: 'post',
         data: transaction,
       }),
-      invalidatesTags: (result, error, arg) => [
+      invalidatesTags: (_result, _error, arg) => [
         { type: 'Transactions', id: arg.origin },
       ],
     }),

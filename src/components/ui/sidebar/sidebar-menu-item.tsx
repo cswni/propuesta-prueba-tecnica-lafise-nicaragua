@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ChevronRight } from 'lucide-react';
+import ChevronRight  from 'lucide-react/icons/chevron-right';
 import { useLocation } from 'react-router-dom';
 import { cn } from '@/lib/utils.ts';
 

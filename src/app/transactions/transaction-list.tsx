@@ -1,28 +1,9 @@
 import * as React from "react"
 import LogoLafiseBlanco from "@/assets/images/logo-lafise-blanco.svg"
-import {
-  closestCenter,
-  DndContext,
-  KeyboardSensor,
-  MouseSensor,
-  TouchSensor,
-  useSensor,
-  useSensors,
-  type UniqueIdentifier,
-} from "@dnd-kit/core"
-import { restrictToVerticalAxis } from "@dnd-kit/modifiers"
-import {
-  SortableContext,
-  useSortable,
-  verticalListSortingStrategy,
-} from "@dnd-kit/sortable"
-import { CSS } from "@dnd-kit/utilities"
-import {
-  IconChevronLeft,
-  IconChevronRight,
-  IconChevronsLeft,
-  IconChevronsRight
-} from "@tabler/icons-react"
+import IconChevronLeft from "lucide-react/icons/chevron-left"
+import IconChevronRight from "lucide-react/icons/chevron-right"
+import IconChevronsLeft from "lucide-react/icons/chevrons-left"
+import IconChevronsRight from "lucide-react/icons/chevrons-right"
 import {
   flexRender,
   getCoreRowModel,
@@ -40,7 +21,6 @@ import type {
   SortingState,
   VisibilityState,
 } from "@tanstack/react-table"
-import { z } from "zod"
 
 import { useIsMobile } from "@/hooks/use-mobile.ts"
 import { Button } from "@/components/ui/button.tsx"
@@ -73,48 +53,37 @@ import {
 } from "@/components/ui/tabs.tsx"
 import { useSelector } from 'react-redux'
 import { useGetAccountTransactionsQuery } from '@/store/services/api'
-import type {TransactionsSchema} from "@/app/transactions/schemas.ts";
+import type { RootState } from "@/store";
+import type { UserProduct } from "@/types/user.ts";
+import type { Transaction} from "@/types/transactions.ts";
 
-const columns: ColumnDef<z.infer<typeof TransactionsSchema>>[] = [
+const columns: ColumnDef<Transaction>[] = [
   {
-    accessorKey: "fecha",
+    accessorKey: "transaction_date",
     header: "Fecha",
-    cell: ({ row }) => <TableCellViewer item={row.original} onOpen={() => {}} />,
+    cell: ({ row }) => <TableCellViewer item={row.original} onOpen={() => {}} />, // row.original is Transaction
     enableHiding: false,
   },
   {
-    accessorKey: "descripcion",
+    accessorKey: "description",
     header: "Descripción",
-    cell: ({ row }) => row.original.descripcion,
+    cell: ({ row }) => row.original.description,
   },
   {
-    accessorKey: "debitoUSD",
+    accessorKey: "amount",
     header: "Débito (USD)",
-    cell: ({ row }) => row.original.debitoUSD.toFixed(2),
+    cell: ({ row }) => row.original.amount.value.toFixed(2),
   },
   {
-    accessorKey: "balanceUSD",
-    header: "Balance (USD)",
-    cell: ({ row }) => row.original.balanceUSD.toFixed(2),
+    accessorKey: "bank_description",
+    header: "Banco",
+    cell: ({ row }) => row.original.bank_description,
   },
 ]
 
-function DraggableRow({ row }: { row: Row<z.infer<typeof TransactionsSchema>> }) {
-  const { transform, transition, setNodeRef, isDragging } = useSortable({
-    id: row.original.id,
-  })
-
+function TransactionsTableRow({ row }: { row: Row<Transaction> }) {
   return (
-    <TableRow
-      data-state={row.getIsSelected() && "selected"}
-      data-dragging={isDragging}
-      ref={setNodeRef}
-      className="relative z-0 data-[dragging=true]:z-10 data-[dragging=true]:opacity-80"
-      style={{
-        transform: CSS.Transform.toString(transform),
-        transition: transition,
-      }}
-    >
+    <TableRow>
       {row.getVisibleCells().map((cell) => (
         <TableCell key={cell.id}>
           {flexRender(cell.column.columnDef.cell, cell.getContext())}
@@ -125,12 +94,12 @@ function DraggableRow({ row }: { row: Row<z.infer<typeof TransactionsSchema>> })
 }
 
 export function TransactionsList() {
-  const user = useSelector((state: any) => state.user.data)
-  const accountId = user?.products?.find((p: any) => p.type === 'Account')?.id
-  const { data, error, isLoading } = useGetAccountTransactionsQuery(accountId, { skip: !accountId })
+  const user = useSelector((state: RootState) => state.user.data)
+  const accountId = user?.products?.find((p: UserProduct) => p.type === 'Account')?.id
+  const { data, error, isLoading } = useGetAccountTransactionsQuery(String(accountId), { skip: !accountId })
 
   let content: React.ReactNode = null
-  let transactions: any[] = []
+  let transactions: Transaction[] = []
 
   if (!user) {
     content = <div className="p-8 text-center">Cargando usuario...</div>
@@ -143,14 +112,7 @@ export function TransactionsList() {
   } else if (!data || !data.items) {
     content = <div className="p-8 text-center">Sin transacciones</div>
   } else {
-    // Map API response to table format
-    transactions = data.items.map((item: any, idx: number) => ({
-      id: item.transaction_number || idx,
-      fecha: item.transaction_date ? new Date(item.transaction_date).toLocaleDateString() : '',
-      descripcion: item.description,
-      debitoUSD: item.amount?.value ?? 0,
-      balanceUSD: 0, // No balance in API response, set to 0 or calculate if available
-    }))
+    transactions = data.items as Transaction[];
   }
 
   const [rowSelection, setRowSelection] = React.useState({})
@@ -164,17 +126,6 @@ export function TransactionsList() {
     pageIndex: 0,
     pageSize: 10,
   })
-  const sortableId = React.useId()
-  const sensors = useSensors(
-    useSensor(MouseSensor, {}),
-    useSensor(TouchSensor, {}),
-    useSensor(KeyboardSensor, {})
-  )
-
-  const dataIds = React.useMemo<UniqueIdentifier[]>(
-    () => transactions?.map((item: { id: number }) => item.id) || [],
-    [transactions]
-  )
 
   const table = useReactTable({
     data: transactions,
@@ -186,7 +137,7 @@ export function TransactionsList() {
       columnFilters,
       pagination,
     },
-    getRowId: (row) => row.id.toString(),
+    getRowId: (row) => row.transaction_number.toString(),
     enableRowSelection: true,
     onRowSelectionChange: setRowSelection,
     onSortingChange: setSorting,
@@ -200,8 +151,6 @@ export function TransactionsList() {
     getFacetedRowModel: getFacetedRowModel(),
     getFacetedUniqueValues: getFacetedUniqueValues(),
   })
-
-  // Remove handleDragEnd and setData logic, as transactions are fetched and not locally mutated
 
   if (isLoading) return <div className="p-8 text-center">Cargando transacciones...</div>
   if (error) return <div className="p-8 text-center text-red-500">Error al cargar transacciones</div>
@@ -251,14 +200,7 @@ export function TransactionsList() {
             className="relative flex flex-col gap-4 overflow-auto px-4 lg:px-6"
           >
             <div className="overflow-hidden rounded-sm border">
-              <DndContext
-                collisionDetection={closestCenter}
-                modifiers={[restrictToVerticalAxis]}
-                onDragEnd={() => {}}
-                sensors={sensors}
-                id={sortableId}
-              >
-                <Table>
+              <Table>
                   <TableHeader className="bg-transparent sticky top-0 z-10">
                     {table.getHeaderGroups().map((headerGroup) => (
                       <TableRow key={headerGroup.id}>
@@ -279,20 +221,13 @@ export function TransactionsList() {
                   </TableHeader>
                   <TableBody className="**:data-[slot=table-cell]:first:w-8">
                     {table.getRowModel().rows?.length ? (
-                      <SortableContext
-                        items={dataIds}
-                        strategy={verticalListSortingStrategy}
-                      >
-                        {table.getRowModel().rows.map((row) => (
-                          <DraggableRow
+                        table.getRowModel().rows.map((row) => (
+                          <TransactionsTableRow
                             key={row.id}
                             row={row}
-                            // Add onClick to the row
-                            // @ts-expect-error No error in this case
-                            onClick={() => handleRowClick(row)}
                           />
-                        ))}
-                      </SortableContext>
+                        ))
+
                     ) : (
                       <TableRow>
                         <TableCell
@@ -305,7 +240,6 @@ export function TransactionsList() {
                     )}
                   </TableBody>
                 </Table>
-              </DndContext>
             </div>
             <div className="flex items-center justify-between px-4">
               <div className="text-muted-foreground hidden flex-1 text-sm lg:flex">
@@ -406,7 +340,7 @@ export function TransactionsList() {
   )
 }
 
-function TableCellViewer({ item, onOpen }: { item: z.infer<typeof TransactionsSchema>, onOpen: () => void }) {
+function TableCellViewer({ item, onOpen }: { item: Transaction, onOpen: () => void }) {
   const isMobile = useIsMobile()
   const [open, setOpen] = React.useState(false)
 
@@ -419,7 +353,7 @@ function TableCellViewer({ item, onOpen }: { item: z.infer<typeof TransactionsSc
   return (
     <>
       <Button variant="link" className="text-foreground w-fit px-0 text-left" onClick={handleOpen}>
-        {item.fecha}
+        {item.transaction_date}
       </Button>
       <Drawer open={open} direction={isMobile ? "bottom" : "right"} onOpenChange={setOpen}>
         <DrawerContent className="bg-white min-h-[40vh] flex flex-col items-center justify-start sm:rounded-l-2xl shadow-2xl overflow-hidden">
@@ -442,19 +376,19 @@ function TableCellViewer({ item, onOpen }: { item: z.infer<typeof TransactionsSc
             <div className="flex flex-col gap-4">
               <div className="flex items-center justify-between">
                 <span className="font-semibold text-slate-700">Descripción:</span>
-                <span className="text-slate-900 font-bold text-lg text-right">{item.descripcion}</span>
+                <span className="text-slate-900 font-bold text-lg text-right">{item.description}</span>
               </div>
               <div className="flex items-center justify-between">
                 <span className="font-semibold text-slate-700">Fecha:</span>
-                <span className="text-slate-600 text-right">{item.fecha}</span>
+                <span className="text-slate-600 text-right">{item.transaction_date}</span>
               </div>
               <div className="flex items-center justify-between">
                 <span className="font-semibold text-blue-700">Débito:</span>
-                <span className="text-blue-700 font-bold text-lg text-right">${item.debitoUSD.toFixed(2)}</span>
+                <span className="text-blue-700 font-bold text-lg text-right">${item.amount.value.toFixed(2)}</span>
               </div>
               <div className="flex items-center justify-between">
-                <span className="font-semibold text-green-700">Balance:</span>
-                <span className="text-green-700 font-bold text-lg text-right">${item.balanceUSD.toFixed(2)}</span>
+                <span className="font-semibold text-green-700">Banco:</span>
+                <span className="text-green-700 font-bold text-lg text-right">{item.bank_description}</span>
               </div>
             </div>
           </div>

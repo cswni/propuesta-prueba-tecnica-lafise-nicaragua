@@ -1,4 +1,3 @@
-import { type Icon } from "@tabler/icons-react"
 import { Link } from "react-router-dom"
 
 import {
@@ -9,6 +8,7 @@ import {
 } from "@/components/ui/sidebar/sidebar.tsx"
 import SidebarMenuItem from "@/components/ui/sidebar/sidebar-menu-item.tsx";
 import { useSidebar } from '@/providers/sidebar/use-sidebar';
+import type {LucideIcon} from "lucide-react";
 
 export function NavMain({
   items,
@@ -16,7 +16,7 @@ export function NavMain({
   items: {
     title: string
     url: string
-    icon?: Icon
+    icon?: LucideIcon
     svg?: string
   }[]
 }) {

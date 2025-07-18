@@ -13,8 +13,6 @@ import Paganet from '@/assets/images/sidebar/paganet.svg'
 import Ahorro from '@/assets/images/sidebar/ahorro.svg'
 import Configuracion from '@/assets/images/sidebar/configuracion.svg'
 
-import { type Icon,} from '@tabler/icons-react';
-
 import { NavMain } from '@/components/nav-main';
 import {
   Sidebar,
@@ -30,6 +28,7 @@ import { useIsMobile } from '@/hooks/use-mobile';
 import {useSettings} from "@/providers/settings/use-settings.ts";
 import { ExchangeRate } from '@/components/ui/sidebar/exchange-rate.tsx';
 import { ServerInfo } from '@/components/ui/sidebar/server-info.tsx';
+import type {LucideIcon} from "lucide-react";
 
 type SidebarData = {
   user: {
@@ -40,7 +39,7 @@ type SidebarData = {
   navMain: {
     title: string;
     url: string;
-    icon?: Icon;
+    icon?: LucideIcon;
     svg?: string;
   }[]
 };
