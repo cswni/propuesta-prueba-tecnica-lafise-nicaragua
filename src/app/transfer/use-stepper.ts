@@ -1,9 +1,13 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import type React from 'react';
 
-export interface StepDef {
+export type StepDef = {
   label: string;
-  component: React.ReactNode;
-}
+  component: React.ComponentType<{
+    getError?: (field: string) => string | undefined;
+    disableContinue?: boolean;
+  }>;
+};
 
 export function useStepper(steps: StepDef[]) {
   const [currentStep, setCurrentStep] = useState(0);

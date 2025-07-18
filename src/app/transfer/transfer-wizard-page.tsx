@@ -101,8 +101,10 @@ export default function TransferWizardPage() {
     }
   }
 
-  const getError = (field: keyof TransferFormType) => {
-    const err = formState.errors[field];
+  // getError now accepts a string for compatibility with all step components
+  const getError = (field: string) => {
+    if (!Object.prototype.hasOwnProperty.call(formState.errors, field)) return undefined;
+    const err = formState.errors[field as keyof TransferFormType];
     if (!err) return undefined;
     if (typeof err.message === 'string') return err.message;
     return 'Campo inválido';
