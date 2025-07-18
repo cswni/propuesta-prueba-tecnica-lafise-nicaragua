@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { type FC } from 'react';
 import ChevronRight from 'lucide-react/icons/chevron-right';
 import { useLocation } from 'react-router-dom';
 import { cn } from '@/lib/utils.ts';
@@ -8,14 +8,18 @@ export type SidebarMenuItemProps = React.ComponentProps<'li'> & {
   avoidActive?: boolean;
 };
 
-const SidebarMenuItem = (props: SidebarMenuItemProps) => {
-  const { className, showRightArrow = false, avoidActive = false, children, ...rest } = props;
+export const SidebarMenuItem: FC<SidebarMenuItemProps> = ({
+  children,
+  showRightArrow = false,
+  avoidActive = false,
+  ...props
+}) => {
   const location = useLocation();
 
   // Verificar la ruta activa
   const isActive = React.Children.toArray(children).some((child) => {
-    if (React.isValidElement(child) && 'to' in (child.props as any)) {
-      return (child.props as any).to === location.pathname;
+    if (React.isValidElement(child) && 'to' in (child.props as { to: string })) {
+      return (child.props as { to: string }).to === location.pathname;
     }
     return false;
   });
@@ -27,9 +31,9 @@ const SidebarMenuItem = (props: SidebarMenuItemProps) => {
       className={cn(
         'hover:bg-[var(--base-soft-green)] hover:cursor-pointer group/menu-item py-2 px-1 relative font-semibold min-h-[48px]',
         isActive && !avoidActive && 'bg-[var(--base-soft-green)]',
-        className
+        props.className
       )}
-      {...rest}
+      {...props}
     >
       {children}
       {showRightArrow && (
@@ -38,5 +42,3 @@ const SidebarMenuItem = (props: SidebarMenuItemProps) => {
     </li>
   );
 };
-
-export default SidebarMenuItem;

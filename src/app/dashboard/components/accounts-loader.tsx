@@ -41,7 +41,7 @@ const AccountsLoader = () => {
     [user]
   );
 
-  const [loadedAccounts, setLoadedAccounts] = useState<{ [id: string]: AccountUI }>({});
+  const [, setLoadedAccounts] = useState<{ [id: string]: AccountUI }>({});
 
   const onData = (account: AccountUI) => {
     setLoadedAccounts((prev) => {

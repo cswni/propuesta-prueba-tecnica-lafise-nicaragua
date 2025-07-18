@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 export interface StepDef {
   label: string;
-  component: React.ComponentType<any>;
+  component: React.ReactNode;
 }
 
 export function useStepper(steps: StepDef[]) {

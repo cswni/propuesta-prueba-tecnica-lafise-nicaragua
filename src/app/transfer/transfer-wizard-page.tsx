@@ -31,6 +31,7 @@ const transferSchema = z.object({
 });
 
 type TransferFormType = z.infer<typeof transferSchema>;
+type StepFieldMap = (keyof TransferFormType)[][];
 
 const stepDefs: StepDef[] = [
   { label: 'Cuenta origen', component: StepAccountFrom },
@@ -40,11 +41,7 @@ const stepDefs: StepDef[] = [
 ];
 
 // stepFieldMap: For each step, list only the required fields. All other fields are optional.
-// Step 1: cuentaOrigenId (required)
-// Step 2: cuentaDestinoId (required)
-// Step 3: monto (required)
-// Step 4: all fields optional
-const stepFieldMap = [['cuentaOrigenId'], ['cuentaDestinoId'], ['monto'], []];
+const stepFieldMap: StepFieldMap = [['cuentaOrigenId'], ['cuentaDestinoId'], ['monto'], []];
 
 export default function TransferWizardPage() {
   const navigate = useNavigate();
@@ -61,21 +58,20 @@ export default function TransferWizardPage() {
   const { formState } = methods;
 
   // Disable continue if any required field for the current step is empty or invalid
-  const requiredFields = stepFieldMap[currentStep];
+  const requiredFields: (keyof TransferFormType)[] = stepFieldMap[currentStep];
   let disableContinue = false;
   const allValues = methods.getValues();
-  for (const field of requiredFields as string[]) {
-    const value = allValues[field as keyof TransferFormType];
-    if (!value || (typeof value === 'string' && value.trim() === '')) {
+  for (const field of requiredFields) {
+    const value = allValues[field];
+    if (!value || value.trim() === '') {
       disableContinue = true;
       break;
     }
   }
 
   async function onStepSubmit(data: TransferFormType) {
-    const fields = stepFieldMap[currentStep];
-    // Restore per-step validation
-    const valid = await methods.trigger(fields as any);
+    const fields: (keyof TransferFormType)[] = stepFieldMap[currentStep];
+    const valid = await methods.trigger(fields);
     if (!valid) return;
     if (!isLastStep) {
       nextStep();
@@ -99,7 +95,8 @@ export default function TransferWizardPage() {
       await createTransaction(payload).unwrap();
       methods.reset();
       setShowModal(true);
-    } catch (err: any) {
+    } catch (err) {
+      console.error('Error creating transaction:', err);
       toast.error('Ocurrió un error al realizar la transferencia.');
     }
   }
