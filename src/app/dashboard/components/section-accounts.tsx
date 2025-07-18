@@ -1,9 +1,10 @@
-import type { AccountUI } from '@/types/accounts';
+import { useSelector } from 'react-redux';
 import { toast } from 'sonner';
+
 import UsaFlag from '@/assets/images/flags/usa-flag.svg';
 import CopyIcon from '@/assets/images/icons/copy.svg';
-import { useSelector } from 'react-redux';
 import type { RootState } from '@/store';
+import type { AccountUI } from '@/types/accounts';
 
 function AccountCard({ alias, accountNumber, balance, flag, currency, id }: AccountUI) {
   const handleCopyAccountNumber = () => {

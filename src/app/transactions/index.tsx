@@ -1,5 +1,5 @@
+import { TransactionsList } from '@/app/transactions/transaction-list';
 import HeadingLine from '@/components/ui/heading-line';
-import { TransactionsList } from '@/app/transactions/transaction-list.tsx';
 const TransactionsPage = () => {
   return (
     <div className="flex flex-1 flex-col h-full overflow-y-auto">

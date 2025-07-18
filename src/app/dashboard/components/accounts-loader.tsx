@@ -1,11 +1,12 @@
-import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState, useMemo } from 'react';
-import { setUserAccounts } from '@/store';
-import { useGetAccountQuery } from '@/store/services/api.ts';
-import type { AccountUI } from '@/types/accounts';
-import type { User } from '@/types/user';
+import { useDispatch, useSelector } from 'react-redux';
+
 import NicaraguaFlag from '@/assets/images/flags/nicaragua-flag.svg';
 import UsaFlag from '@/assets/images/flags/usa-flag.svg';
+import { setUserAccounts } from '@/store';
+import { useGetAccountQuery } from '@/store/services/api';
+import type { AccountUI } from '@/types/accounts';
+import type { User } from '@/types/user';
 
 const flagByCurrency: Record<string, string> = {
   NIO: NicaraguaFlag,

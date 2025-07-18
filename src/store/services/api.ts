@@ -1,10 +1,11 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
-import axios, { AxiosError } from 'axios';
 import type { BaseQueryFn } from '@reduxjs/toolkit/query/react';
+import axios, { AxiosError } from 'axios';
 import type { AxiosRequestConfig } from 'axios';
-import type { User } from '@/types/user';
+
 import type { AccountApi } from '@/types/accounts';
 import type { Transaction, TransactionsApiResponse } from '@/types/transactions';
+import type { User } from '@/types/user';
 
 const axiosBaseQuery =
   (

@@ -1,8 +1,11 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-import path from "path"
-import tailwindcss from "@tailwindcss/vite"
 import {fileURLToPath} from "node:url";
+import path from "path"
+
+import tailwindcss from "@tailwindcss/vite"
+import react from '@vitejs/plugin-react'
+import { defineConfig } from 'vite'
+
+
 
 const PORT = 8081;
 
@@ -16,6 +19,7 @@ export default defineConfig({
           new URL("./node_modules/lucide-react/dist/esm/icons", import.meta.url)
       ),
     },
+    extensions: ['.js', '.ts', '.jsx', '.tsx', '.json','.svg', '.css'],
   },
   server: {
     allowedHosts: [

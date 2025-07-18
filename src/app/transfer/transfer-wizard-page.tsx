@@ -1,18 +1,22 @@
-import { Button } from '@/components/ui/button';
-import { Stepper } from './stepper.tsx';
-import { useStepper } from './use-stepper.ts';
-import type { StepDef } from './use-stepper.ts';
-import { StepAccountFrom } from './steps/step-account-from.tsx';
-import { StepAccountTo } from './steps/step-account-to.tsx';
-import { StepTransferAmount } from './steps/step-transfer-amount.tsx';
-import { StepInfoSummary } from './steps/step-info-summary.tsx';
-import { useForm, FormProvider } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
-import { useCreateTransactionMutation } from '@/store/services/api';
-import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import { useForm, FormProvider } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
+import { z } from 'zod';
+
+import { Button } from '@/components/ui/button';
+import { useCreateTransactionMutation } from '@/store/services/api';
+
+import { Stepper } from './stepper';
+import { StepAccountFrom } from './steps/step-account-from';
+import { StepAccountTo } from './steps/step-account-to';
+import { StepInfoSummary } from './steps/step-info-summary';
+import { StepTransferAmount } from './steps/step-transfer-amount';
+import { useStepper } from './use-stepper';
+import type { StepDef } from './use-stepper';
+
+
 
 // Zod schema for POST /transactions
 const transferSchema = z.object({

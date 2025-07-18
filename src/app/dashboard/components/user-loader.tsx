@@ -1,7 +1,8 @@
-import { useDispatch } from 'react-redux';
-import { useGetUserQuery } from '@/store/services/api.ts';
 import { useEffect, useRef } from 'react';
+import { useDispatch } from 'react-redux';
+
 import { setUser } from '@/store';
+import { useGetUserQuery } from '@/store/services/api';
 
 const UserLoader = () => {
   const dispatch = useDispatch();

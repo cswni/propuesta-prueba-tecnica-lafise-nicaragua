@@ -1,8 +1,8 @@
+import { useSelector } from 'react-redux';
+
 import LogoLafise from '@/assets/images/logo-lafise-blanco.svg';
 import LafiseLogoShield from '@/assets/images/logo-lafise-shield.svg';
-import { useSelector } from 'react-redux';
 import type { RootState } from '@/store';
-
 import type { CardProps } from '@/types/cards';
 
 function CreditDebitCard(props: CardProps) {

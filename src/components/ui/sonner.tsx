@@ -1,5 +1,5 @@
-import * as React from 'react';
 import { useTheme } from 'next-themes';
+import * as React from 'react';
 import { Toaster as Sonner, type ToasterProps } from 'sonner';
 
 const Toaster = ({ ...props }: ToasterProps) => {

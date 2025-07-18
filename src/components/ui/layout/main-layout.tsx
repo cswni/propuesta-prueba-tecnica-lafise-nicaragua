@@ -1,5 +1,6 @@
-import { cn } from '@/lib/utils.ts';
 import * as React from 'react';
+
+import { cn } from '@/lib/utils';
 import { useSettings } from '@/providers/settings/use-settings';
 import { useSidebar } from '@/providers/sidebar/use-sidebar';
 

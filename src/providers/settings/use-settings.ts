@@ -1,5 +1,6 @@
 import { useContext } from 'react';
-import { SettingsContext } from '@/providers/settings/settings-context.tsx';
+
+import { SettingsContext } from '@/providers/settings/settings-context';
 
 export const useSettings = () => {
   const context = useContext(SettingsContext);

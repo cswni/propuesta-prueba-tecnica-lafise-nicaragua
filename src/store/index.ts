@@ -1,9 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { setupListeners } from '@reduxjs/toolkit/query';
-import { api } from '@/store/services/api';
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
-import type { User } from '@/types/user';
+import { setupListeners } from '@reduxjs/toolkit/query';
+
+import { api } from '@/store/services/api';
 import type { AccountUI } from '@/types/accounts';
+import type { User } from '@/types/user';
 
 interface UserState {
   data: User | null;

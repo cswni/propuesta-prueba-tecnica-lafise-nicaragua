@@ -1,3 +1,8 @@
+import React from 'react';
+import { useFormContext, Controller } from 'react-hook-form';
+import { useSelector } from 'react-redux';
+
+import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import {
   Select,
@@ -6,13 +11,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Input } from '@/components/ui/input';
-import { useFormContext, Controller } from 'react-hook-form';
-import { useGetAccountQuery } from '@/store/services/api';
-import { useSelector } from 'react-redux';
 import type { RootState } from '@/store';
+import { useGetAccountQuery } from '@/store/services/api';
 import type { AccountUI } from '@/types/accounts';
-import React from 'react';
+
 
 export function StepInfoSummary({
   getError,

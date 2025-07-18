@@ -1,12 +1,13 @@
 import * as React from 'react';
+
+import Interchange from '@/assets/images/icons/interchange.svg';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select.tsx';
-import Interchange from '@/assets/images/icons/interchange.svg';
+} from '@/components/ui/select';
 
 export function ExchangeRate() {
   const [fromCurrency, setFromCurrency] = React.useState('NIO');

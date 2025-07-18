@@ -1,23 +1,21 @@
 'use client';
 
-import * as React from 'react';
 import { Slot } from '@radix-ui/react-slot';
 import { cva } from 'class-variance-authority';
 import type { VariantProps } from 'class-variance-authority';
 import MenuIcon from 'lucide-react/icons/menu';
+import * as React from 'react';
 
-import { cn } from '@/lib/utils.ts';
-import { Button } from '@/components/ui/button.tsx';
-import { Separator } from '@/components/ui/separator.tsx';
+import { Button } from '@/components/ui/button';
+import { Separator } from '@/components/ui/separator';
 import {
   Sheet,
   SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-} from '@/components/ui/sheet.tsx';
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip.tsx';
-import { useSidebar } from '@/providers/sidebar/use-sidebar.ts';
+  SheetHeader, SheetTitle, SheetDescription,
+} from '@/components/ui/sheet';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
+import { cn } from '@/lib/utils';
+import { useSidebar } from '@/providers/sidebar/use-sidebar';
 
 const SIDEBAR_WIDTH_MOBILE = '18rem';
 

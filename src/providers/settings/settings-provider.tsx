@@ -1,5 +1,6 @@
 import { useState, type ReactNode } from 'react';
-import { SettingsContext } from './settings-context.tsx';
+
+import { SettingsContext } from './settings-context';
 
 export const SettingsProvider = ({ children }: { children: ReactNode }) => {
   const [isFullWidth, setIsFullWidth] = useState(false);

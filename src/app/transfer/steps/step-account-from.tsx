@@ -1,3 +1,7 @@
+import { useEffect } from 'react';
+import { useFormContext, Controller } from 'react-hook-form';
+import { useSelector } from 'react-redux';
+
 import { Label } from '@/components/ui/label';
 import {
   Select,
@@ -6,12 +10,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { useSelector } from 'react-redux';
 import type { RootState } from '@/store';
+import { useGetAccountQuery } from '@/store/services/api';
 import type { AccountUI } from '@/types/accounts';
-import { useFormContext, Controller } from 'react-hook-form';
-import { useGetAccountQuery } from '@/store/services/api.ts';
-import { useEffect } from 'react';
 
 export function StepAccountFrom({
   getError,

@@ -1,7 +1,8 @@
-import React, { type FC } from 'react';
 import ChevronRight from 'lucide-react/icons/chevron-right';
+import React, { type FC } from 'react';
 import { useLocation } from 'react-router-dom';
-import { cn } from '@/lib/utils.ts';
+
+import { cn } from '@/lib/utils';
 
 export type SidebarMenuItemProps = React.ComponentProps<'li'> & {
   showRightArrow?: boolean;

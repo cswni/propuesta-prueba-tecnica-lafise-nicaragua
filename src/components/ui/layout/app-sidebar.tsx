@@ -1,34 +1,33 @@
+import type { LucideIcon } from 'lucide-react';
 import * as React from 'react';
+import { Link } from 'react-router-dom';
 
-// Assets
 import LogoLafise from '@/assets/images/logo-lafise.svg';
+import Administrar from '@/assets/images/sidebar/administrar.svg';
+import Ahorro from '@/assets/images/sidebar/ahorro.svg';
+import Cheque from '@/assets/images/sidebar/cheque.svg';
+import Configuracion from '@/assets/images/sidebar/configuracion.svg';
+import Gestionar from '@/assets/images/sidebar/gestionar.svg';
+import Mistransacciones from '@/assets/images/sidebar/mistransacciones.svg';
+import Paganet from '@/assets/images/sidebar/paganet.svg';
+import Pagar from '@/assets/images/sidebar/pagar.svg';
 import Tablero from '@/assets/images/sidebar/tablero.svg';
 import Transferir from '@/assets/images/sidebar/transferir.svg';
-import Pagar from '@/assets/images/sidebar/pagar.svg';
-import Mistransacciones from '@/assets/images/sidebar/mistransacciones.svg';
-import Gestionar from '@/assets/images/sidebar/gestionar.svg';
-import Cheque from '@/assets/images/sidebar/cheque.svg';
-import Administrar from '@/assets/images/sidebar/administrar.svg';
-import Paganet from '@/assets/images/sidebar/paganet.svg';
-import Ahorro from '@/assets/images/sidebar/ahorro.svg';
-import Configuracion from '@/assets/images/sidebar/configuracion.svg';
-
-import { NavMain } from '@/components/ui/layout/nav-main.tsx';
+import { NavMain } from '@/components/ui/layout/nav-main';
+import { ExchangeRate } from '@/components/ui/sidebar/exchange-rate';
+import { ServerInfo } from '@/components/ui/sidebar/server-info';
 import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
   SidebarHeader,
   SidebarMenu,
-} from '@/components/ui/sidebar/sidebar.tsx';
-import { Link } from 'react-router-dom';
-import { SidebarMenuItem } from '@/components/ui/sidebar/sidebar-menu-item.tsx';
-import { Toggle } from '@/components/ui/toggle.tsx';
-import { useIsMobile } from '@/hooks/use-mobile.ts';
-import { useSettings } from '@/providers/settings/use-settings.ts';
-import { ExchangeRate } from '@/components/ui/sidebar/exchange-rate.tsx';
-import { ServerInfo } from '@/components/ui/sidebar/server-info.tsx';
-import type { LucideIcon } from 'lucide-react';
+} from '@/components/ui/sidebar/sidebar';
+import { SidebarMenuItem } from '@/components/ui/sidebar/sidebar-menu-item';
+import { Toggle } from '@/components/ui/toggle';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { useSettings } from '@/providers/settings/use-settings';
+
 
 type SidebarData = {
   user: {

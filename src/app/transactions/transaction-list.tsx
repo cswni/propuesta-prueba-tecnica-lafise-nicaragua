@@ -1,9 +1,3 @@
-import * as React from 'react';
-import LogoLafiseBlanco from '@/assets/images/logo-lafise-blanco.svg';
-import IconChevronLeft from 'lucide-react/icons/chevron-left';
-import IconChevronRight from 'lucide-react/icons/chevron-right';
-import IconChevronsLeft from 'lucide-react/icons/chevrons-left';
-import IconChevronsRight from 'lucide-react/icons/chevrons-right';
 import {
   flexRender,
   getCoreRowModel,
@@ -21,18 +15,24 @@ import type {
   SortingState,
   VisibilityState,
 } from '@tanstack/react-table';
+import IconChevronLeft from 'lucide-react/icons/chevron-left';
+import IconChevronRight from 'lucide-react/icons/chevron-right';
+import IconChevronsLeft from 'lucide-react/icons/chevrons-left';
+import IconChevronsRight from 'lucide-react/icons/chevrons-right';
+import * as React from 'react';
+import { useSelector } from 'react-redux';
 
-import { useIsMobile } from '@/hooks/use-mobile.ts';
-import { Button } from '@/components/ui/button.tsx';
-import { Drawer, DrawerContent, DrawerFooter } from '@/components/ui/drawer.tsx';
-import { Label } from '@/components/ui/label.tsx';
+import LogoLafiseBlanco from '@/assets/images/logo-lafise-blanco.svg';
+import { Button } from '@/components/ui/button';
+import { Drawer, DrawerContent, DrawerFooter } from '@/components/ui/drawer';
+import { Label } from '@/components/ui/label';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select.tsx';
+} from '@/components/ui/select';
 import {
   Table,
   TableBody,
@@ -40,13 +40,13 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table.tsx';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs.tsx';
-import { useSelector } from 'react-redux';
-import { useGetAccountTransactionsQuery } from '@/store/services/api';
+} from '@/components/ui/table';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { useIsMobile } from '@/hooks/use-mobile';
 import type { RootState } from '@/store';
-import type { UserProduct } from '@/types/user.ts';
-import type { Transaction } from '@/types/transactions.ts';
+import { useGetAccountTransactionsQuery } from '@/store/services/api';
+import type { Transaction } from '@/types/transactions';
+import type { UserProduct } from '@/types/user';
 
 const columns: ColumnDef<Transaction>[] = [
   {

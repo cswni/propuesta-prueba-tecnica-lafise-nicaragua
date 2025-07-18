@@ -1,8 +1,11 @@
-import { SidebarContext, type SidebarContextProps } from './sidebar-context.tsx';
 import { TooltipProvider } from '@radix-ui/react-tooltip';
 import * as React from 'react';
-import { cn } from '@/lib/utils.ts';
-import { useIsMobile } from '@/hooks/use-mobile.ts';
+
+
+import { useIsMobile } from '@/hooks/use-mobile';
+import { cn } from '@/lib/utils';
+
+import { SidebarContext } from './sidebar-context';
 
 const SIDEBAR_COOKIE_NAME = 'sidebar_state';
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7;
@@ -67,7 +70,7 @@ export function SidebarProvider({
   // This makes it easier to style the sidebar with Tailwind classes.
   const state = open ? 'expanded' : 'collapsed';
 
-  const contextValue = React.useMemo<SidebarContextProps>(
+  const contextValue = React.useMemo<SidebarContext>(
     () => ({
       state,
       open,
