@@ -24,4 +24,61 @@ export default defineConfig({
     port: PORT,
     host: true
   },
-})
+
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'react-vendors': [
+            'react',
+            'react-dom',
+            'react-router-dom',
+            'react-redux',
+            'react-hook-form',
+            '@hookform/resolvers',
+          ],
+          'redux': [
+            '@reduxjs/toolkit',
+          ],
+          'tanstack': [
+            '@tanstack/react-table',
+          ],
+          'icons': [
+            'lucide-react',
+          ],
+          'zod': [
+            'zod',
+          ],
+          'sonner': [
+            'sonner',
+          ],
+          'vaul': [
+            'vaul',
+          ],
+          'classnames': [
+            'clsx',
+            'class-variance-authority',
+            'tailwind-merge',
+          ],
+          'next-themes': [
+            'next-themes',
+          ],
+          'radix-ui': [
+            '@radix-ui/react-avatar',
+            '@radix-ui/react-checkbox',
+            '@radix-ui/react-dialog',
+            '@radix-ui/react-dropdown-menu',
+            '@radix-ui/react-label',
+            '@radix-ui/react-select',
+            '@radix-ui/react-separator',
+            '@radix-ui/react-slot',
+            '@radix-ui/react-tabs',
+            '@radix-ui/react-toggle',
+            '@radix-ui/react-toggle-group',
+            '@radix-ui/react-tooltip',
+          ],
+        }
+      }
+    }
+    }
+  })
